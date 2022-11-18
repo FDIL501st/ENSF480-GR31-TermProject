@@ -259,17 +259,17 @@
 										"$ref": "AAAAAAGEgiBZUCt4EE0="
 									},
 									"font": "Arial;13;0",
-									"left": 452,
-									"top": 184,
-									"width": 138.0107421875,
+									"left": 438,
+									"top": 176,
+									"width": 168.35888671875,
 									"height": 13,
-									"alpha": 1.052883015727534,
-									"distance": 100.22474744293447,
+									"alpha": 1.1312933479973646,
+									"distance": 98.08159868191383,
 									"hostEdge": {
 										"$ref": "AAAAAAGEgiBZTis8uRI="
 									},
 									"edgePosition": 1,
-									"text": "Within 72 hours?"
+									"text": " 72 hours prior to show start?"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -1427,7 +1427,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGEgiBZTist3VU="
 					},
-					"name": "Within 72 hours?",
+					"name": " 72 hours prior to show start?",
 					"source": {
 						"$ref": "AAAAAAGEgiBZUCtvYYU="
 					},
