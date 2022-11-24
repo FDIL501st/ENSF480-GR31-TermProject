@@ -27,7 +27,7 @@ public class RegistrationForm extends Form implements ActionListener{
         panel = new JPanel();//panel 
         panel.setLayout(null);
         
-       JLabel userLabel = new JLabel("Username"); //label for username
+       JLabel userLabel = new JLabel("Email"); //label for username
         userLabel.setBounds(10,50,80,25);
        panel.add(userLabel);
     
