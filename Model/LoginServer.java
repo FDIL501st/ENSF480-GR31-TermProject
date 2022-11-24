@@ -13,18 +13,18 @@ public class LoginServer {
         }
         return instance;
     }
-    public boolean register(String username,String password,String fName,String lName,String address,String cardNum){
+    public boolean register(String email,String password,String fName,String lName,String address,String cardNum){
         for(RegisteredUser u:users){
-            if(u.getUsername().equals(username)){
+            if(u.getEmail().equals(email)){
                 return false;
             }
         }
-        users.add(new RegisteredUser(username,password,fName,lName,address,cardNum));
+        users.add(new RegisteredUser(email,password,fName,lName,address,cardNum));
         return true;
     }
-    public RegisteredUser checkDuplicate(String username,String password){
+    public RegisteredUser checkDuplicate(String email,String password){
         for(RegisteredUser u: users){
-            if(u.getUsername().equals(username)&&(u.getPassword().equals(password))){
+            if(u.getEmail().equals(email)&&(u.getPassword().equals(password))){
                 return u;
             }
         }

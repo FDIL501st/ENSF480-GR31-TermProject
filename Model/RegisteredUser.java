@@ -1,6 +1,6 @@
 package Model;
 public class RegisteredUser extends User{
-    private String username;
+    private String email;
     private String password;
     private String firstName;
     private String lastName;
@@ -8,8 +8,8 @@ public class RegisteredUser extends User{
     private String cardNumber;
 	private double annualFee;
     
-    public String getUsername(){
-        return username;
+    public String getEmail(){
+        return email;
     }
     public String getPassword(){
         return password;
@@ -29,8 +29,8 @@ public class RegisteredUser extends User{
 	public double getannualFee(){
 		return annualFee;
 	}
-    public RegisteredUser(String username,String password,String fName,String lName,String address,String cardNum){
-        this.username = username;
+    public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum){
+        this.email = email;
         this.password = password;
         firstName = fName;
         lastName = lName;

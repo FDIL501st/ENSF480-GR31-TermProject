@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 public class Movie {
     private String movieName;
     private String movieGenre;

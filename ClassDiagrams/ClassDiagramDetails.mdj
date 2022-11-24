@@ -205,7 +205,7 @@
 											"top": 152,
 											"width": 753.21923828125,
 											"height": 13,
-											"text": "+register(username: String, password: String, fName: String, lName: String, address: String, cardNum: String): boolean",
+											"text": "+register(email: String, password: String, fName: String, lName: String, address: String, cardNum: String): boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -222,7 +222,7 @@
 											"top": 167,
 											"width": 753.21923828125,
 											"height": 13,
-											"text": "+checkDuplicate(username: String, password: String): RegisteredUser",
+											"text": "+checkDuplicate(email: String, password: String): RegisteredUser",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1234,7 +1234,7 @@
 											"width": 303.11328125,
 											"height": 13,
 											"underline": true,
-											"text": "+counter: int",
+											"text": "+theatreCount: int",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1883,7 +1883,7 @@
 											"top": 684,
 											"width": 678.0693359375,
 											"height": 13,
-											"text": "+RegisteredUser(username: String, password: String, fName: String, lName: String, address: String, cardNum: String)",
+											"text": "+RegisteredUser(email: String, password: String, fName: String, lName: String, address: String, cardNum: String)",
 											"horizontalAlignment": 0
 										}
 									],
@@ -2028,7 +2028,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGEjIZqogj8f7w="
 									},
-									"name": "username",
+									"name": "email",
 									"type": "String"
 								},
 								{
@@ -2104,7 +2104,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGEjIgIJAkWw3g="
 									},
-									"name": "username",
+									"name": "email",
 									"type": "String"
 								},
 								{
@@ -2445,7 +2445,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGEghzR5sXAzTc="
 							},
-							"name": "counter",
+							"name": "theatreCount",
 							"isStatic": true,
 							"type": "int"
 						}
@@ -2703,7 +2703,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGEjJXd9Qk6Bn0="
 									},
-									"name": "username",
+									"name": "email",
 									"type": "String"
 								},
 								{
