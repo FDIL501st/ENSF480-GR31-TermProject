@@ -69,6 +69,10 @@ public class UserDatabaseReader extends DatabaseReader{
         return true;
     }
 
+    public static boolean userExist(RegisteredUser user) {
+        return userExist(user.getEmail());
+    }
+
     public static boolean addUser(RegisteredUser user) {
         // No need to add an already existing user
         if (userExist(user.getEmail())) {
@@ -87,11 +91,11 @@ public class UserDatabaseReader extends DatabaseReader{
         
         try {
             insertUser = connection.createStatement();
-            int count = insertUser.executeUpdate(query);
+            int rowsChanged = insertUser.executeUpdate(query);
             insertUser.close();
-            // if count is 0, then new user was not added
+            // if rowsChanged is 0, then new user was not added
             // so make it throw an SQLException so it can be caught and false be returned
-            if (count == 0) {
+            if (rowsChanged == 0) {
                 throw new SQLException();
             }
         } catch (SQLException e) {
@@ -104,10 +108,75 @@ public class UserDatabaseReader extends DatabaseReader{
     }
 
     public static boolean removeUser(String email) {
+        // can't remove user if he doesn't exist
+        if (!userExist(email)) {
+            return false;
+        }
+        // if can't connect, operation failed as can't remove the user
+        if (!connect()) {
+            return false;
+        }
+        
+        String query = String.format("DELETE FROM %s WHERE email=%s", TABLE, email);
+        Statement deleteUser = null;
+
+        try {
+            deleteUser = connection.createStatement();
+            int rowsChanged = deleteUser.executeUpdate(query);
+            deleteUser.close();
+
+            // if rowsChanged == 0, then the user was not removed
+            // so throw SQLException so it can be caught and false be returned
+            if (rowsChanged == 0) {
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            disconnect();
+            return false;
+        }
+         
+        disconnect();
         return true;
     }
 
+    public static boolean removeUser(RegisteredUser user) {
+        return removeUser(user.getEmail());
+    }
+
     public static boolean updateUser(RegisteredUser updatedUser) {
+        // if user doesn't exist, can't update them
+        if (!userExist(updatedUser.getEmail())) {
+            return false;
+        }
+        // operation failed if can't connect to database as can't update user
+        if (!connect()) {
+            return false;
+        }
+
+        String query = String.format(
+            "UPDATE %s SET password=%s, first_name=%s, last_name=%s, address=%s, card_number=%s WHERE email=%s",
+            TABLE, updatedUser.getPassword(), updatedUser.getfirstName(), updatedUser.getlastName(),
+            updatedUser.getAddress(), updatedUser.getCardNumber(), updatedUser.getEmail());
+
+        Statement userUpdate = null;
+
+        try {
+            userUpdate = connection.createStatement();
+            int rowsChanged = userUpdate.executeUpdate(query);
+            userUpdate.close();
+
+            // if rowsChanged == 0, then update did not occur
+            // to return false, throw an SQLException
+            if (rowsChanged == 0) {
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            disconnect();
+            return false;
+        }
+
+        disconnect();
         return true;
     }
+
 }
