@@ -7303,6 +7303,24 @@
 									"subViews": [
 										{
 											"_type": "UMLOperationView",
+											"_id": "AAAAAAGEr/f1qJhkZ1c=",
+											"_parent": {
+												"$ref": "AAAAAAGErS8nOIrH8aQ="
+											},
+											"model": {
+												"$ref": "AAAAAAGEr/f1ophhNi4="
+											},
+											"font": "Arial;13;0",
+											"left": 501,
+											"top": 306,
+											"width": 484.71337890625,
+											"height": 13,
+											"underline": true,
+											"text": "+setTable(theatreName: String): void",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
 											"_id": "AAAAAAGErTgxsotq1xw=",
 											"_parent": {
 												"$ref": "AAAAAAGErS8nOIrH8aQ="
@@ -7312,11 +7330,11 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 306,
+											"top": 321,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
-											"text": "+findMovie(name: String, showDate: Date): Movie",
+											"text": "+findAllShowTimes(movieName: String): ArrayList<Date>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -7330,7 +7348,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 321,
+											"top": 336,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
@@ -7348,29 +7366,11 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 336,
-											"width": 484.71337890625,
-											"height": 13,
-											"underline": true,
-											"text": "+addMovie(name: String, releaseDate: Date): boolean",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGEr/f1qJhkZ1c=",
-											"_parent": {
-												"$ref": "AAAAAAGErS8nOIrH8aQ="
-											},
-											"model": {
-												"$ref": "AAAAAAGEr/f1ophhNi4="
-											},
-											"font": "Arial;13;0",
-											"left": 501,
 											"top": 351,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
-											"text": "+setTable(theatreName: String): void",
+											"text": "+addMovie(name: String, releaseDate: Date): boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -8717,6 +8717,24 @@
 									"subViews": [
 										{
 											"_type": "UMLOperationView",
+											"_id": "AAAAAAGEsVc1tOHT5RY=",
+											"_parent": {
+												"$ref": "AAAAAAGEsVc1tOHPVIs="
+											},
+											"model": {
+												"$ref": "AAAAAAGEr/f1ophhNi4="
+											},
+											"font": "Arial;13;0",
+											"left": 501,
+											"top": 889,
+											"width": 484.71337890625,
+											"height": 13,
+											"underline": true,
+											"text": "+setTable(theatreName: String): void",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
 											"_id": "AAAAAAGEsVc1tOHQc/M=",
 											"_parent": {
 												"$ref": "AAAAAAGEsVc1tOHPVIs="
@@ -8726,11 +8744,11 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 889,
+											"top": 904,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
-											"text": "+findMovie(name: String, showDate: Date): Movie",
+											"text": "+findAllShowTimes(movieName: String): ArrayList<Date>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8744,7 +8762,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 904,
+											"top": 919,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
@@ -8762,29 +8780,11 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 919,
-											"width": 484.71337890625,
-											"height": 13,
-											"underline": true,
-											"text": "+addMovie(name: String, releaseDate: Date): boolean",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGEsVc1tOHT5RY=",
-											"_parent": {
-												"$ref": "AAAAAAGEsVc1tOHPVIs="
-											},
-											"model": {
-												"$ref": "AAAAAAGEr/f1ophhNi4="
-											},
-											"font": "Arial;13;0",
-											"left": 501,
 											"top": 934,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
-											"text": "+setTable(theatreName: String): void",
+											"text": "+addMovie(name: String, releaseDate: Date): boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -9789,11 +9789,40 @@
 					"operations": [
 						{
 							"_type": "UMLOperation",
+							"_id": "AAAAAAGEr/f1ophhNi4=",
+							"_parent": {
+								"$ref": "AAAAAAGErS8nN4q+zDY="
+							},
+							"name": "setTable",
+							"isStatic": true,
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGEr/gtBZhomcg=",
+									"_parent": {
+										"$ref": "AAAAAAGEr/f1ophhNi4="
+									},
+									"name": "theatreName",
+									"type": "String"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGEr/gtBZhpSgQ=",
+									"_parent": {
+										"$ref": "AAAAAAGEr/f1ophhNi4="
+									},
+									"type": "void",
+									"direction": "return"
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
 							"_id": "AAAAAAGErTgxp4tnhzw=",
 							"_parent": {
 								"$ref": "AAAAAAGErS8nN4q+zDY="
 							},
-							"name": "findMovie",
+							"name": "findAllShowTimes",
 							"isStatic": true,
 							"parameters": [
 								{
@@ -9802,17 +9831,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGErTgxp4tnhzw="
 									},
-									"name": "name",
+									"name": "movieName",
 									"type": "String"
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGErTimsotzTco=",
-									"_parent": {
-										"$ref": "AAAAAAGErTgxp4tnhzw="
-									},
-									"name": "showDate",
-									"type": "Date"
 								},
 								{
 									"_type": "UMLParameter",
@@ -9820,9 +9840,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGErTgxp4tnhzw="
 									},
-									"type": {
-										"$ref": "AAAAAAGEghzR5sW9CZA="
-									},
+									"type": "ArrayList<Date>",
 									"direction": "return"
 								}
 							]
@@ -9901,35 +9919,6 @@
 									},
 									"name": "Parameter1",
 									"type": "boolean",
-									"direction": "return"
-								}
-							]
-						},
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGEr/f1ophhNi4=",
-							"_parent": {
-								"$ref": "AAAAAAGErS8nN4q+zDY="
-							},
-							"name": "setTable",
-							"isStatic": true,
-							"parameters": [
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGEr/gtBZhomcg=",
-									"_parent": {
-										"$ref": "AAAAAAGEr/f1ophhNi4="
-									},
-									"name": "theatreName",
-									"type": "String"
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGEr/gtBZhpSgQ=",
-									"_parent": {
-										"$ref": "AAAAAAGEr/f1ophhNi4="
-									},
-									"type": "void",
 									"direction": "return"
 								}
 							]
