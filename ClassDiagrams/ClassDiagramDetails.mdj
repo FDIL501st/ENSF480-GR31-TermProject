@@ -7334,7 +7334,25 @@
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
-											"text": "+findAllShowTimes(movieName: String): ArrayList<Date>",
+											"text": "+getAllShowTimes(movieName: String): ArrayList<Date>",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGEtkxJOLEtZxI=",
+											"_parent": {
+												"$ref": "AAAAAAGErS8nOIrH8aQ="
+											},
+											"model": {
+												"$ref": "AAAAAAGEtkxJKbEqrlU="
+											},
+											"font": "Arial;13;0",
+											"left": 501,
+											"top": 336,
+											"width": 484.71337890625,
+											"height": 13,
+											"underline": true,
+											"text": "+getSeats(movieName: String, time: Date): ArrayList<Integer>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -7348,7 +7366,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 336,
+											"top": 351,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
@@ -7366,11 +7384,11 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 351,
+											"top": 366,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
-											"text": "+addMovie(name: String, releaseDate: Date): boolean",
+											"text": "+addMovie(name: String, releaseDate: Date, seats: ArrayList<Integer>): boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -7378,7 +7396,7 @@
 									"left": 496,
 									"top": 301,
 									"width": 494.71337890625,
-									"height": 68
+									"height": 83
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -7416,7 +7434,7 @@
 							"left": 496,
 							"top": 240,
 							"width": 494.71337890625,
-							"height": 129,
+							"height": 144,
 							"nameCompartment": {
 								"$ref": "AAAAAAGErS8nN4rBP1o="
 							},
@@ -7454,8 +7472,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 568,
-									"top": 210,
+									"left": 564,
+									"top": 211,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -7475,8 +7493,8 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 560,
-									"top": 223,
+									"left": 556,
+									"top": 224,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -7496,8 +7514,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 583,
-									"top": 185,
+									"left": 579,
+									"top": 186,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -7515,7 +7533,7 @@
 								"$ref": "AAAAAAGErS8nN4rAkBE="
 							},
 							"lineStyle": 1,
-							"points": "635:239;518:169",
+							"points": "627:239;518:171",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGErS8nXorqDfk="
@@ -8748,7 +8766,25 @@
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
-											"text": "+findAllShowTimes(movieName: String): ArrayList<Date>",
+											"text": "+getAllShowTimes(movieName: String): ArrayList<Date>",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGEtkxJQLEwHxY=",
+											"_parent": {
+												"$ref": "AAAAAAGEsVc1tOHPVIs="
+											},
+											"model": {
+												"$ref": "AAAAAAGEtkxJKbEqrlU="
+											},
+											"font": "Arial;13;0",
+											"left": 501,
+											"top": 919,
+											"width": 484.71337890625,
+											"height": 13,
+											"underline": true,
+											"text": "+getSeats(movieName: String, time: Date): ArrayList<Integer>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8762,7 +8798,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 919,
+											"top": 934,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
@@ -8780,11 +8816,11 @@
 											},
 											"font": "Arial;13;0",
 											"left": 501,
-											"top": 934,
+											"top": 949,
 											"width": 484.71337890625,
 											"height": 13,
 											"underline": true,
-											"text": "+addMovie(name: String, releaseDate: Date): boolean",
+											"text": "+addMovie(name: String, releaseDate: Date, seats: ArrayList<Integer>): boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -8792,7 +8828,7 @@
 									"left": 496,
 									"top": 884,
 									"width": 494.71337890625,
-									"height": 68
+									"height": 83
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -8832,7 +8868,7 @@
 							"left": 496,
 							"top": 823,
 							"width": 494.71337890625,
-							"height": 129,
+							"height": 144,
 							"nameCompartment": {
 								"$ref": "AAAAAAGEsVc1tOHIykQ="
 							},
@@ -8870,8 +8906,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 567,
-									"top": 794,
+									"left": 563,
+									"top": 795,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -8891,8 +8927,8 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 559,
-									"top": 807,
+									"left": 555,
+									"top": 808,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -8912,8 +8948,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 582,
-									"top": 769,
+									"left": 578,
+									"top": 770,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -8931,7 +8967,7 @@
 								"$ref": "AAAAAAGEsVc1tOHH3pc="
 							},
 							"lineStyle": 1,
-							"points": "632:822;518:754",
+							"points": "625:822;518:757",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGEsVc1tOHX7kA="
@@ -9822,7 +9858,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGErS8nN4q+zDY="
 							},
-							"name": "findAllShowTimes",
+							"name": "getAllShowTimes",
 							"isStatic": true,
 							"parameters": [
 								{
@@ -9841,6 +9877,44 @@
 										"$ref": "AAAAAAGErTgxp4tnhzw="
 									},
 									"type": "ArrayList<Date>",
+									"direction": "return"
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGEtkxJKbEqrlU=",
+							"_parent": {
+								"$ref": "AAAAAAGErS8nN4q+zDY="
+							},
+							"name": "getSeats",
+							"isStatic": true,
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGEtkzoRLE2zsc=",
+									"_parent": {
+										"$ref": "AAAAAAGEtkxJKbEqrlU="
+									},
+									"name": "movieName",
+									"type": "String"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGEtkzoRbE3wZg=",
+									"_parent": {
+										"$ref": "AAAAAAGEtkxJKbEqrlU="
+									},
+									"name": "time",
+									"type": "Date"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGEtkzoRbE4D5M=",
+									"_parent": {
+										"$ref": "AAAAAAGEtkxJKbEqrlU="
+									},
+									"type": "ArrayList<Integer>",
 									"direction": "return"
 								}
 							]
@@ -9920,6 +9994,15 @@
 									"name": "Parameter1",
 									"type": "boolean",
 									"direction": "return"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGEtkS4zLEopvI=",
+									"_parent": {
+										"$ref": "AAAAAAGErTUEUosgk3w="
+									},
+									"name": "seats",
+									"type": "ArrayList<Integer>"
 								}
 							]
 						}
