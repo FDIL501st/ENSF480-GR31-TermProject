@@ -1,6 +1,8 @@
 package Database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public abstract class DatabaseReader {
     final static private String DB_NAME = "movie_database";
@@ -37,4 +39,5 @@ public abstract class DatabaseReader {
         }
         return true;
     }
+
 }

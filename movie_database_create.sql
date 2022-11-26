@@ -38,3 +38,16 @@ CREATE TABLE theatre1 (
   `seat29` TINYINT NOT NULL DEFAULT 1,
   `seat30` TINYINT NOT NULL DEFAULT 1
   );
+
+
+DROP TABLE IF EXISTS registered_users;
+
+CREATE TABLE registered_users (
+  email VARCHAR(100) CHARACTER SET 'ascii' NOT NULL,
+  password VARCHAR(20) CHARACTER SET 'ascii' NOT NULL,
+  first_name VARCHAR(30) CHARACTER SET 'ascii' NOT NULL,
+  last_name VARCHAR(30) CHARACTER SET 'ascii' NOT NULL,
+  address VARCHAR(50) CHARACTER SET 'ascii' NOT NULL,
+  card_number VARCHAR(20) CHARACTER SET 'ascii' NOT NULL
+);
+
