@@ -35,6 +35,7 @@ public class UserDatabaseReader extends DatabaseReader{
             foundUser.close();    
             
         } catch (SQLException e) {
+            disconnect();
             return null;    //unable to fecth user
         }
         
@@ -49,19 +50,64 @@ public class UserDatabaseReader extends DatabaseReader{
             return false; // TODO - Maybe throw an exception here to catch later
         }
 
-        
+        String query = String.format("SELECT * FROM %s WHERE email=%s", TABLE, email);
+
+        Statement fetchUser = null;
+
+        try {
+
+            fetchUser = connection.createStatement();
+            if (!fetchUser.execute(query)) {
+                throw new SQLException();   //to return false
+            }
+            fetchUser.close();   
+        } catch (SQLException e) {
+            disconnect();
+            return false;
+        }
         while (!disconnect()) {}    // TODO - change in future
         return true;
     }
 
     public static boolean addUser(RegisteredUser user) {
+        // No need to add an already existing user
         if (userExist(user.getEmail())) {
-            return false;   // TODO - Maybe throw an exception here to catch later
+            return false;   
         }
+        // attempt to connect to database
+        if (!connect()) {
+            return false;
+        }
+
+        String query = String.format("INSERT INTO %s VALUES (%s, %s, %s, %s, %s, %s)",
+        TABLE, user.getEmail(), user.getPassword(), user.getfirstName(), 
+        user.getlastName(), user.getAddress(), user.getCardNumber());
+
+        Statement insertUser = null;
+        
+        try {
+            insertUser = connection.createStatement();
+            int count = insertUser.executeUpdate(query);
+            insertUser.close();
+            // if count is 0, then new user was not added
+            // so make it throw an SQLException so it can be caught and false be returned
+            if (count == 0) {
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            disconnect();
+            return false;
+        }
+
+        disconnect();
         return true;
     }
 
-    public static boolean removeUser() {
+    public static boolean removeUser(String email) {
+        return true;
+    }
+
+    public static boolean updateUser(RegisteredUser updatedUser) {
         return true;
     }
 }
