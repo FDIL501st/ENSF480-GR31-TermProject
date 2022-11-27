@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 public class Movie {
     private String movieName;
-    private String movieGenre;
     private Date releaseDate;
     private ArrayList<Date> availableTimes;
     public Movie(String name,String releaseDate,ArrayList<String> times)  throws ParseException{
@@ -21,9 +20,6 @@ public class Movie {
     }
     public String getMovieName(){
         return movieName;
-    }
-    public String getMovieGenre(){
-        return movieGenre;
     }
     public String regularAnnoucement(){
         Date d = new Date();
