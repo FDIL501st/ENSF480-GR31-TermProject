@@ -6,7 +6,8 @@ DROP TABLE IF EXISTS theatre1;
 
 CREATE TABLE theatre1 (
   `movie_name` VARCHAR(50) CHARACTER SET 'ascii' NOT NULL COMMENT 'name of movie',
-  `time` DATETIME NOT NULL COMMENT 'date and time of movie showing',
+  `show_time` DATETIME NOT NULL COMMENT 'date and time of movie showing',
+  `release_date` DATETIME NOT NULL COMMENT 'the release date of the movie'
   `seat1` TINYINT NOT NULL DEFAULT 1,
   `seat2` TINYINT NOT NULL DEFAULT 1,
   `seat3` TINYINT NOT NULL DEFAULT 1,
