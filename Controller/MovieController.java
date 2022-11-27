@@ -1,23 +1,42 @@
 package Controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.DefaultListModel;
 
 import Database.MovieDatabaseReader;
 import Model.Movie;
 public class MovieController extends Controller{
-    public MovieController(){
-        super.data = new MovieDatabaseReader();
+    
+
+    public void getAllShowTimes(String movieName,DefaultListModel<String> times){
+       
+        /* 
+        ArrayList<Date> showTimes = MovieDatabaseReader.getAllShowTimes(movieName);
+        for(int i=0;i<showTimes.size();i++){
+            times.addElement(showTimes.get(i).toString());
+        }
+        */
+        //test data
+        times.clear();
+        times.addElement("26-11-2022 12:50");
+        times.addElement("26-11-2022 1:50");
+        times.addElement("26-11-2022 2:50");
+        times.addElement("26-11-2022 3:50");
+        times.addElement("26-11-2022 4:50");
+   
+
     }
     public DefaultListModel<String> getAllMovies(){
-        //ArrayList<Movie> movies = data.getMovies();
+        //ArrayList<Movie> movies = MovieDatabaseReader.getAllMovies();
         DefaultListModel<String> names = new DefaultListModel<>();
         /* 
         for(int i=0;i<movies.size();i++){
             names.addElement(movies.get(i).getMovieName());
         }
         */
+        //test data
         names.addElement("m1");
         names.addElement("m2");
         names.addElement("m3");
@@ -27,7 +46,7 @@ public class MovieController extends Controller{
         return names;
     }
     public DefaultListModel<String> getNewMovies(){
-        //ArrayList<Movie> movies = data.getMovies();
+       // ArrayList<Movie> movies = MovieDatabaseReader.getAllMovie();
         DefaultListModel<String> names = new DefaultListModel<>();
         /* 
         for(int i=0;i<movies.size();i++){
@@ -36,6 +55,7 @@ public class MovieController extends Controller{
             }
         }
         */
+        //test data
         names.addElement("m1");
         names.addElement("m2");
         names.addElement("m3");
@@ -46,6 +66,7 @@ public class MovieController extends Controller{
     }
     public void addRUAnnoucement(DefaultListModel<String> names){
         //ArrayList<Movie> movies = data.getMovies();
+        //test data
         names.addElement("m7 (RU)");
         names.addElement("m8 (RU)");
         names.addElement("m9 (RU)");
