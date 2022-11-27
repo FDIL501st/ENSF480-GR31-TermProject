@@ -149,7 +149,7 @@ public class RegistrationForm extends Form implements ActionListener{
                 JOptionPane.showMessageDialog(null,"Registration successful");
             }
             else{
-                JOptionPane.showMessageDialog(null,"Username already registered");
+                JOptionPane.showMessageDialog(null,"Email already registered");
             }
         }
         popup.setVisible(false);

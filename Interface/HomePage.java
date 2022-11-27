@@ -14,7 +14,6 @@ public class HomePage implements ActionListener{
    private static JButton registerButton;
    private static JButton movieSelect;
   static DefaultListModel<String> movies = new DefaultListModel<>();
-   static MovieController mc;
 
    public static void main(String[] args){ //main to test
     HomePage hp = new HomePage();
@@ -65,8 +64,8 @@ public class HomePage implements ActionListener{
         announcementPanel.setLayout(new FlowLayout());
         
         
-        mc = new MovieController(); //add new movie list
-        movies = mc.getNewMovies();
+     
+        movies = MovieController.getNewMovies();
         JList<String> announcements = new JList<>(movies);
      
        

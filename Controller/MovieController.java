@@ -10,25 +10,7 @@ import Model.Movie;
 public class MovieController extends Controller{
     
 
-    public void getAllShowTimes(String movieName,DefaultListModel<String> times){
-       
-        /* 
-        ArrayList<Date> showTimes = MovieDatabaseReader.getAllShowTimes(movieName);
-        for(int i=0;i<showTimes.size();i++){
-            times.addElement(showTimes.get(i).toString());
-        }
-        */
-        //test data
-        times.clear();
-        times.addElement("26-11-2022 12:50");
-        times.addElement("26-11-2022 1:50");
-        times.addElement("26-11-2022 2:50");
-        times.addElement("26-11-2022 3:50");
-        times.addElement("26-11-2022 4:50");
-   
-
-    }
-    public DefaultListModel<String> getAllMovies(){
+    public static DefaultListModel<String> getAllMovies(){
         //ArrayList<Movie> movies = MovieDatabaseReader.getAllMovies();
         DefaultListModel<String> names = new DefaultListModel<>();
         /* 
@@ -45,7 +27,7 @@ public class MovieController extends Controller{
         names.addElement("m6");
         return names;
     }
-    public DefaultListModel<String> getNewMovies(){
+    public static DefaultListModel<String> getNewMovies(){
        // ArrayList<Movie> movies = MovieDatabaseReader.getAllMovie();
         DefaultListModel<String> names = new DefaultListModel<>();
         /* 
@@ -64,7 +46,7 @@ public class MovieController extends Controller{
         names.addElement("m6");
         return names;
     }
-    public void addRUAnnoucement(DefaultListModel<String> names){
+    public static void addRUAnnouncement(DefaultListModel<String> names){
         //ArrayList<Movie> movies = data.getMovies();
         //test data
         names.addElement("m7 (RU)");

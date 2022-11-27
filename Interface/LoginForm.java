@@ -2,6 +2,7 @@ package Interface;
 
 import javax.swing.*;
 
+import Controller.MovieController;
 import Model.LoginServer;
 
 import java.awt.event.*;
@@ -78,7 +79,7 @@ public class LoginForm extends Form implements ActionListener {
             popup.setAlwaysOnTop(true);
             if(l.checkDuplicate(email,password)!=null){
                 JOptionPane.showMessageDialog(null,"Login successful");
-                HomePage.mc.addRUAnnoucement(HomePage.movies);
+                MovieController.addRUAnnouncement(HomePage.movies);
                 loginFrame.dispose();
             }
             else{
