@@ -20,7 +20,4 @@ public class Movie {
     public String getMovieName(){
         return movieName;
     }
-    public String getMovieGenre(){
-        return movieGenre;
-    }
 }

@@ -14,12 +14,10 @@ public class UserDatabaseReader extends DatabaseReader{
         
         String query = String.format("SELECT * FROM %s WHERE email=%s, password=%s", TABLE, email, password);
         
-        Statement fetchUser = null;
-        ResultSet foundUser = null;
         RegisteredUser user = null;
         try {
-            fetchUser = connection.createStatement();
-            foundUser = fetchUser.executeQuery(query);
+            Statement fetchUser = connection.createStatement();
+            ResultSet foundUser = fetchUser.executeQuery(query);
 
             if (foundUser.next()) {
                 //make a new RegisteredUser object by getting data from row
@@ -86,11 +84,9 @@ public class UserDatabaseReader extends DatabaseReader{
         String query = String.format("INSERT INTO %s VALUES (%s, %s, %s, %s, %s, %s)",
         TABLE, user.getEmail(), user.getPassword(), user.getfirstName(), 
         user.getlastName(), user.getAddress(), user.getCardNumber());
-
-        Statement insertUser = null;
         
         try {
-            insertUser = connection.createStatement();
+            Statement insertUser = connection.createStatement();
             int rowsChanged = insertUser.executeUpdate(query);
             insertUser.close();
             // if rowsChanged is 0, then new user was not added
@@ -118,10 +114,9 @@ public class UserDatabaseReader extends DatabaseReader{
         }
         
         String query = String.format("DELETE FROM %s WHERE email=%s", TABLE, email);
-        Statement deleteUser = null;
 
         try {
-            deleteUser = connection.createStatement();
+            Statement deleteUser = connection.createStatement();
             int rowsChanged = deleteUser.executeUpdate(query);
             deleteUser.close();
 
@@ -158,10 +153,8 @@ public class UserDatabaseReader extends DatabaseReader{
             TABLE, updatedUser.getPassword(), updatedUser.getfirstName(), updatedUser.getlastName(),
             updatedUser.getAddress(), updatedUser.getCardNumber(), updatedUser.getEmail());
 
-        Statement userUpdate = null;
-
         try {
-            userUpdate = connection.createStatement();
+            Statement userUpdate = connection.createStatement();
             int rowsChanged = userUpdate.executeUpdate(query);
             userUpdate.close();
 

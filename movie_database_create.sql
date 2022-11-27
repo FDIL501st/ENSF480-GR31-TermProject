@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS theatre1;
 CREATE TABLE theatre1 (
   `movie_name` VARCHAR(50) CHARACTER SET 'ascii' NOT NULL COMMENT 'name of movie',
   `show_time` DATETIME NOT NULL COMMENT 'date and time of movie showing',
-  `release_date` DATETIME NOT NULL COMMENT 'the release date of the movie'
+  `release_date` DATETIME NOT NULL COMMENT 'the release date of the movie',
   `seat1` TINYINT NOT NULL DEFAULT 1,
   `seat2` TINYINT NOT NULL DEFAULT 1,
   `seat3` TINYINT NOT NULL DEFAULT 1,
@@ -51,4 +51,6 @@ CREATE TABLE registered_users (
   address VARCHAR(50) CHARACTER SET 'ascii' NOT NULL,
   card_number VARCHAR(20) CHARACTER SET 'ascii' NOT NULL
 );
+
+SELECT * FROM theatre1;
 

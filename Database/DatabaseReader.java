@@ -15,11 +15,17 @@ public abstract class DatabaseReader {
      * @return true if was able to connect. false if an SQLException was thrown.
      */
     final static protected boolean connect() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/"+DB_NAME, DB_USER, DB_PASSWORD);
-        } catch (SQLException e) {
-            return false;
+        if (connection != null) {
+            try {
+                // no need to try to connect if already connected
+                if (connection.isClosed()) {
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost/"+DB_NAME, DB_USER, DB_PASSWORD);
+                }
+            } catch (SQLException e) {
+                return false;
+            }
         }
+        
         return true;
     }
 
