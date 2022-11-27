@@ -9,7 +9,7 @@ public class UserDatabaseReader extends DatabaseReader{
     
     public static RegisteredUser getUser(String email, String password) {
         if (!connect()) {
-            return null;    // TODO - Maybe throw an exception here to catch later
+            return null;
         }
         
         String query = String.format("SELECT * FROM %s WHERE email=%s, password=%s", TABLE, email, password);
@@ -37,15 +37,14 @@ public class UserDatabaseReader extends DatabaseReader{
             return null;    //unable to fecth user
         }
         
-        while (!disconnect()) {}    //system is stuck if unable to close connection
-        // TODO - change in future
+        disconnect();
         
         return user;
     }
 
     public static boolean userExist(String email) {
         if (!connect()) {
-            return false; // TODO - Maybe throw an exception here to catch later
+            return false;
         }
 
         String query = String.format("SELECT * FROM %s WHERE email=%s", TABLE, email);
@@ -63,7 +62,7 @@ public class UserDatabaseReader extends DatabaseReader{
             disconnect();
             return false;
         }
-        while (!disconnect()) {}    // TODO - change in future
+        disconnect();
         return true;
     }
 

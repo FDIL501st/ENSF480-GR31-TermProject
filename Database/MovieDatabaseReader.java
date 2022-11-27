@@ -2,6 +2,7 @@ package Database;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Iterator;
 import java.sql.*;
 import java.text.ParseException;
@@ -111,7 +112,7 @@ public class MovieDatabaseReader extends DatabaseReader{
 
         //at this point have movie_name and release_date, now need all showTimes of the movie to make Movie object
         // first need to convert to String
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         String release_date = null;
         if (releaseDate != null) {
             release_date = formatter.format(releaseDate);
@@ -124,7 +125,7 @@ public class MovieDatabaseReader extends DatabaseReader{
         //now need to convert to String all the showTimes
         Iterator<Date> showTimeIterator = allShowTimes.iterator();
         ArrayList<String> allShowTimesString = new ArrayList<>();
-        formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.ENGLISH);
         while (showTimeIterator.hasNext()) {
             allShowTimesString.add(formatter.format(showTimeIterator.next()));
         }
@@ -172,7 +173,30 @@ public class MovieDatabaseReader extends DatabaseReader{
         return allMovies;
     }
 
-    public static boolean updateSeats(String movieName, Date showTime) {
+    public static boolean updateSeat(String movieName, Date showTime, int seatNum, int seatStatus) {
+        //if fail to connect, unable to update seat
+        if (!connect()) {
+            return false;
+        }
+
+        String query = String.format(
+            "UPDATE %s SET seat%d=%d WHERE movie_name=%s, show_time=%s",
+            TABLE, seatNum, seatStatus, movieName, showTime);
+
+        try {
+            Statement seatUpdate = connection.createStatement();
+            int rowsChanged = seatUpdate.executeUpdate(query);
+            seatUpdate.close();
+            //if rowsChanged == 0, seat was not updated
+            // so throw a SQLException so it can be thrown so we can return false
+            if (rowsChanged == 0) {
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            disconnect();
+            return false;
+        }
+        disconnect();
         return true;
     }
 
@@ -203,14 +227,14 @@ public class MovieDatabaseReader extends DatabaseReader{
         return true;
     }
 
-    public static boolean addMovie(String movieName, Date showTime, ArrayList<Integer> seats) {
+    public static boolean addMovie(String movieName, Date showTime, Date releaseDate, ArrayList<Integer> seats) {
         // failed to add movie if can't connect
         if (!connect()) {
             return false;
         }
         
-        String query = String.format("INSERT INTO %s VALUES (%s, %t",
-        TABLE, movieName, showTime);
+        String query = String.format("INSERT INTO %s VALUES (%s, %t, %t",
+        TABLE, movieName, showTime, releaseDate);
         //to the query, need to add rest of the seats
         Iterator<Integer> seatsIterator = seats.iterator();
         int i = 0;  //secondary loop tracker so don't exceed number of seats stored
@@ -221,10 +245,20 @@ public class MovieDatabaseReader extends DatabaseReader{
         }
         query += ")";   //close off parenthesis for sql syntax
         //query has been made
-
-
-        // TODO - finish rest of method
-
+        
+        try {
+            Statement movieAdd = connection.createStatement();
+            int rowsChanged = movieAdd.executeUpdate(query);
+            movieAdd.close();
+            // if rowsChanged == 0, new movie was not added
+            //  so throw SQLException so can return false
+            if (rowsChanged == 0) {
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            disconnect();
+            return false;
+        }
         disconnect();
         return true;
     }
