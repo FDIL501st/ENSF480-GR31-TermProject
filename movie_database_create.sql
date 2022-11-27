@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS movie_database;
 CREATE DATABASE movie_database; 
 USE movie_database;
 
+
 DROP TABLE IF EXISTS theatre1;
 
 CREATE TABLE theatre1 (
@@ -52,5 +53,12 @@ CREATE TABLE registered_users (
   card_number VARCHAR(20) CHARACTER SET 'ascii' NOT NULL
 );
 
-SELECT * FROM theatre1;
+
+DROP TABLE IF EXISTS tickets;
+
+CREATE TABLE tickets (
+  movie_name VARCHAR(50) CHARACTER SET 'ascii' NOT NULL COMMENT 'name of movie',
+  show_time DATETIME NOT NULL COMMENT 'date and time of movie showing'
+  seat_num INT NOT NULL COMMENT 'the seat the ticket reserves.'
+);
 
