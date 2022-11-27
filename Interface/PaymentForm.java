@@ -2,7 +2,7 @@ package Interface;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-public class PaymentForm {
+public class PaymentForm extends Form implements ActionListener{
     private static JFrame paymentFrame;
     private static JPanel panel;
     private static JButton confirmButton;

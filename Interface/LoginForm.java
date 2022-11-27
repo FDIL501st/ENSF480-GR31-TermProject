@@ -1,5 +1,5 @@
 package Interface;
-import java.awt.*;
+
 import javax.swing.*;
 
 import Model.LoginServer;
@@ -9,10 +9,11 @@ public class LoginForm extends Form implements ActionListener {
    private static JFrame loginFrame;
    private static JPanel panel;
    
-   private static JTextField userText;
+   private static JTextField emailText;
    private static JPasswordField passwordText;
    private static JButton loginButton;
    private static JButton homeButton;
+  
 
 
  
@@ -25,16 +26,16 @@ public class LoginForm extends Form implements ActionListener {
         panel = new JPanel();//panel 
         panel.setLayout(null);
         
-       JLabel userLabel = new JLabel("Email"); //label for username
-        userLabel.setBounds(10,80,80,25);
-       panel.add(userLabel);
+       JLabel emailLabel = new JLabel("Email"); //label for email
+        emailLabel.setBounds(10,80,80,25);
+       panel.add(emailLabel);
     
         JLabel passwordLabel = new JLabel("Password"); //label for password
         passwordLabel.setBounds(10,150,80,25);
        panel.add(passwordLabel);
         
-         userText = new JTextField(); //text field for username
-        userText.setBounds(100,80,165,25);
+         emailText = new JTextField(); //text field for username
+        emailText.setBounds(100,80,165,25);
         
       passwordText = new JPasswordField(); //text field for password
        passwordText.setBounds(100,150,165,25);
@@ -49,8 +50,8 @@ public class LoginForm extends Form implements ActionListener {
      
 
         
-       panel.add(userLabel);
-       panel.add(userText);
+       panel.add(emailLabel);
+       panel.add(emailText);
        panel.add(passwordLabel);
        panel.add(passwordText);
        panel.add(loginButton);
@@ -66,7 +67,7 @@ public class LoginForm extends Form implements ActionListener {
         if(e.getActionCommand().equals("Home")){
             loginFrame.dispose();
        }
-       String username = userText.getText();
+       String email = emailText.getText();
        String password = passwordText.getText();
        LoginServer l = LoginServer.getInstance();
        JFrame popup = new JFrame();
@@ -75,8 +76,10 @@ public class LoginForm extends Form implements ActionListener {
             popup.setVisible(true);
             popup.toFront();
             popup.setAlwaysOnTop(true);
-            if(l.checkDuplicate(username,password)!=null){
+            if(l.checkDuplicate(email,password)!=null){
                 JOptionPane.showMessageDialog(null,"Login successful");
+                HomePage.mc.addRUAnnoucement(HomePage.movies);
+                loginFrame.dispose();
             }
             else{
                 JOptionPane.showMessageDialog(null,"Incorrect username or password");
