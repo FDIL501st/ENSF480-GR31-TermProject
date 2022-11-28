@@ -55,7 +55,7 @@ public class MovieDatabaseReader extends DatabaseReader{
             return null;
         }
 
-        String query = String.format("SELECT * FROM %s WHERE movie_name=%s, time=%t", 
+        String query = String.format("SELECT * FROM %s WHERE movie_name=%s, show_time=%t", 
         TABLE, movieName, showTime);
 
         ArrayList<Integer> seats = new ArrayList<>();
@@ -206,7 +206,7 @@ public class MovieDatabaseReader extends DatabaseReader{
             return false;
         }
 
-        String query = String.format("DELETE FROM %s WHERE movie_name=%s, time=%s", 
+        String query = String.format("DELETE FROM %s WHERE movie_name=%s, show_time=%s", 
         TABLE, movieName, showTime);
 
         try {
