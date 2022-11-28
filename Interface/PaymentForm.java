@@ -15,11 +15,11 @@ public class PaymentForm extends Form implements ActionListener{
         panel.setLayout(null);
 
         homeButton = new JButton("Home");
-        homeButton.addActionListener(new TicketForm());
+        homeButton.addActionListener(new PaymentForm());
         homeButton.setBounds(10,10,80,25);
 
         confirmButton = new JButton("Confirm");
-        confirmButton.addActionListener(new TicketForm());
+        confirmButton.addActionListener(new PaymentForm());
         confirmButton.setBounds(450,400,150,25);
 
         panel.add(homeButton);
