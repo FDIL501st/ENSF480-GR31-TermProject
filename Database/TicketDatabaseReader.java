@@ -2,6 +2,9 @@ package Database;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Locale;
+import java.text.SimpleDateFormat;
+import Model.Movie;
 import Model.Ticket;
 import java.sql.*;
 
@@ -31,7 +34,7 @@ public class TicketDatabaseReader extends DatabaseReader {
             return false;
         }
         disconnect();
-        
+
         return true;
     }
 
@@ -63,6 +66,39 @@ public class TicketDatabaseReader extends DatabaseReader {
     }
 
     public static Ticket getTicket(String movieName, Date showTime, int seatNum) throws ParseException{
-        return new Ticket(null, showTime.toString());
+        // if fail to connect, can't return a Ticket object
+        if (!connect()) {
+            return null;
+        }
+
+        String query = String.format("SELECT movie_name from %s WHERE movie_name=%s, show_time=%s, seat_num=%s", 
+        TABLE, movieName, showTime, seatNum);
+        // first need to see if ticket actually exists in database
+        String movie_name = null;
+        try {
+            Statement fetchTicket = connection.createStatement();
+            ResultSet foundTicket = fetchTicket.executeQuery(query);
+
+            //expecting 1 Ticket/row to be found
+            if (foundTicket.next()) {
+                movie_name = foundTicket.getString(1);  //column 1 is movie_name
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            disconnect();
+            return null;
+        }
+        disconnect();
+        // if movie_name is null, then ticket not found
+        if (movie_name == null) {
+            return null;
+        }
+        // Now make find Movie
+        Movie movie = MovieDatabaseReader.getMovie(movieName);
+        // format showTime for Ticket constructor
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.ENGLISH);
+        String showTimeString = formatter.format(showTime);
+        return new Ticket(movie, showTimeString, seatNum);
     }
 }
