@@ -37,9 +37,8 @@ public class RegisteredUser extends User{
 	public Date getDateLastPayed(){
 		return dateLastPayed;
 	}
-    public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum, String date) throws ParseException{
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH);
-        dateLastPayed = formatter.parse(date);
+    public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum){
+        dateLastPayed = new Date();
         this.email = email;
         this.password = password;
         firstName = fName;

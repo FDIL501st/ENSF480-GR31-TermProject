@@ -23,7 +23,7 @@ public class TicketForm extends Form implements ActionListener{
     private String movieSelected;
     private static JPanel seatPanel;
     private static ArrayList<JButton> seatsArr = new ArrayList<JButton>(100);
-    private ArrayList<int> selectedSeats = new ArrayList<int>();
+    private ArrayList<Integer> selectedSeats = new ArrayList<Integer>();
     
    
     
