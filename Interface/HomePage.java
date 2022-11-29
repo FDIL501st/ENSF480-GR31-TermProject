@@ -9,11 +9,12 @@ import java.awt.event.*;
 public class HomePage implements ActionListener{
     protected Form form;
     private static JFrame homeFrame;
-   private static JPanel mainPanel;
-   private static JButton loginButton;
-   private static JButton registerButton;
-   private static JButton movieSelect;
-  static DefaultListModel<String> movies = new DefaultListModel<>();
+    private static JPanel mainPanel;
+    private static JButton loginButton;
+    private static JButton registerButton;
+    private static JButton movieSelect;
+    private static JButton annualPayment;
+    static DefaultListModel<String> movies = new DefaultListModel<>();
 
    public static void main(String[] args){ //main to test
     HomePage hp = new HomePage();
@@ -45,6 +46,10 @@ public class HomePage implements ActionListener{
         registerButton = new JButton("Register");
         registerButton.addActionListener(new HomePage());
         registerButton.setBounds(460,10,100,25);
+        
+        annualPayment = new JButton("Annual Payment");
+        annualPayment.addActionListener(new HomePage());
+        annualPayment.setBounds(360, 10, 100, 25);
 
         movieSelect = new JButton("View Movies");
         movieSelect.addActionListener(new HomePage());
@@ -99,6 +104,11 @@ public class HomePage implements ActionListener{
         }
         if(e.getActionCommand().equals("View Movies")){
             this.setForm(new TicketForm());
+            form.run();
+        }
+        
+        if(e.getActionCommand().equals("Annual Payment")){
+            this.setForm(new PaymentForm());
             form.run();
         }
     }
