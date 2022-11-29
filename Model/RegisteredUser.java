@@ -1,4 +1,8 @@
 package Model;
+import java.util.Date;
+import java.util.Locale;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 public class RegisteredUser extends User{
     private String email;
     private String password;
@@ -7,6 +11,7 @@ public class RegisteredUser extends User{
     private String address;
     private String cardNumber;
 	private double annualFee;
+	private Date dateLastPayed;
     
     public String getEmail(){
         return email;
@@ -29,7 +34,12 @@ public class RegisteredUser extends User{
 	public double getannualFee(){
 		return annualFee;
 	}
-    public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum){
+	public Date getDateLastPayed(){
+		return dateLastPayed;
+	}
+    public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum, String date) throws ParseException{
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH);
+        dateLastPayed = formatter.parse(date);
         this.email = email;
         this.password = password;
         firstName = fName;
