@@ -80,6 +80,7 @@ public class LoginForm extends Form implements ActionListener {
             if(l.checkDuplicate(email,password)!=null){
                 JOptionPane.showMessageDialog(null,"Login successful");
                 MovieController.addRUAnnouncement(HomePage.movies);
+                Form.loginStatus = true;
                 loginFrame.dispose();
             }
             else{

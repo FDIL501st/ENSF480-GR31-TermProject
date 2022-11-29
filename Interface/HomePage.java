@@ -94,7 +94,8 @@ public class HomePage implements ActionListener{
         }
         if(e.getActionCommand().equals("Register")){
             this.setForm(new RegistrationForm());
-            form.run();
+            form.run(); 
+            
         }
         if(e.getActionCommand().equals("View Movies")){
             this.setForm(new TicketForm());

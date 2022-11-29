@@ -6,10 +6,9 @@ import java.text.SimpleDateFormat;
 public class Ticket {
     private Movie movie;
     private Date time;
-    private String status;
     private int seatNum;
     public Ticket(Movie movie,String date,int seatNum) throws ParseException{
-        status = "Active";
+    
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm",Locale.ENGLISH);
         time = formatter.parse(date);
         this.movie = movie;
@@ -21,9 +20,6 @@ public class Ticket {
     }
     public Date getTime(){
         return time;
-    }
-    public String getStatus(){
-        return status;
     }
     public int getSeatNum(){
         return seatNum;
