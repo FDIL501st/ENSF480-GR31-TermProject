@@ -38,6 +38,10 @@ public class TicketDatabaseReader extends DatabaseReader {
         return true;
     }
 
+    public static boolean addTicket(Ticket ticket) {
+        return addTicket(ticket.getMovie().getMovieName(), ticket.getTime(), ticket.getSeatNum());
+    }
+
     public static boolean removeTicket(String movieName, Date showTime, int seatNum) {
         // if fail to connect, failed to remove ticket
         if (!connect()) {
@@ -63,6 +67,10 @@ public class TicketDatabaseReader extends DatabaseReader {
         disconnect();
 
         return true;
+    }
+
+    public static boolean removeTicket(Ticket ticket) {
+        return removeTicket(ticket.getMovie().getMovieName(), ticket.getTime(), ticket.getSeatNum());
     }
 
     public static Ticket getTicket(String movieName, Date showTime, int seatNum) throws ParseException{
