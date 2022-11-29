@@ -47,9 +47,11 @@ public class HomePage implements ActionListener{
         registerButton.addActionListener(new HomePage());
         registerButton.setBounds(460,10,100,25);
         
-        annualPayment = new JButton("Annual Payment");
-        annualPayment.addActionListener(new HomePage());
-        annualPayment.setBounds(360, 10, 100, 25);
+        if(Form.loginStatus == true){
+            annualPayment = new JButton("Annual Payment");
+            annualPayment.addActionListener(new HomePage());
+            annualPayment.setBounds(360, 10, 100, 25);
+        }
 
         movieSelect = new JButton("View Movies");
         movieSelect.addActionListener(new HomePage());
