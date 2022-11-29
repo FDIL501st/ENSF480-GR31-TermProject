@@ -1662,7 +1662,7 @@
 											"font": "Arial;13;0",
 											"left": 5,
 											"top": 533,
-											"width": 678.0693359375,
+											"width": 725.03564453125,
 											"height": 13,
 											"text": "«entity»"
 										},
@@ -1675,7 +1675,7 @@
 											"font": "Arial;13;1",
 											"left": 5,
 											"top": 548,
-											"width": 678.0693359375,
+											"width": 725.03564453125,
 											"height": 13,
 											"text": "RegisteredUser"
 										},
@@ -1709,7 +1709,7 @@
 									],
 									"font": "Arial;13;0",
 									"top": 528,
-									"width": 688.0693359375,
+									"width": 735.03564453125,
 									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGEjGt3jQh7yxc="
@@ -1746,7 +1746,7 @@
 											"font": "Arial;13;0",
 											"left": 5,
 											"top": 571,
-											"width": 678.0693359375,
+											"width": 725.03564453125,
 											"height": 13,
 											"text": "-email: String",
 											"horizontalAlignment": 0
@@ -1763,7 +1763,7 @@
 											"font": "Arial;13;0",
 											"left": 5,
 											"top": 586,
-											"width": 678.0693359375,
+											"width": 725.03564453125,
 											"height": 13,
 											"text": "-password: String",
 											"horizontalAlignment": 0
@@ -1780,7 +1780,7 @@
 											"font": "Arial;13;0",
 											"left": 5,
 											"top": 601,
-											"width": 678.0693359375,
+											"width": 725.03564453125,
 											"height": 13,
 											"text": "-firstName: String",
 											"horizontalAlignment": 0
@@ -1797,7 +1797,7 @@
 											"font": "Arial;13;0",
 											"left": 5,
 											"top": 616,
-											"width": 678.0693359375,
+											"width": 725.03564453125,
 											"height": 13,
 											"text": "-address: String",
 											"horizontalAlignment": 0
@@ -1814,7 +1814,7 @@
 											"font": "Arial;13;0",
 											"left": 5,
 											"top": 631,
-											"width": 678.0693359375,
+											"width": 725.03564453125,
 											"height": 13,
 											"text": "-cardNumber: String",
 											"horizontalAlignment": 0
@@ -1831,7 +1831,7 @@
 											"font": "Arial;13;0",
 											"left": 5,
 											"top": 646,
-											"width": 678.0693359375,
+											"width": 725.03564453125,
 											"height": 13,
 											"text": "-lastName: String",
 											"horizontalAlignment": 0
@@ -1848,16 +1848,33 @@
 											"font": "Arial;13;0",
 											"left": 5,
 											"top": 661,
-											"width": 678.0693359375,
+											"width": 725.03564453125,
 											"height": 13,
 											"text": "-annualFee: double",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGExRRKuiTWvxs=",
+											"_parent": {
+												"$ref": "AAAAAAGEjGt3jgh/2xM="
+											},
+											"model": {
+												"$ref": "AAAAAAGExRRKoCTTjy8="
+											},
+											"font": "Arial;13;0",
+											"left": 5,
+											"top": 676,
+											"width": 725.03564453125,
+											"height": 13,
+											"text": "-dateLastPayed: Date",
 											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"top": 566,
-									"width": 688.0693359375,
-									"height": 113
+									"width": 735.03564453125,
+									"height": 128
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -1880,16 +1897,16 @@
 											},
 											"font": "Arial;13;0",
 											"left": 5,
-											"top": 684,
-											"width": 678.0693359375,
+											"top": 699,
+											"width": 725.03564453125,
 											"height": 13,
-											"text": "+RegisteredUser(email: String, password: String, fName: String, lName: String, address: String, cardNum: String)",
+											"text": "+RegisteredUser(email: String, password: String, fName: String, lName: String, address: String, cardNum: String, date: String)",
 											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
-									"top": 679,
-									"width": 688.0693359375,
+									"top": 694,
+									"width": 735.03564453125,
 									"height": 23
 								},
 								{
@@ -1928,8 +1945,8 @@
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"top": 528,
-							"width": 688.0693359375,
-							"height": 174,
+							"width": 735.03564453125,
+							"height": 189,
 							"nameCompartment": {
 								"$ref": "AAAAAAGEjGt3jQh60Ls="
 							},
@@ -2686,6 +2703,16 @@
 							"name": "annualFee",
 							"visibility": "private",
 							"type": "double"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGExRRKoCTTjy8=",
+							"_parent": {
+								"$ref": "AAAAAAGEjGt3iwh3dYI="
+							},
+							"name": "dateLastPayed",
+							"visibility": "private",
+							"type": "Date"
 						}
 					],
 					"operations": [
@@ -2749,6 +2776,15 @@
 										"$ref": "AAAAAAGEjJXd9Qk6Bn0="
 									},
 									"name": "cardNum",
+									"type": "String"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGExRV2zyTbr2E=",
+									"_parent": {
+										"$ref": "AAAAAAGEjJXd9Qk6Bn0="
+									},
+									"name": "date",
 									"type": "String"
 								}
 							]

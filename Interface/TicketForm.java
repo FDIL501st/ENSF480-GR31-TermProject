@@ -23,6 +23,7 @@ public class TicketForm extends Form implements ActionListener{
     private String movieSelected;
     private static JPanel seatPanel;
     private static ArrayList<JButton> seatsArr = new ArrayList<JButton>(100);
+    private ArrayList<int> selectedSeats = new ArrayList<int>();
     
    
     
@@ -158,7 +159,14 @@ public class TicketForm extends Form implements ActionListener{
         }
         for(int i=0;i<100;i++){
             if(e.getActionCommand().equals(String.valueOf(i))){
-                JOptionPane.showMessageDialog(null,"Seat " +String.valueOf(i) + " selected");
+                if (selectedSeats.contains(i)) {
+                    JOptionPane.showMessageDialog(null,"Seat " +String.valueOf(i) + " unselected");
+                    selectedSeats.remove(i);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null,"Seat " +String.valueOf(i) + " selected");
+                    selectedSeats.add(i);
+                }
             }
         }
     }
