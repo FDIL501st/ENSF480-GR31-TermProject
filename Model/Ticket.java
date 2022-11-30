@@ -1,19 +1,24 @@
 package Model;
 import java.util.Date;
-import java.util.Locale;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 public class Ticket {
     private Movie movie;
     private Date time;
     private int seatNum;
-    public Ticket(Movie movie,String date,int seatNum) throws ParseException{
-    
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm",Locale.ENGLISH);
-        time = formatter.parse(date);
+    private int roomNum;
+    private int ID;
+    private static int counter = 0;
+    public Ticket(Movie movie,Date timeSelected,int seatNum,int roomNum) {
+       this.time = timeSelected;
         this.movie = movie;
         this.seatNum = seatNum;
-        
+        this.roomNum = roomNum;
+        this.ID = counter;
+        counter++;
+
+    }
+    public int getRoomNum(){
+        return roomNum;
     }
     public Movie getMovie(){
         return movie;
@@ -23,5 +28,8 @@ public class Ticket {
     }
     public int getSeatNum(){
         return seatNum;
+    }
+    public int getID(){
+        return ID;
     }
 }

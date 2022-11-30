@@ -16,7 +16,7 @@ public class Payment {
     }
     public boolean cancelStatus(){
     //ticket is within 3 days of show time
-       if(TimeUnit.DAYS.convert(paymentTime.getTime() - ticket.getTime().getTime(),TimeUnit.MILLISECONDS) < 3){
+       if(TimeUnit.DAYS.convert( ticket.getTime().getTime()- paymentTime.getTime(),TimeUnit.MILLISECONDS) <3){
             return false;
        }
         

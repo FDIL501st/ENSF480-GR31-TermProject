@@ -2,8 +2,7 @@ package Interface;
 
 import javax.swing.*;
 
-import Controller.MovieController;
-import Model.LoginServer;
+import Controller.UserController;
 
 import java.awt.event.*;
 public class LoginForm extends Form implements ActionListener {
@@ -60,7 +59,7 @@ public class LoginForm extends Form implements ActionListener {
       
       
 
-        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
         loginFrame.add(panel);
         loginFrame.setVisible(true);
     }
@@ -70,16 +69,21 @@ public class LoginForm extends Form implements ActionListener {
        }
        String email = emailText.getText();
        String password = passwordText.getText();
-       LoginServer l = LoginServer.getInstance();
-       JFrame popup = new JFrame();
 
        if(e.getActionCommand().equals("Sign in")){
-            popup.setVisible(true);
-            popup.toFront();
-            popup.setAlwaysOnTop(true);
-            if(l.checkDuplicate(email,password)!=null){
+           
+            if(UserController.validate(email,password)!= null){
                 JOptionPane.showMessageDialog(null,"Login successful");
-                MovieController.addRUAnnouncement(HomePage.movies);
+                for(int i=0;i<HomePage.movieList.size();i++){
+                    if(HomePage.movieList.get(i).RUAnnouncement() != null){
+                        HomePage.movies.addElement(HomePage.movieList.get(i).RUAnnouncement());
+                    }
+                }
+                TicketForm.selectedTickets.clear(); //clear previously selected tickets
+                PaymentForm.payments.clear(); //clear previous payments
+                HomePage.paidTickets.clear();
+                HomePage.pListTitle.setVisible(false); //homepage payment invisible
+                HomePage.selectButton.setVisible(false); 
                 Form.loginStatus = true;
                 loginFrame.dispose();
             }
@@ -87,7 +91,7 @@ public class LoginForm extends Form implements ActionListener {
                 JOptionPane.showMessageDialog(null,"Incorrect username or password");
             }
         }
-        popup.setVisible(false);
+
     }
     
 }

@@ -23,7 +23,7 @@ public class LoginServer {
         users.add(new RegisteredUser(email,password,fName,lName,address,cardNum));
         return true;
     }
-    public RegisteredUser checkDuplicate(String email,String password){
+    public RegisteredUser validate(String email,String password){
         for(RegisteredUser u: users){
             if(u.getEmail().equals(email)&&(u.getPassword().equals(password))){
                 return u;

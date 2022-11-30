@@ -2,7 +2,7 @@ package Interface;
 import java.awt.*;
 import javax.swing.*;
 
-import Model.LoginServer;
+import Controller.UserController;
 
 import java.awt.event.*;
 import java.util.regex.*;
@@ -90,7 +90,7 @@ public class RegistrationForm extends Form implements ActionListener{
       
       
 
-        registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       
         registerFrame.add(panel);
         registerFrame.setVisible(true);
     }
@@ -105,13 +105,9 @@ public class RegistrationForm extends Form implements ActionListener{
        String address = addressText.getText().trim();
        String cardNum = cardText.getText().trim();
     
-       LoginServer l = LoginServer.getInstance();
-       JFrame popup = new JFrame();
        
         if(e.getActionCommand().equals("Register")){
-            popup.setVisible(true);
-            popup.toFront();
-            popup.setAlwaysOnTop(true);
+          
             if(!Pattern.matches("^(.+)@(.+)$",email) ){ //check for valid email 
                 JOptionPane.showMessageDialog(null,"Email is invalid");
             }
@@ -145,13 +141,13 @@ public class RegistrationForm extends Form implements ActionListener{
             else if(cardNum.length()==0){ 
                 JOptionPane.showMessageDialog(null,"Card Number field is empty");
             }
-            else if(l.register(email,password,fName,lName,address,cardText.getText())){
+            else if(UserController.register(email,password,fName,lName,address,cardNum)){
                 JOptionPane.showMessageDialog(null,"Registration successful");
             }
             else{
                 JOptionPane.showMessageDialog(null,"Email already registered");
             }
         }
-        popup.setVisible(false);
+     
     }
 }
