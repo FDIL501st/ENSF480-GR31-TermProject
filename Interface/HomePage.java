@@ -140,19 +140,17 @@ public class HomePage implements ActionListener{
     public void actionPerformed(ActionEvent e){
        
         if(e.getActionCommand().equals("Login")){
-            this.setForm(new LoginForm());
-            form.run();
-        
+                this.setForm(new LoginForm());
+                form.run();
         }
         if(e.getActionCommand().equals("Register")){
-            this.setForm(new RegistrationForm());
-            form.run(); 
-            
+                this.setForm(new RegistrationForm());
+                form.run();  
         }
         if(e.getActionCommand().equals("View Movies")){
-            this.setForm(new TicketForm());
             TicketForm.selectedTickets.clear();
-            form.run();
+                this.setForm(new TicketForm());
+                form.run();
         }
         
         if(e.getActionCommand().equals("Annual Payment")){

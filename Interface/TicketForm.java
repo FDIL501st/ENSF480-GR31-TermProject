@@ -25,7 +25,7 @@ public class TicketForm extends Form implements ActionListener{
     private static Date timeSelected; //current time selected
     private static int roomSelected; //current room selected
     private static JPanel seatPanel; 
-    private static ArrayList<JButton> seatsArr = new ArrayList<JButton>(100); //array of all seats for a given movie and time
+    static ArrayList<JButton> seatsArr = new ArrayList<JButton>(100); //array of all seats for a given movie and time
     static ArrayList<Ticket> selectedTickets = new ArrayList<Ticket>(); //list of all tickets selected
     private static JTextField movieText;
     private static  JPanel sListTitle;
@@ -129,6 +129,7 @@ public class TicketForm extends Form implements ActionListener{
         ticketFrame.add(panel);
         ticketFrame.setVisible(true); 
         
+        
 
 
     }
@@ -136,6 +137,9 @@ public class TicketForm extends Form implements ActionListener{
         String movieName = movieText.getText().trim(); //movie name entered by user in textbox
 
         if(e.getActionCommand().equals("Home")){ //close ticket form if home button pressed
+            seatsArr.clear();
+            selectedTickets.clear();
+            times.clear();
             ticketFrame.dispose();
        }
        if(e.getActionCommand().equals("Select Movie")){ //select movie button pressed
@@ -151,7 +155,7 @@ public class TicketForm extends Form implements ActionListener{
                         found = true;
                         dates = HomePage.movieList.get(i).getAvailableTimes();
                         for(int j=0;j<dates.size();j++){
-                            times.addElement(dates.get(i).toString()); //convert Date to string
+                            times.addElement(dates.get(j).toString()); //convert Date to string
                         }
                         
                         timeselect.setVisible(true); //set timeselect button to visible
@@ -184,6 +188,7 @@ public class TicketForm extends Form implements ActionListener{
         }
         if(e.getActionCommand().equals("Pay")){
             PaymentForm pf = new PaymentForm();
+            times.clear();
             pf.run();
         }
         for(int i=0;i<100;i++){

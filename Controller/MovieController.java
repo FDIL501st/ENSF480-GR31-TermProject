@@ -51,8 +51,8 @@ public class MovieController extends Controller{
         names.add(new Movie("m2","02-12-2022", times1));
         names.add(new Movie("m3","02-12-2022", times));
         names.add(new Movie("m4","02-12-2022", times1));
-        names.add(new Movie("m5","10-01-2023", times2));
-        names.add(new Movie("m6","10-01-2023", times2));
+        names.add(new Movie("m5","06-01-2023", times2));
+        names.add(new Movie("m6","06-01-2023", times2));
         return names;
     }
     public static DefaultListModel<String> getNewMovies(){
