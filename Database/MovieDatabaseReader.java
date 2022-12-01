@@ -320,5 +320,8 @@ public class MovieDatabaseReader extends DatabaseReader{
                 System.out.println(iterator.next().toString());
         
         System.out.println(MovieDatabaseReader.removeMovie(movieName, show));
+        // this is false as miliseconds don't match
+        // database needs to ignores miliseconds
+        // and have dates provided also ignore miliseconds 
     }
 }
