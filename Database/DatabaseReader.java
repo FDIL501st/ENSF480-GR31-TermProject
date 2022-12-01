@@ -3,6 +3,7 @@ package Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Date;
 
 public abstract class DatabaseReader {
     final static private String DB_NAME = "movie_database";
@@ -44,4 +45,41 @@ public abstract class DatabaseReader {
         return true;
     }
 
+    /**
+     * Rounds down the seconds to 0.
+     * @param time time provided in miliseconds as per java.util.Date parameters are
+     * @return time with seconds rounded down to 0
+     */
+    final static public long roundSecondsDown(long time) {
+        long time_seconds = time;  
+        // round seconds down to 0
+        // this means any seconds [59,0] becomes 0 or seconds [99,60] becomes 60
+        // need to deal with least 5 significant digits.
+        long seconds = time_seconds % 100_000;
+
+        //2 cases:
+        // digits less than 60 000 ms (60 s), so make those 2 digits 00
+        // rest are equal or greater than 60 000 ms (60 s), so make those 2 digits 60 000
+        if (seconds < 60_000) {
+            time_seconds -= seconds;
+        }
+        else {
+            seconds -= 60_000;
+            time_seconds -= seconds;
+        }
+        // finally return
+        return time_seconds;
+    }
+
+    public static void main(String[] args) {
+        // testing roundsSecondsDown()
+        Date date = new Date();
+        long l = date.getTime();
+        System.out.println(date.toString());
+        System.out.println(l);
+        System.out.println(DatabaseReader.roundSecondsDown(l));
+        date.setTime(DatabaseReader.roundSecondsDown(l));
+        System.out.println(date.toString());
+        // Currently seems to work
+    }
 }

@@ -1,6 +1,6 @@
 package Controller;
 
-import Database.DatabaseReader;
+import Database.*;
 
 public abstract class Controller {
     

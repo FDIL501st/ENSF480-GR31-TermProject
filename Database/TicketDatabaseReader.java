@@ -17,11 +17,18 @@ public class TicketDatabaseReader extends DatabaseReader {
             return false;
         }
 
-        String query = String.format("INSERT INTO %s VALUES (%s, %t, %d)", 
-        TABLE, showTime, seatNum);
-
+        String query = String.format("INSERT INTO %s (movie_name, show_time, seat_num) VALUES (?, ?, ?)", 
+        TABLE);
+        // create TimeStamp for show_time
+        Timestamp show_time = new Timestamp(showTime.getTime());
+        show_time.setTime(roundSecondsDown(show_time.getTime()));   //round seconds down to 0
         try {
-            Statement insertTicket = connection.createStatement();
+            PreparedStatement insertTicket = connection.prepareStatement(query);
+            // set values
+            insertTicket.setString(1, movieName);
+            insertTicket.setTimestamp(2, show_time);
+            insertTicket.setInt(3, seatNum);
+            // statement is ready to execute
             int rowsChanged = insertTicket.executeUpdate(query);
             insertTicket.close();
             // if rowsChanged == 0, then insert did not occur
@@ -35,6 +42,8 @@ public class TicketDatabaseReader extends DatabaseReader {
         }
         disconnect();
 
+        //update seat which just got reserved
+        MovieDatabaseReader.updateSeat(movieName, showTime, seatNum, 0);
         return true;
     }
 
@@ -48,12 +57,12 @@ public class TicketDatabaseReader extends DatabaseReader {
             return false;
         }
 
-        String query = String.format("DELETE FROM %s WHERE movie_name=%s, show_time=%s, seat_num=%s", 
-        TABLE, movieName, showTime, seatNum);
+        String query = String.format("DELETE FROM %s WHERE movie_name = ?, show_time = ?, seat_num = ?", 
+        TABLE);
 
         try {
-            Statement deleteTicket = connection.createStatement();
-            int rowsChanged = deleteTicket.executeUpdate(query);
+            PreparedStatement deleteTicket = connection.prepareStatement(query);
+            int rowsChanged = deleteTicket.executeUpdate();
             deleteTicket.close();
             // if rowsChanged == 0, then ticket was not deleted
             // so throw SQLException so it can be caught and false be returned
@@ -65,7 +74,8 @@ public class TicketDatabaseReader extends DatabaseReader {
             return false;
         }
         disconnect();
-
+        // update seat which just became available
+        MovieDatabaseReader.updateSeat(movieName, showTime, seatNum, 1);
         return true;
     }
 
