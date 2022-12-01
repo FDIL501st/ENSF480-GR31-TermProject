@@ -13,6 +13,16 @@ import Model.Movie;
 public class MovieDatabaseReader extends DatabaseReader{
     private static String TABLE = "theatre1";
     final private static int NUM_OF_SEATS = 100;
+    private static ArrayList<Movie> allMovies = fetchAllMovies();
+
+    public static ArrayList<Movie> getAllMovies() {
+        return allMovies;
+    }
+
+    public static void setAllMovies(ArrayList<Movie> movies) {
+        //need to update database
+        // might not need this as this is admin features and can just call other functions instead
+    }
 
     /**
      * Sets the table accessed by this class. Is to be set when wanting to access movies from a specific theatre.
@@ -73,13 +83,19 @@ public class MovieDatabaseReader extends DatabaseReader{
         if (!connect()) {
             return null;
         }
-
-        String query = String.format("SELECT * FROM %s WHERE movie_name=%s, show_time=%t", 
-        TABLE, movieName, showTime);
+        
+        String query = String.format("SELECT * FROM %s WHERE movie_name = ? AND show_time = ?", 
+        TABLE);
+        // create TimeStamp from Date
+        Timestamp show_time = new Timestamp(showTime.getTime());
 
         ArrayList<Integer> seats = new ArrayList<>(NUM_OF_SEATS);
         try {
-            Statement fetchSeats = connection.createStatement();
+            PreparedStatement fetchSeats = connection.prepareStatement(query);
+            // set movie_name and show_time
+            fetchSeats.setString(1, movieName);
+            fetchSeats.setTimestamp(2, show_time);
+            // now statement is ready to execute
             ResultSet allSeats = fetchSeats.executeQuery(query);
 
             // only expecting one row to be returned, so use only first row
@@ -126,7 +142,7 @@ public class MovieDatabaseReader extends DatabaseReader{
 
             // all release dates for the movie should be the same, so only need to read 1
             if (movies.next()) {
-                releaseDate = movies.getTimestamp("release_date");
+                releaseDate = movies.getDate("release_date");
             }
 
             fetchMovie.close(); //also closes movies
@@ -169,7 +185,7 @@ public class MovieDatabaseReader extends DatabaseReader{
      * gets all the movies stored in the database
      * @return an ArrayList filled with Movie objects for all the movies
      */
-    public static ArrayList<Movie> getAllMovies() {
+    public static ArrayList<Movie> fetchAllMovies() {
         //if fail to connect, can't return anything
         if (!connect()) {
             return null;
@@ -213,14 +229,20 @@ public class MovieDatabaseReader extends DatabaseReader{
         if (!connect()) {
             return false;
         }
+        
+        String query = String.format("UPDATE %s SET seat%d = ? WHERE movie_name = ? AND show_time = ?",
+            TABLE, seatNum);
 
-        String query = String.format(
-            "UPDATE %s SET seat%d=%d WHERE movie_name=%s, show_time=%s",
-            TABLE, seatNum, seatStatus, movieName, showTime);
-
+        // create TimeStamp from Date
+        Timestamp show_time = Timestamp.from(showTime.toInstant());
         try {
-            Statement seatUpdate = connection.createStatement();
-            int rowsChanged = seatUpdate.executeUpdate(query);
+            PreparedStatement seatUpdate = connection.prepareStatement(query);
+            // set seatStatus, movie_name and show_time
+            seatUpdate.setInt(1, seatStatus);
+            seatUpdate.setString(2, movieName);
+            seatUpdate.setTimestamp(3, show_time);
+            // statement ready to execute
+            int rowsChanged = seatUpdate.executeUpdate();
             seatUpdate.close();
             //if rowsChanged == 0, seat was not updated
             // so throw a SQLException so it can be thrown so we can return false
@@ -275,15 +297,15 @@ public class MovieDatabaseReader extends DatabaseReader{
         
         String query = String.format("INSERT INTO %s (movie_name, show_time, release_date) VALUES (?, ?, ?)",
         TABLE);
-        // need to create from Date objects to TimeStamp objects
+        // need to create sql Dates/Timestamp
         Timestamp showDate = new Timestamp(showTime.getTime());
-        Timestamp relDate = new Timestamp(releaseDate.getTime());
+        java.sql.Date relDate = new java.sql.Date(releaseDate.getTime());
         try {
             PreparedStatement insertMovie = connection.prepareStatement(query);
             // set values
             insertMovie.setString(1, movieName);
             insertMovie.setTimestamp(2, showDate);
-            insertMovie.setTimestamp(3, relDate);
+            insertMovie.setDate(3, relDate);
             // statement complete to execute  
             int rowsChanged = insertMovie.executeUpdate();
             insertMovie.close();
@@ -303,9 +325,13 @@ public class MovieDatabaseReader extends DatabaseReader{
     public static void main(String[] args) {
         /* Testing this class */
         Date show = new Date();
+        show.setTime(roundSecondsDown(show.getTime()));
         System.out.println(show.toString());
+
         Date release = new Date();
+        release.setTime(roundSecondsDown(release.getTime()));
         System.out.println(release.toString());
+
         String movieName = "Movie1";
 
         System.out.println(MovieDatabaseReader.addMovie(movieName, show, release));
@@ -319,9 +345,23 @@ public class MovieDatabaseReader extends DatabaseReader{
             while (iterator.hasNext()) 
                 System.out.println(iterator.next().toString());
         
-        System.out.println(MovieDatabaseReader.removeMovie(movieName, show));
-        // this is false as miliseconds don't match
-        // database needs to ignores miliseconds
-        // and have dates provided also ignore miliseconds 
+        System.out.println();
+        ArrayList<Movie> movies = MovieDatabaseReader.fetchAllMovies();
+        for (Movie movie : movies) {
+            System.out.println(movie.getMovieName());
+            System.out.println(movie.releaseDate().toString());
+
+            Iterator<Date> iterator1 = movie.getAvailableTimes().iterator();
+            while (iterator1.hasNext()) 
+                System.out.println(iterator1.next().toString());
+        }
+        //Stystem.out.println();
+        //System.out.println(MovieDatabaseReader.removeMovie(movieName, show)); 
+        //still works
+
+        System.out.println();
+        System.out.println(MovieDatabaseReader.updateSeat(movieName, show, 1, 0));
+        // works
+        
     }
 }

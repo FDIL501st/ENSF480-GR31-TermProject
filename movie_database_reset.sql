@@ -2,14 +2,12 @@ DROP DATABASE IF EXISTS movie_database;
 CREATE DATABASE movie_database; 
 USE movie_database;
 
-
 DROP TABLE IF EXISTS theatre1;
-
 CREATE TABLE theatre1 (
   `movie_name` VARCHAR(50) CHARACTER SET 'ascii' NOT NULL COMMENT 'name of movie',
   `show_time` TIMESTAMP NOT NULL COMMENT 'date and time of movie showing',
   primary key (movie_name, show_time),
-  `release_date` TIMESTAMP NOT NULL COMMENT 'the release date of the movie',
+  `release_date` DATE NOT NULL COMMENT 'the release date of the movie',
   `seat1` TINYINT NOT NULL DEFAULT 1,
   `seat2` TINYINT NOT NULL DEFAULT 1,
   `seat3` TINYINT NOT NULL DEFAULT 1,
@@ -110,11 +108,9 @@ CREATE TABLE theatre1 (
   `seat98` TINYINT NOT NULL DEFAULT 1,
   `seat99` TINYINT NOT NULL DEFAULT 1,
   `seat100` TINYINT NOT NULL DEFAULT 1
-  );
-
+);
 
 DROP TABLE IF EXISTS registered_users;
-
 CREATE TABLE registered_users (
   email VARCHAR(100) CHARACTER SET 'ascii' NOT NULL,
   `password` VARCHAR(20) CHARACTER SET 'ascii' NOT NULL,
@@ -122,17 +118,21 @@ CREATE TABLE registered_users (
   last_name VARCHAR(30) CHARACTER SET 'ascii' NOT NULL,
   `address` VARCHAR(50) CHARACTER SET 'ascii' NOT NULL,
   card_number VARCHAR(20) CHARACTER SET 'ascii' NOT NULL,
-  registration_date DATETIME NOT NULL COMMENT 'date user registered'
+  registration_date DATE NOT NULL COMMENT 'date user registered'
 );
 
-
 DROP TABLE IF EXISTS tickets;
-
 CREATE TABLE tickets (
   movie_name VARCHAR(50) CHARACTER SET 'ascii' NOT NULL COMMENT 'name of movie',
   show_time DATETIME NOT NULL COMMENT 'date and time of movie showing',
   seat_num INT NOT NULL COMMENT 'the seat the ticket reserves.'
 );
 
-
+DROP TABLE IF EXISTS codes;
+CREATE TABLE codes (
+  `ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `value` DOUBLE ZEROFILL NOT NULL COMMENT 'value of code. The monetary/$ value that code represents.',
+  `expiry` DATE NOT NULL COMMENT 'Expiry Date of the code',
+  PRIMARY KEY (`ID`)
+  );
 
