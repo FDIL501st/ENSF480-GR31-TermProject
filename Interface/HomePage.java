@@ -84,7 +84,7 @@ public class HomePage implements ActionListener{
         announcementTitle.add(announcementLabel);
         
         JPanel announcementPanel = new JPanel();
-        announcementPanel.setBounds(450,80,200,400);
+        announcementPanel.setBounds(425,80,250,400);
         announcementPanel.setLayout(new FlowLayout());
         
         
@@ -159,6 +159,7 @@ public class HomePage implements ActionListener{
         }
         if (e.getActionCommand().equals("Logout")) {
             if (form.loginStatus == true) {
+                JOptionPane.showMessageDialog(null, "Successfully Logged Out");
                 this.form.loginStatus = false;
                 movies.clear();
                 movieList.clear();
@@ -173,7 +174,6 @@ public class HomePage implements ActionListener{
                     }       
                 }
                 announcements = new JList<>(movies);
-                JOptionPane.showMessageDialog(null, "Successfully Logged Out");
             }
             else {
                 JOptionPane.showMessageDialog(null, "Unable to logout\nNo user is logged in");
