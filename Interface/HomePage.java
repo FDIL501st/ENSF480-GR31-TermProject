@@ -186,6 +186,7 @@ public class HomePage implements ActionListener{
         }
         
         if(e.getActionCommand().equals("Annual Payment")){
+            
         }
         if(e.getActionCommand().equals("Select Ticket")){
             if(paidList.getSelectedIndex()!= -1){ //an item on the ticket list is selected

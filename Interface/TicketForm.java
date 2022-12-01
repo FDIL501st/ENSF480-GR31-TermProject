@@ -187,9 +187,14 @@ public class TicketForm extends Form implements ActionListener{
             sListTitle.setVisible(true); //set seat title to be visible
         }
         if(e.getActionCommand().equals("Pay")){
-            PaymentForm pf = new PaymentForm();
-            times.clear();
-            pf.run();
+            if (selectedTickets.size() == 0) {
+                JOptionPane.showMessageDialog(null, "No tickets selcted");
+            }
+            else {
+                PaymentForm pf = new PaymentForm();
+                times.clear();
+                pf.run();
+            }
         }
         for(int i=0;i<100;i++){
             if(e.getActionCommand().equals(String.valueOf(i))){
