@@ -188,7 +188,7 @@ public class TicketForm extends Form implements ActionListener{
         }
         if(e.getActionCommand().equals("Pay")){
             if (selectedTickets.size() == 0) {
-                JOptionPane.showMessageDialog(null, "No tickets selcted");
+                JOptionPane.showMessageDialog(null, "No tickets selected");
             }
             else {
                 PaymentForm pf = new PaymentForm();

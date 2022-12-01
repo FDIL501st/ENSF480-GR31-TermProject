@@ -59,12 +59,32 @@ public class PaymentForm extends Form implements ActionListener{
         ticketList = new JList<>(tickets); //list of tickets
         ticketPanel.add(ticketList);
 
+        JPanel summTitle = new JPanel(); 
+        summTitle.setBounds(300,40,150,40);
+        summTitle.setLayout(new BorderLayout());
+        JLabel summLabel = new JLabel();
+        summLabel.setText("Receipt");
+        summLabel.setFont(new Font("Calibri Black", Font.BOLD, 15));
+        summLabel.setVisible(true);
+        summTitle.add(summLabel);
+
+        JTextField summText = new JTextField();
+        summText.setBounds(300, 80, 200, 40);
+        if (tickets.size() == 0) {
+            summText.setText("Annual Payment x1: $20.00");
+        }
+        else {
+            summText.setText("Tickets x" + tickets.size() + ": $" + 100*tickets.size() + ".00");
+        }
+
         panel.add(homeButton);
         panel.add(confirmButton);
         panel.add(selectButton);
         
         paymentFrame.add(tListTitle);
         paymentFrame.add(ticketPanel);
+        paymentFrame.add(summTitle);
+        paymentFrame.add(summText);
         paymentFrame.add(panel);
         paymentFrame.setVisible(true);
         
