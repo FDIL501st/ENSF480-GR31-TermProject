@@ -12,28 +12,40 @@ import Model.Movie;
 
 public class MovieDatabaseReader extends DatabaseReader{
     private static String TABLE = "theatre1";
-    final private static int NUM_OF_SEATS = 30;
+    final private static int NUM_OF_SEATS = 100;
 
+    /**
+     * Sets the table accessed by this class. Is to be set when wanting to access movies from a specific theatre.
+     * Table names are the names of the theatre.
+     * @param theatreName name of theatre whose database/table we need to access
+     */
     public static void setTable(String theatreName) {
         TABLE = theatreName;
     }
 
+    /**
+     * Gets all show times of a movie in a theatre.
+     * @param movieName the name of the movie whose show times are wanted
+     * @return 
+     */
     public static ArrayList<Date> getAllShowTimes(String movieName) {
         // return nothing if failed to connect
         if (!connect()) {
             return null;
         }
 
-        String query = String.format("SELECT show_time FROM %s WHERE movie_name=%s",
-        TABLE, movieName);
+        String query = String.format("SELECT show_time FROM %s WHERE movie_name = ?",
+        TABLE);
 
         ArrayList<Date> showTimes = new ArrayList<>();
         try {
-            Statement fetchAllTimes = connection.createStatement();
-            ResultSet allTimes = fetchAllTimes.executeQuery(query);
+            PreparedStatement fetchAllTimes = connection.prepareStatement(query);
+            // insert movie_name
+            fetchAllTimes.setString(1, movieName);
+            ResultSet allTimes = fetchAllTimes.executeQuery();
 
             while (allTimes.next()) {
-                Date showTime = allTimes.getDate("show_time");
+                Date showTime = allTimes.getTimestamp("show_time");
                 showTimes.add(showTime);
             }
 
@@ -48,6 +60,13 @@ public class MovieDatabaseReader extends DatabaseReader{
         return showTimes;
     }
 
+    /**
+     * Gets all 50 seats of a movie for one of its show time.
+     * @param movieName name of movie 
+     * @param showTime the show time of the movie
+     * @return An array of integers, which index 0 is the room number, 
+     * and the rest are 1 or 0 representing if a seat is available or not
+     */
     public static ArrayList<Integer> getSeats(String movieName, Date showTime) {
         
         // return nothing if failed to connect
@@ -58,7 +77,7 @@ public class MovieDatabaseReader extends DatabaseReader{
         String query = String.format("SELECT * FROM %s WHERE movie_name=%s, show_time=%t", 
         TABLE, movieName, showTime);
 
-        ArrayList<Integer> seats = new ArrayList<>();
+        ArrayList<Integer> seats = new ArrayList<>(NUM_OF_SEATS);
         try {
             Statement fetchSeats = connection.createStatement();
             ResultSet allSeats = fetchSeats.executeQuery(query);
@@ -74,7 +93,6 @@ public class MovieDatabaseReader extends DatabaseReader{
             }
 
             fetchSeats.close();
-            allSeats.close();
 
         } catch (SQLException e) {
             disconnect();
@@ -85,23 +103,30 @@ public class MovieDatabaseReader extends DatabaseReader{
         return seats;
     }
 
-    public static Movie getMovie(String movieName) throws ParseException{
+    /**
+     * Gets a movie from the database
+     * @param movieName name of movie 
+     * @return Reference to movie object
+     */
+    public static Movie getMovie(String movieName) {
         //if fail to connect, got no movie object to return
         if (!connect()) {
             return null;
         }
 
-        String query = String.format("SELECT release_date FROM %s WHERE movie_name=%s", 
-        TABLE, movieName);
+        String query = String.format("SELECT release_date FROM %s WHERE movie_name = ?", 
+        TABLE);
 
         Date releaseDate = null;
         try {
-            Statement fetchMovie = connection.createStatement();
-            ResultSet movies = fetchMovie.executeQuery(query);
+            PreparedStatement fetchMovie = connection.prepareStatement(query);
+            //insert movie_name
+            fetchMovie.setString(1, movieName);
+            ResultSet movies = fetchMovie.executeQuery();
 
             // all release dates for the movie should be the same, so only need to read 1
             if (movies.next()) {
-                releaseDate = movies.getDate("release_date");
+                releaseDate = movies.getTimestamp("release_date");
             }
 
             fetchMovie.close(); //also closes movies
@@ -125,16 +150,26 @@ public class MovieDatabaseReader extends DatabaseReader{
         //now need to convert to String all the showTimes
         Iterator<Date> showTimeIterator = allShowTimes.iterator();
         ArrayList<String> allShowTimesString = new ArrayList<>();
-        formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.ENGLISH);
+        formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH);
         while (showTimeIterator.hasNext()) {
             allShowTimesString.add(formatter.format(showTimeIterator.next()));
         }
 
         //Now got all parameters ready to make Movie object to return
-        return new Movie(movieName, release_date, allShowTimesString);
+        try {
+            return new Movie(movieName, release_date, allShowTimesString);
+        } catch (ParseException e) {
+            // failed to create Movie object, so can't return one
+            return null;
+        }
+        
     }
 
-    public static ArrayList<Movie> getAllMovies() throws ParseException{
+    /**
+     * gets all the movies stored in the database
+     * @return an ArrayList filled with Movie objects for all the movies
+     */
+    public static ArrayList<Movie> getAllMovies() {
         //if fail to connect, can't return anything
         if (!connect()) {
             return null;
@@ -206,12 +241,17 @@ public class MovieDatabaseReader extends DatabaseReader{
             return false;
         }
 
-        String query = String.format("DELETE FROM %s WHERE movie_name=%s, show_time=%s", 
-        TABLE, movieName, showTime);
-
+        String query = String.format("DELETE FROM %s WHERE movie_name= ? AND show_time= ?", 
+        TABLE);
+        // create TimeStamp object from Date object to later set
+        Timestamp showDate = new Timestamp(showTime.getTime());
         try {
-            Statement deleteMovie = connection.createStatement();
-            int rowsChanged = deleteMovie.executeUpdate(query);
+            PreparedStatement deleteMovie = connection.prepareStatement(query);
+            //set values
+            deleteMovie.setString(1, movieName);
+            deleteMovie.setTimestamp(2, showDate);
+            // statment ready to execute
+            int rowsChanged = deleteMovie.executeUpdate();
             deleteMovie.close();
             // if rowsChanged is 0, then did not delete movie
             // throw SQLException is it can be caught and false be returned
@@ -227,29 +267,26 @@ public class MovieDatabaseReader extends DatabaseReader{
         return true;
     }
 
-    public static boolean addMovie(String movieName, Date showTime, Date releaseDate, ArrayList<Integer> seats) {
+    public static boolean addMovie(String movieName, Date showTime, Date releaseDate) {
         // failed to add movie if can't connect
         if (!connect()) {
             return false;
         }
         
-        String query = String.format("INSERT INTO %s VALUES (%s, %t, %t",
-        TABLE, movieName, showTime, releaseDate);
-        //to the query, need to add rest of the seats
-        Iterator<Integer> seatsIterator = seats.iterator();
-        int i = 0;  //secondary loop tracker so don't exceed number of seats stored
-        while (seatsIterator.hasNext() && i < NUM_OF_SEATS) {
-            int seatStatus = seatsIterator.next();
-            query += String.format(", %d", seatStatus);
-            i++;
-        }
-        query += ")";   //close off parenthesis for sql syntax
-        //query has been made
-        
+        String query = String.format("INSERT INTO %s (movie_name, show_time, release_date) VALUES (?, ?, ?)",
+        TABLE);
+        // need to create from Date objects to TimeStamp objects
+        Timestamp showDate = new Timestamp(showTime.getTime());
+        Timestamp relDate = new Timestamp(releaseDate.getTime());
         try {
-            Statement movieAdd = connection.createStatement();
-            int rowsChanged = movieAdd.executeUpdate(query);
-            movieAdd.close();
+            PreparedStatement insertMovie = connection.prepareStatement(query);
+            // set values
+            insertMovie.setString(1, movieName);
+            insertMovie.setTimestamp(2, showDate);
+            insertMovie.setTimestamp(3, relDate);
+            // statement complete to execute  
+            int rowsChanged = insertMovie.executeUpdate();
+            insertMovie.close();
             // if rowsChanged == 0, new movie was not added
             //  so throw SQLException so can return false
             if (rowsChanged == 0) {
@@ -261,5 +298,27 @@ public class MovieDatabaseReader extends DatabaseReader{
         }
         disconnect();
         return true;
+    }
+
+    public static void main(String[] args) {
+        /* Testing this class */
+        Date show = new Date();
+        System.out.println(show.toString());
+        Date release = new Date();
+        System.out.println(release.toString());
+        String movieName = "Movie1";
+
+        System.out.println(MovieDatabaseReader.addMovie(movieName, show, release));
+
+        Movie movie1 = MovieDatabaseReader.getMovie(movieName);
+        if (movie1 != null)
+            System.out.println(movie1.getMovieName());
+            System.out.println(movie1.releaseDate().toString());
+
+            Iterator<Date> iterator = movie1.getAvailableTimes().iterator();
+            while (iterator.hasNext()) 
+                System.out.println(iterator.next().toString());
+        
+        System.out.println(MovieDatabaseReader.removeMovie(movieName, show));
     }
 }

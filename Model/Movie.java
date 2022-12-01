@@ -13,7 +13,7 @@ public class Movie {
         movieName = name;
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH);
         this.releaseDate =formatter.parse(releaseDate);
-        formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm",Locale.ENGLISH);
+        formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm",Locale.ENGLISH);
         for(int i=0;i<times.size();i++){
              availableTimes.add(formatter.parse(times.get(i)));
          }

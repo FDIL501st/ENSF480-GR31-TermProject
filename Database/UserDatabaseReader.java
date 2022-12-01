@@ -147,6 +147,7 @@ public class UserDatabaseReader extends DatabaseReader{
             return false;
         }
 
+        // Can't update email or registration_date
         String query = String.format(
             "UPDATE %s SET password=%s, first_name=%s, last_name=%s, address=%s, card_number=%s WHERE email=%s",
             TABLE, updatedUser.getPassword(), updatedUser.getfirstName(), updatedUser.getlastName(),

@@ -73,7 +73,7 @@ public class TicketDatabaseReader extends DatabaseReader {
         return removeTicket(ticket.getMovie().getMovieName(), ticket.getTime(), ticket.getSeatNum());
     }
 
-    public static Ticket getTicket(String movieName, Date showTime, int seatNum) throws ParseException{
+    public static Ticket getTicket(String movieName, Date showTime, int seatNum) {
         // if fail to connect, can't return a Ticket object
         if (!connect()) {
             return null;
@@ -104,9 +104,7 @@ public class TicketDatabaseReader extends DatabaseReader {
         }
         // Now make find Movie
         Movie movie = MovieDatabaseReader.getMovie(movieName);
-        // format showTime for Ticket constructor
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.ENGLISH);
-        String showTimeString = formatter.format(showTime);
-        return new Ticket(movie, showTimeString, seatNum);
+
+        return new Ticket(movie, showTime, seatNum, 1);
     }
 }
