@@ -121,31 +121,9 @@ public class PaymentForm extends Form implements ActionListener{
                 TicketForm.seatsArr.clear();
                 tickets.clear();
             }
-            else{ //need to get user credit card information
-                String cardNum = JOptionPane.showInputDialog("Please Enter Credit Card Information");
-                cardNum = cardNum.trim();
-                if(!Pattern.matches("\\b[0-9]{4}\\s?[0-9]{4}\\s?[0-9]{4}\\s?[0-9]{4}\\s?\\b",cardNum)){
-                    JOptionPane.showMessageDialog(null,"Card number is invalid");
-                }
-                else{
-                    String email = JOptionPane.showInputDialog("Please Enter your email");
-                    email = email.trim();
-                    if(!Pattern.matches("^(.+)@(.+)$",email) ){
-                        JOptionPane.showMessageDialog(null,"Email entered is invalid");
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null,"Payment has been completed");
-                        for(int i=0;i<TicketForm.selectedTickets.size();i++){ //create payment objects
-                            payments.add(new Payment(TicketForm.selectedTickets.get(i)));
-                            HomePage.paidTickets.addElement("Ticket " + String.valueOf(PaymentForm.payments.get(i).getTicket().getID()));
-                        }
-                        HomePage.selectButton.setVisible(true); //homepage ticket select button is visible
-                        HomePage.pListTitle.setVisible(true);
-                        TicketForm.selectedTickets.clear(); //clear tickets
-                        TicketForm.seatsArr.clear();
-                        tickets.clear();
-                    }
-                }
+            else{ //need to get user additional information
+                Form f = new CardForm();
+                f.run();     
             }
         }
     }

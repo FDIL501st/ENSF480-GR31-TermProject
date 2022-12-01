@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 public class RegisteredUser extends User{
     private String email;
     private String password;
@@ -46,5 +47,11 @@ public class RegisteredUser extends User{
         this.address = address;
         this.cardNumber = cardNum;
         super.registrationStatus = true;
+    }
+    public boolean checkAnnualFee(){
+        if(TimeUnit.DAYS.convert( new Date().getTime()- dateLastPayed.getTime(),TimeUnit.MILLISECONDS)>=365){
+            return true;
+        }
+            return false;
     }
 }

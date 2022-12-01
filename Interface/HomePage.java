@@ -143,6 +143,7 @@ public class HomePage implements ActionListener{
          homeFrame.add(pListTitle);
          homeFrame.add(mainPanel);
          homeFrame.setVisible(true);
+         
     }
     public void setForm(Form f){
         form = f;

@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.LoginServer;
-import Model.User;
+import Model.RegisteredUser;
 
 public class UserController extends Controller{
     public static boolean register(String email,String password,String fName,String lName,String address,String cardNum){
@@ -11,7 +11,7 @@ public class UserController extends Controller{
         }
         return false;
     }
-    public static User validate(String email,String password){
+    public static RegisteredUser validate(String email,String password){
         LoginServer lg = LoginServer.getInstance();
         if(lg.validate(email,password)!= null){
             return lg.validate(email,password);
