@@ -143,6 +143,7 @@ public class RegistrationForm extends Form implements ActionListener{
             }
             else if(UserController.register(email,password,fName,lName,address,cardNum)){
                 JOptionPane.showMessageDialog(null,"Registration successful");
+                registerFrame.dispose();
             }
             else{
                 JOptionPane.showMessageDialog(null,"Email already registered");

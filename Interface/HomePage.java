@@ -17,9 +17,10 @@ public class HomePage implements ActionListener{
     private static JFrame homeFrame;
     private static JPanel mainPanel;
     private static JButton loginButton;
+    private static JButton logoutButton;
     private static JButton registerButton;
     private static JButton movieSelect;
-    private static JButton annualPayment;
+    static JButton annualPayment;
     private static JButton cancelButton;
     static JButton selectButton;
     static DefaultListModel<String> movies = new DefaultListModel<>();
@@ -27,6 +28,7 @@ public class HomePage implements ActionListener{
     static DefaultListModel<String> paidTickets = new DefaultListModel<>();
     private static JList<String> paidList;
    static JPanel pListTitle;
+   JList<String> announcements;
    private static Payment paymentSelected; //payment to be cancelled
 
    public static void main(String[] args) throws ParseException{ //main to test
@@ -54,17 +56,19 @@ public class HomePage implements ActionListener{
 
         loginButton = new JButton("Login");
        loginButton.addActionListener(new HomePage());
-        loginButton.setBounds(580,10,80,25);
+        loginButton.setBounds(520,10,80,25);
 
         registerButton = new JButton("Register");
         registerButton.addActionListener(new HomePage());
-        registerButton.setBounds(460,10,100,25);
+        registerButton.setBounds(420,10,100,25);
+
+        logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(new HomePage());
+        logoutButton.setBounds(600, 10, 80, 25);
         
-        if(Form.loginStatus == true){
-            annualPayment = new JButton("Annual Payment");
-            annualPayment.addActionListener(new HomePage());
-            annualPayment.setBounds(360, 10, 100, 25);
-        }
+        annualPayment = new JButton("Annual Payment");
+        annualPayment.addActionListener(new HomePage());
+        annualPayment.setBounds(280, 10, 140, 25);
 
         movieSelect = new JButton("View Movies");
         movieSelect.addActionListener(new HomePage());
@@ -90,7 +94,7 @@ public class HomePage implements ActionListener{
                 movies.addElement(movieList.get(i).regularAnnouncement());
             }
         }
-        JList<String> announcements = new JList<>(movies);
+        announcements = new JList<>(movies);
 
         pListTitle = new JPanel(); 
         pListTitle.setBounds(100,120,150,40);
@@ -122,10 +126,16 @@ public class HomePage implements ActionListener{
         mainPanel.add(announcementTitle);
         mainPanel.add(loginButton);
         mainPanel.add(registerButton);
+        mainPanel.add(logoutButton);
         mainPanel.add(movieSelect);
         mainPanel.add(selectButton);
         mainPanel.add(cancelButton);
+        mainPanel.add(annualPayment);
         announcementPanel.add(announcements);
+
+        if (form.loginStatus == false) {
+            annualPayment.setVisible(false);
+        }
   
         homeFrame.add(announcementPanel);
          homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -146,6 +156,28 @@ public class HomePage implements ActionListener{
         if(e.getActionCommand().equals("Register")){
                 this.setForm(new RegistrationForm());
                 form.run();  
+        }
+        if (e.getActionCommand().equals("Logout")) {
+            if (form.loginStatus == true) {
+                this.form.loginStatus = false;
+                movies.clear();
+                movieList.clear();
+                try {
+                    movieList = MovieController.getAllMovies();
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+                for(int i=0;i<movieList.size();i++){
+                    if(movieList.get(i).regularAnnouncement()!= null){
+                        movies.addElement(movieList.get(i).regularAnnouncement());
+                    }       
+                }
+                announcements = new JList<>(movies);
+                JOptionPane.showMessageDialog(null, "Successfully Logged Out");
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Unable to logout\nNo user is logged in");
+            }
         }
         if(e.getActionCommand().equals("View Movies")){
             TicketForm.selectedTickets.clear();

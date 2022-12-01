@@ -86,6 +86,7 @@ public class LoginForm extends Form implements ActionListener {
                 HomePage.selectButton.setVisible(false); 
                 PaymentForm.tickets.clear();
                 Form.loginStatus = true;
+                HomePage.annualPayment.setVisible(true);
                 loginFrame.dispose();
             }
             else{
