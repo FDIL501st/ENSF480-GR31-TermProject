@@ -113,6 +113,7 @@ CREATE TABLE theatre1 (
 DROP TABLE IF EXISTS registered_users;
 CREATE TABLE registered_users (
   email VARCHAR(100) CHARACTER SET 'ascii' NOT NULL,
+  primary key (email),
   `password` VARCHAR(20) CHARACTER SET 'ascii' NOT NULL,
   first_name VARCHAR(30) CHARACTER SET 'ascii' NOT NULL,
   last_name VARCHAR(30) CHARACTER SET 'ascii' NOT NULL,
@@ -124,14 +125,15 @@ CREATE TABLE registered_users (
 DROP TABLE IF EXISTS tickets;
 CREATE TABLE tickets (
   movie_name VARCHAR(50) CHARACTER SET 'ascii' NOT NULL COMMENT 'name of movie',
-  show_time DATETIME NOT NULL COMMENT 'date and time of movie showing',
+  show_time TIMESTAMP NOT NULL COMMENT 'date and time of movie showing',
+  primary key (movie_name, show_time),
   seat_num INT NOT NULL COMMENT 'the seat the ticket reserves.'
 );
 
 DROP TABLE IF EXISTS codes;
 CREATE TABLE codes (
   `ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `value` DOUBLE ZEROFILL NOT NULL COMMENT 'value of code. The monetary/$ value that code represents.',
+  `value` DOUBLE NOT NULL DEFAULT 0 COMMENT 'value of code. The monetary/$ value that code represents.',
   `expiry` DATE NOT NULL COMMENT 'Expiry Date of the code',
   PRIMARY KEY (`ID`)
   );

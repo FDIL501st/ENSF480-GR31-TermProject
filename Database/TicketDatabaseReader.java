@@ -89,20 +89,28 @@ public class TicketDatabaseReader extends DatabaseReader {
             return null;
         }
 
-        String query = String.format("SELECT movie_name from %s WHERE movie_name=%s, show_time=%s, seat_num=%s", 
-        TABLE, movieName, showTime, seatNum);
+        String query = String.format("SELECT movie_name from %s WHERE movie_name = ?, show_time = ?, seat_num = ?", 
+        TABLE);
+        //create TimeStamp object from date
+        Timestamp show_time = Timestamp.from(showTime.toInstant());
+        show_time.setTime(roundSecondsDown(show_time.getTime()));   //round seconds down to 0
         // first need to see if ticket actually exists in database
         String movie_name = null;
         try {
-            Statement fetchTicket = connection.createStatement();
-            ResultSet foundTicket = fetchTicket.executeQuery(query);
+            PreparedStatement fetchTicket = connection.prepareStatement(query);
+            // set values
+            fetchTicket.setString(1, movie_name);
+            fetchTicket.setTimestamp(2, show_time);
+            fetchTicket.setInt(3, seatNum);
+            // statement ready to execute
+            ResultSet foundTicket = fetchTicket.executeQuery();
 
             //expecting 1 Ticket/row to be found
             if (foundTicket.next()) {
                 movie_name = foundTicket.getString(1);  //column 1 is movie_name
             }
 
-            connection.close();
+            fetchTicket.close();
         } catch (SQLException e) {
             disconnect();
             return null;

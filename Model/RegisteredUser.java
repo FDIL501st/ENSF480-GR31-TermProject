@@ -52,6 +52,16 @@ public class RegisteredUser extends User{
         this.cardNumber = cardNum;
         super.registrationStatus = true;
     }
+    public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum, Date registrationDate){
+        dateLastPayed = registrationDate;
+        this.email = email;
+        this.password = password;
+        firstName = fName;
+        lastName = lName;
+        this.address = address;
+        this.cardNumber = cardNum;
+        super.registrationStatus = true;
+    }
     public boolean checkAnnualFee(){
         if(TimeUnit.DAYS.convert( new Date().getTime()- dateLastPayed.getTime(),TimeUnit.MILLISECONDS)>=365){
             return true;

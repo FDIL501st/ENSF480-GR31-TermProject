@@ -80,13 +80,16 @@ public class UserDatabaseReader extends DatabaseReader{
             return false;
         }
 
-        String query = String.format("INSERT INTO %s VALUES (%s, %s, %s, %s, %s, %s)",
-        TABLE, user.getEmail(), user.getPassword(), user.getfirstName(), 
-        user.getlastName(), user.getAddress(), user.getCardNumber());
+        String query = String.format(
+            "INSERT INTO %s (email, password, first_name, last_name, address, card_number) VALUES (?, ?, ?, ?, ?, ?)",
+            TABLE);
         
         try {
-            Statement insertUser = connection.createStatement();
-            int rowsChanged = insertUser.executeUpdate(query);
+            PreparedStatement insertUser = connection.prepareStatement(query);
+            // set values
+            insertUser.setString(1, user.getEmail());
+            // statement ready to execute
+            int rowsChanged = insertUser.executeUpdate();
             insertUser.close();
             // if rowsChanged is 0, then new user was not added
             // so make it throw an SQLException so it can be caught and false be returned
