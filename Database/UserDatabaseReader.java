@@ -1,12 +1,54 @@
 package Database;
 
 import java.sql.*;
+import java.util.ArrayList;
+
+import javax.swing.text.TabExpander;
 
 import Model.RegisteredUser;
 
 public class UserDatabaseReader extends DatabaseReader{
     final private static String TABLE = "registered_users";
-    
+    private static ArrayList<RegisteredUser> allUsers = fetchAllUsers();
+
+    public static ArrayList<RegisteredUser> getAllUsers() {
+        return allUsers;
+    }
+
+    public static ArrayList<RegisteredUser> fetchAllUsers() {
+        // if can't connect, return null
+        if (!connect()) {
+            return null;
+        }
+
+        String query = String.format("SELECT * FROM %s", TABLE);
+        ArrayList<RegisteredUser> users = new ArrayList<>();
+
+        try {
+            Statement selectAllUsers = connection.createStatement();
+            ResultSet allUsersResult = selectAllUsers.executeQuery(query);
+            while (allUsersResult.next()) {
+                //make a new RegisteredUser object by getting data from row
+                String fetchedEmail = allUsersResult.getString(1);
+                String fetchedPassword = allUsersResult.getString(2);
+                String firstName = allUsersResult.getString(3);
+                String lastName = allUsersResult.getString(4);
+                String address = allUsersResult.getString(5);
+                String cardNumber = allUsersResult.getString(6);
+                java.util.Date registrationDate = allUsersResult.getDate(7);
+                
+                users.add(new RegisteredUser(fetchedEmail, fetchedPassword, firstName, lastName, address, cardNumber, registrationDate));  
+            }
+            selectAllUsers.close();
+        } catch (SQLException e) {
+            disconnect();
+            return null;
+        }
+
+        disconnect();
+        return users;
+    }
+
     public static RegisteredUser getUser(String email, String password) {
         if (!connect()) {
             return null;
@@ -187,6 +229,7 @@ public class UserDatabaseReader extends DatabaseReader{
     }
 
     public static void main(String[] args) {
+        /* 
         String email = "fdil.fadilh1@gmail.com";
         String password = "fdil";
         String firstName = "Fadil";
@@ -213,8 +256,22 @@ public class UserDatabaseReader extends DatabaseReader{
         System.out.println(UserDatabaseReader.updateUser(ru3));
         System.out.println();
 
-        System.out.println(UserDatabaseReader.removeUser(registeredUser)); 
-        
+        //System.out.println(UserDatabaseReader.removeUser(registeredUser)); 
+        */
+        /* 
+        ArrayList<RegisteredUser> users = getAllUsers();
+        for (RegisteredUser registeredUser : users) {
+        System.out.println(registeredUser.getEmail());
+        System.out.println(registeredUser.getPassword());
+        System.out.println(registeredUser.getfirstName());
+        System.out.println(registeredUser.getlastName());
+        System.out.println(registeredUser.getAddress());
+        System.out.println(registeredUser.getCardNumber());
+        System.out.println(registeredUser.getDateLastPayed().toString());
+        System.out.println();
+        }
+        */
+        System.out.println(getAllUsers().size());
         // all methods works as intended
     }
 }
