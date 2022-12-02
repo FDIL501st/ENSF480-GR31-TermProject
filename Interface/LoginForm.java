@@ -23,7 +23,7 @@ public class LoginForm extends Form implements ActionListener {
         loginFrame.setTitle("Login Form");
 
        
-        panel = new JPanel();//panel 
+        panel = new JPanel();//main panel 
         panel.setLayout(null);
         
        JLabel emailLabel = new JLabel("Email"); //label for email
@@ -62,9 +62,10 @@ public class LoginForm extends Form implements ActionListener {
     
         loginFrame.add(panel);
         loginFrame.setVisible(true);
+        loginFrame.setLocationRelativeTo(null); //center the page
     }
     public void actionPerformed(ActionEvent e){
-        if(e.getActionCommand().equals("Home")){
+        if(e.getActionCommand().equals("Home")){ //close form and return to home page
             loginFrame.dispose();
        }
        String email = emailText.getText();
@@ -72,11 +73,11 @@ public class LoginForm extends Form implements ActionListener {
 
        if(e.getActionCommand().equals("Sign in")){
            
-            if(UserController.validate(email,password)!= null){
+            if(UserController.validate(email,password)!= null){ //check if email and password are in database
                 JOptionPane.showMessageDialog(null,"Login successful");
                 for(int i=0;i<HomePage.movieList.size();i++){
                     if(HomePage.movieList.get(i).RUAnnouncement() != null){
-                        HomePage.movies.addElement(HomePage.movieList.get(i).RUAnnouncement());
+                        HomePage.movies.addElement(HomePage.movieList.get(i).RUAnnouncement()); //add registered user announcements
                     }
                 }
                 TicketForm.selectedTickets.clear(); //clear previously selected tickets
@@ -84,9 +85,19 @@ public class LoginForm extends Form implements ActionListener {
                 HomePage.paidTickets.clear();
                 HomePage.pListTitle.setVisible(false); //homepage payment invisible
                 HomePage.selectButton.setVisible(false); 
-                PaymentForm.tickets.clear();
-                Form.loginStatus = true;
-                HomePage.annualPayment.setVisible(true);
+                PaymentForm.tickets.clear(); //clear any unpaid tickets in paymentform
+                Form.loginStatus = true; //set login status
+                HomePage.annualPayment.setVisible(true); //annual payment button on home page is visible
+                HomePage.currentUser = UserController.validate(email,password); //set current user
+                if(HomePage.currentUser.getPaidTickets().size()>0){ //check for any paid tickets on users account
+                    for(int i=0;i<HomePage.currentUser.getPaidTickets().size();i++){
+                        PaymentForm.payments.add(HomePage.currentUser.getPaidTickets().get(i));
+                        HomePage.paidTickets.addElement("Ticket " + String.valueOf(PaymentForm.payments.get(i).getTicket().getID()));
+                    }
+                    HomePage.selectButton.setVisible(true); //homepage ticket select button is visible
+                    HomePage.pListTitle.setVisible(true);
+                }
+                HomePage.logoutButton.setVisible(true); //logout button on home page is visible
                 loginFrame.dispose();
             }
             else{

@@ -6,7 +6,6 @@ import Model.Payment;
 
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class PaymentForm extends Form implements ActionListener{
     private static JFrame paymentFrame;
@@ -14,6 +13,7 @@ public class PaymentForm extends Form implements ActionListener{
     private static JButton confirmButton;
     private static JButton homeButton;
     private static JButton selectButton;
+    private static JTextField summText;
     static DefaultListModel<String> tickets = new DefaultListModel<>();
     private static JList<String> ticketList;
     static ArrayList<Payment> payments = new ArrayList<Payment>();
@@ -26,7 +26,7 @@ public class PaymentForm extends Form implements ActionListener{
         panel = new JPanel();//panel 
         panel.setLayout(null);
 
-        homeButton = new JButton("Home");
+        homeButton = new JButton("Home"); 
         homeButton.addActionListener(new PaymentForm());
         homeButton.setBounds(10,10,80,25);
 
@@ -57,7 +57,7 @@ public class PaymentForm extends Form implements ActionListener{
             }
         }
         ticketList = new JList<>(tickets); //list of tickets
-        ticketPanel.add(ticketList);
+        ticketPanel.add(ticketList); //display list of tickets
 
         JPanel summTitle = new JPanel(); 
         summTitle.setBounds(300,40,150,40);
@@ -68,7 +68,7 @@ public class PaymentForm extends Form implements ActionListener{
         summLabel.setVisible(true);
         summTitle.add(summLabel);
 
-        JTextField summText = new JTextField();
+         summText = new JTextField(); //show the price of the tickets
         summText.setBounds(300, 80, 200, 40);
         if (tickets.size() == 0) {
             summText.setText("Annual Payment x1: $20.00");
@@ -76,7 +76,7 @@ public class PaymentForm extends Form implements ActionListener{
         else {
             summText.setText("Tickets x" + tickets.size() + ": $" + 100*tickets.size() + ".00");
         }
-
+        summText.setEditable(false); 
         panel.add(homeButton);
         panel.add(confirmButton);
         panel.add(selectButton);
@@ -87,17 +87,22 @@ public class PaymentForm extends Form implements ActionListener{
         paymentFrame.add(summText);
         paymentFrame.add(panel);
         paymentFrame.setVisible(true);
+        paymentFrame.setLocationRelativeTo(null); //center the page
         
     }
     public void actionPerformed(ActionEvent e){
         if(e.getActionCommand().equals("Home")){
-            paymentFrame.dispose();
+            TicketForm.selectedTickets.clear(); //clear all tickets
+            tickets.clear(); 
+            TicketForm.seatsArr.clear(); //clear any selected seats
+            paymentFrame.dispose(); 
+            ticketFormOpened = false; //indicate that ticket form can be reopened
        }
        if(e.getActionCommand().equals("Select Ticket")){ //select ticket (show ticket information)
             if(ticketList.getSelectedIndex()!= -1){ //an item on the ticket list is selected
                 for(int i=0;i<TicketForm.selectedTickets.size();i++){ //check which ticket from the list is selected
                     if(ticketList.getSelectedValue().equals("Ticket " + String.valueOf(TicketForm.selectedTickets.get(i).getID()))){
-                        JLabel info = new JLabel();
+                        JLabel info = new JLabel(); //display info for tickets
                         info.setText("<html>Ticket ID: " + ticketList.getSelectedValue() +
                         "<br>Movie Name: "+TicketForm.selectedTickets.get(i).getMovie().getMovieName() +
                         "<br>Time: "+ TicketForm.selectedTickets.get(i).getTime().toString() +
@@ -113,16 +118,21 @@ public class PaymentForm extends Form implements ActionListener{
                 JOptionPane.showMessageDialog(null,"Payment has been completed");
                 for(int i=0;i<TicketForm.selectedTickets.size();i++){ //create payment objects
                     payments.add(new Payment(TicketForm.selectedTickets.get(i)));
-                    HomePage.paidTickets.addElement("Ticket " + String.valueOf(PaymentForm.payments.get(i).getTicket().getID()));
+                    HomePage.paidTickets.addElement("Ticket " + String.valueOf(TicketForm.selectedTickets.get(i).getID()));
                 }
+                HomePage.currentUser.updatePayments(payments); //add paid tickets to user 
                 HomePage.selectButton.setVisible(true); //homepage ticket select button is visible
                 HomePage.pListTitle.setVisible(true);
                 TicketForm.selectedTickets.clear(); //clear tickets
                 TicketForm.seatsArr.clear();
                 tickets.clear();
+                summText.setVisible(false); //price display is cleared
+                paymentFrame.dispose();
+                ticketFormOpened =false;
             }
             else{ //need to get user additional information
                 Form f = new CardForm();
+                paymentFrame.dispose();
                 f.run();     
             }
         }

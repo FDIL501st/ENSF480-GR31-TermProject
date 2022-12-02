@@ -93,6 +93,7 @@ public class RegistrationForm extends Form implements ActionListener{
        
         registerFrame.add(panel);
         registerFrame.setVisible(true);
+        registerFrame.setLocationRelativeTo(null); //center the page
     }
     public void actionPerformed(ActionEvent e){
         if(e.getActionCommand().equals("Home")){
@@ -108,21 +109,24 @@ public class RegistrationForm extends Form implements ActionListener{
        
         if(e.getActionCommand().equals("Register")){
           
-            if(!Pattern.matches("^(.+)@(.+)$",email) ){ //check for valid email 
+            if(!Pattern.matches("^(.+)@(.+)$",email) ){ //check for valid email that doesn't contain . or + before "@"" and then "." or "+" after @
                 JOptionPane.showMessageDialog(null,"Email is invalid");
             }
-            else if(!Pattern.matches("[a-zA-z ']*",fName)){ 
+            else if(!Pattern.matches("[a-zA-z ']*",fName)){  //valid first name with alphabetic characters or ' only
                 JOptionPane.showMessageDialog(null,"First name must only contain characters");
             }
-            else if(!Pattern.matches("[a-zA-z ']*",lName)){ 
+            else if(!Pattern.matches("[a-zA-z ']*",lName)){ //valid last name with alphabetic characters or '
                 JOptionPane.showMessageDialog(null,"Last name must only contain characters");
             }
-            else if(!Pattern.matches("\\d{1,5}\\s\\w*\\s?\\w*",address)){ 
+            else if(!Pattern.matches("\\d{1,5}\\s\\w*\\s?\\w*",address)){  
+                 //requires 1-5 digits followed by a space and then however many characters followed or not followed by a space then any number of characters
                 JOptionPane.showMessageDialog(null,"Address is invalid");
             }
             else if(!Pattern.matches("\\b[0-9]{4}\\s?[0-9]{4}\\s?[0-9]{4}\\s?[0-9]{4}\\s?\\b",cardNum)){
+                 //requires 4 sets of 4 digits, with or without a space between each set
                 JOptionPane.showMessageDialog(null,"Card number is invalid");
             }
+            //make sure no fields are empty
             else if(email.length()==0){ 
                 JOptionPane.showMessageDialog(null,"Email field is empty");
             }
@@ -141,11 +145,11 @@ public class RegistrationForm extends Form implements ActionListener{
             else if(cardNum.length()==0){ 
                 JOptionPane.showMessageDialog(null,"Card Number field is empty");
             }
-            else if(UserController.register(email,password,fName,lName,address,cardNum)){
+            else if(UserController.register(email,password,fName,lName,address,cardNum)){ //register user 
                 JOptionPane.showMessageDialog(null,"Registration successful");
                 registerFrame.dispose();
             }
-            else{
+            else{ //cannot register using the same email
                 JOptionPane.showMessageDialog(null,"Email already registered");
             }
         }

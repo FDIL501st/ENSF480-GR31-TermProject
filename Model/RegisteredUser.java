@@ -1,9 +1,7 @@
 package Model;
 import java.util.Date;
-import java.util.Locale;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 public class RegisteredUser extends User{
     private String email;
     private String password;
@@ -11,8 +9,8 @@ public class RegisteredUser extends User{
     private String lastName;
     private String address;
     private String cardNumber;
-	private double annualFee;
 	private Date dateLastPayed;
+    private ArrayList<Payment> ticketsPaid = new ArrayList<Payment>();
     
     public String getEmail(){
         return email;
@@ -32,12 +30,18 @@ public class RegisteredUser extends User{
     public String getCardNumber(){
         return cardNumber;
     }
-	public double getannualFee(){
-		return annualFee;
-	}
 	public Date getDateLastPayed(){
 		return dateLastPayed;
 	}
+    public ArrayList<Payment> getPaidTickets(){
+        return ticketsPaid;
+    }
+    public void updatePayments(ArrayList<Payment> payments){
+        ticketsPaid.clear();
+        for(Payment p:payments){
+            ticketsPaid.add(new Payment(p.getTicket()));
+        }
+    }
     public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum){
         dateLastPayed = new Date();
         this.email = email;

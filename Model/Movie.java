@@ -24,7 +24,7 @@ public class Movie {
     public String regularAnnouncement(){
         Date d = new Date();
         //check if releaseDate is within a month
-        if(TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)>0 && TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)<=30){
+        if(TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)>=0 && TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)<=30){
             return movieName + ": " + releaseDate.toString();
         }
         return null;

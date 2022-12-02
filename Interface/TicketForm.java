@@ -34,6 +34,8 @@ public class TicketForm extends Form implements ActionListener{
    
     
     public void run(){
+        ticketFormOpened =true;
+        selectedTickets.clear();
         ticketFrame = new JFrame(); //create frame
         ticketFrame.setSize(750,500);
         ticketFrame.setTitle("Ticket Form");
@@ -105,6 +107,7 @@ public class TicketForm extends Form implements ActionListener{
            seatsArr.get(i).setFont(new Font("Arial",Font.PLAIN,6));
            seatsArr.get(i).setHorizontalAlignment(SwingConstants.LEFT);
            seatsArr.get(i).addActionListener(new TicketForm());
+           seatsArr.get(i).setBackground(null);
            seatsArr.get(i).setVisible(false); //set all buttons to be invisible before any selection is made
 
             seatPanel.add(seatsArr.get(i)); //add all buttons to seat panel
@@ -128,6 +131,7 @@ public class TicketForm extends Form implements ActionListener{
         ticketFrame.add(sListTitle);
         ticketFrame.add(panel);
         ticketFrame.setVisible(true); 
+        ticketFrame.setLocationRelativeTo(null); //center the page
         
         
 
@@ -141,6 +145,8 @@ public class TicketForm extends Form implements ActionListener{
             selectedTickets.clear();
             times.clear();
             ticketFrame.dispose();
+            ticketFormOpened =false;
+           
        }
        if(e.getActionCommand().equals("Select Movie")){ //select movie button pressed
                 tListTitle.setVisible(false); //set seat display title and time list title to invisible
@@ -173,6 +179,9 @@ public class TicketForm extends Form implements ActionListener{
             if(timeList.getSelectedIndex()!= -1){ //an item on the time list is selected
                 for(int i=0;i<times.size();i++){ //check which time from the list is selected
                     if(timeList.getSelectedValue().equals(times.get(i))){
+                        for(int j=0;j<selectedTickets.size();j++){
+                            seatsArr.get(selectedTickets.get(j).getSeatNum()).setBackground(null);
+                        }
                         seats = TicketController.getSeats(TicketForm.movieSelected.getMovieName(),dates.get(i)); //get array of seats
                         timeSelected = dates.get(i);
                     }
@@ -187,29 +196,31 @@ public class TicketForm extends Form implements ActionListener{
             sListTitle.setVisible(true); //set seat title to be visible
         }
         if(e.getActionCommand().equals("Pay")){
-            if (selectedTickets.size() == 0) {
+            if (selectedTickets.size() == 0) { //make sure user has selected at least one ticket
                 JOptionPane.showMessageDialog(null, "No tickets selected");
             }
             else {
-                PaymentForm pf = new PaymentForm();
-                times.clear();
+                PaymentForm pf = new PaymentForm(); //open payment form
+                times.clear(); 
+                ticketFrame.dispose();
                 pf.run();
             }
         }
-        for(int i=0;i<100;i++){
+        for(int i=0;i<100;i++){ //check which seats are selected
             if(e.getActionCommand().equals(String.valueOf(i))){
                 boolean selected = false;
-                for(int j=0;j<selectedTickets.size();j++){
+                for(int j=0;j<selectedTickets.size();j++){ //check if ticket is already selected
                     if(selectedTickets.get(j).getMovie().getMovieName()==movieSelected.getMovieName() &&selectedTickets.get(j).getTime().equals(timeSelected) && selectedTickets.get(j).getSeatNum()==i){
                         JOptionPane.showMessageDialog(null,"Seat " +String.valueOf(i) + " unselected");
-                        selectedTickets.remove(j);
+                        selectedTickets.remove(j); //unselects the ticket
+                        seatsArr.get(i).setBackground(null);
                         selected = true;
                         break;
                     }
                 }
-                if(!selected) {
+                if(!selected) { //ticket is not already selected, add ticket to selected tickets
                     JOptionPane.showMessageDialog(null,"Seat " +String.valueOf(i) + " selected");
-                    
+                        seatsArr.get(i).setBackground(Color.GREEN);
                         selectedTickets.add(new Ticket(movieSelected,timeSelected,i,roomSelected));
                   
                 }
