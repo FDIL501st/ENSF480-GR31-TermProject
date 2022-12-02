@@ -3,7 +3,8 @@ package Database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
+import java.util.Calendar;
 
 public class CodeDatabaseReader extends DatabaseReader{
     final private static String TABLE = "codes";
@@ -15,9 +16,14 @@ public class CodeDatabaseReader extends DatabaseReader{
         }
         String insertQuery = String.format("INSERT INTO %s (value, expiry) VALUES (?, ?)", TABLE);
         String selectQuery = String.format("SELECT * from %s WHERE value = ? AND expiry = ? ORDER by ID DESC", TABLE);
+        int codeNum = 0;   //stores code number
 
-        // create sql.Date object based off of current date
-        java.sql.Date expiry_date = new java.sql.Date(new Date().getTime());
+        // create sql.Date object based off of current date + 1 year
+        Calendar cal = Calendar.getInstance();
+        // add 1 year as expires in 1 year
+        cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) +1);
+        Date expiry_date = new Date(cal.getTime().getTime());
+        
         try {
             PreparedStatement insertCode = connection.prepareStatement(insertQuery);
             // set values
@@ -40,6 +46,7 @@ public class CodeDatabaseReader extends DatabaseReader{
             ResultSet codes = selectCode.executeQuery();
             if (codes.next()) {
                 // only need first result as that is the latest code (one with highest ID)
+                codeNum = codes.getInt("ID");
             }
             selectCode.close();
         } catch (SQLException e) {
@@ -47,7 +54,34 @@ public class CodeDatabaseReader extends DatabaseReader{
             return;
         }
         disconnect();
-        // need to return Code
+        // TODO - need to return code object
         return;
+    }
+
+    public static double getCodeValue(int codeNum) {
+        // if fail to connect, can't return an actual value so end up returning 0
+        if (!connect()) {
+            return 0;
+        }
+        
+        String query = String.format("SELECT value FROM %s WHERE ID = ?", TABLE);
+        double codeValue = 0;
+        try {
+            PreparedStatement fetchCodeValue = connection.prepareStatement(query);
+            // set ID
+            fetchCodeValue.setInt(1, codeNum);
+            // statment ready to execut
+            ResultSet resultCodeValue = fetchCodeValue.executeQuery();
+            // expecting only 1 result
+            if (resultCodeValue.next()) {
+                codeValue = resultCodeValue.getDouble("value"); //get the value
+            }
+            fetchCodeValue.close();
+        } catch (SQLException e) {
+            disconnect();
+            return 0;
+        }
+        disconnect();
+        return codeValue;
     }
 }
