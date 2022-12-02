@@ -222,7 +222,7 @@ public class RegistrationForm extends Form implements ActionListener{
             }
             else if(e.getActionCommand().equals("Confirm")){
                  //payment successful
-                 JOptionPane.showMessageDialog(null,"Payment has been completed");
+                 JOptionPane.showMessageDialog(null,"Payment has been completed.\nReceipt has been sent to: "+email);
                  for(int i=0;i<TicketForm.selectedTickets.size();i++){ 
                      Payment p = new Payment(TicketForm.selectedTickets.get(i));
                      PaymentForm.payments.add(p); //create payment objects

@@ -85,7 +85,7 @@ public class UserDatabaseReader extends DatabaseReader{
             "INSERT INTO %s (email, password, first_name, last_name, address, card_number, registration_date) VALUES (?, ?, ?, ?, ?, ?, ?)",
             TABLE);
         // get java.sql.Date object from java.util.Date object
-        Date registration_date = new Date(user.getDateLastPayed().getTime());
+        Date registration_date = new Date(user.getRegistrationDate().getTime());
         try {
             PreparedStatement insertUser = connection.prepareStatement(query);
             // set values
@@ -157,7 +157,7 @@ public class UserDatabaseReader extends DatabaseReader{
             "UPDATE %s SET password=?, first_name=?, last_name=?, address=?, card_number=?, registration_date=? WHERE email=?",
             TABLE);
         // get java.sql.Date object from java.util.Date object
-        Date registration_date = new Date(updatedUser.getDateLastPayed().getTime());
+        Date registration_date = new Date(updatedUser.getRegistrationDate().getTime());
         try {
             PreparedStatement userUpdate = connection.prepareStatement(query);
             // set values

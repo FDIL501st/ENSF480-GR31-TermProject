@@ -10,6 +10,8 @@ public class RegisteredUser extends User{
     private String address;
     private String cardNumber;
 	private Date dateLastPayed; //date of last annual payment
+    private Date registrationDate;
+    private int yearsRegistered;//keeps track of which year the annual payment is for
     private ArrayList<Payment> ticketsPaid = new ArrayList<Payment>(); //list of tickets user has paid for
     
     public String getEmail(){
@@ -50,6 +52,8 @@ public class RegisteredUser extends User{
         }
     }
     public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum){
+        this.registrationDate = new Date();
+        this.yearsRegistered = 1;
         this.email = email;
         this.password = password;
         firstName = fName;
@@ -58,8 +62,13 @@ public class RegisteredUser extends User{
         this.cardNumber = cardNum;
         super.registrationStatus = true;
     }
-    public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum, Date registrationDate){
-        dateLastPayed = registrationDate;
+    public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum,Date registrationDate){
+        this.registrationDate = registrationDate;
+        this.yearsRegistered = 1;
+        this.dateLastPayed = new Date();
+        while(TimeUnit.DAYS.convert(new Date().getTime()-registrationDate.getTime(),TimeUnit.MILLISECONDS)>yearsRegistered*365){
+            yearsRegistered++;
+        }
         this.email = email;
         this.password = password;
         firstName = fName;
@@ -67,19 +76,24 @@ public class RegisteredUser extends User{
         this.address = address;
         this.cardNumber = cardNum;
         super.registrationStatus = true;
+    }
+    public Date getRegistrationDate(){
+        return registrationDate;
     }
     /**
      * Check if movie is ready for RegisteredUser announcement
-     * @return boolean value true if annual payment has never been completed or payment has not been completed in 365 days
+     * @return boolean value true if annual payment has never been completed or payment for the year has not been completed
      * false if payment has already been completed for the year
      */
     public boolean checkAnnualFee(){ 
         if(dateLastPayed == null){
             return true;
         }
-        if(TimeUnit.DAYS.convert( new Date().getTime()- dateLastPayed.getTime(),TimeUnit.MILLISECONDS)>=365){
+        if(TimeUnit.DAYS.convert( dateLastPayed.getTime()- registrationDate.getTime(),TimeUnit.MILLISECONDS)>=yearsRegistered*365){
+            yearsRegistered++;
             return true;
         }
+        
             return false;
     }
 }
