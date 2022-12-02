@@ -29,7 +29,7 @@ public class TicketDatabaseReader extends DatabaseReader {
             insertTicket.setTimestamp(2, show_time);
             insertTicket.setInt(3, seatNum);
             // statement is ready to execute
-            int rowsChanged = insertTicket.executeUpdate(query);
+            int rowsChanged = insertTicket.executeUpdate();
             insertTicket.close();
             // if rowsChanged == 0, then insert did not occur
             // throw SQLException so it can be caught and false be returned
@@ -57,11 +57,19 @@ public class TicketDatabaseReader extends DatabaseReader {
             return false;
         }
 
-        String query = String.format("DELETE FROM %s WHERE movie_name = ?, show_time = ?, seat_num = ?", 
+        String query = String.format("DELETE FROM %s WHERE movie_name = ? AND show_time = ? AND seat_num = ?", 
         TABLE);
-
+        // create TimeStamp object from showTime
+        Timestamp show_time = new Timestamp(showTime.getTime());
+        // round down seconds to 0
+        show_time.setTime(roundSecondsDown(show_time.getTime()));
         try {
             PreparedStatement deleteTicket = connection.prepareStatement(query);
+            // set values
+            deleteTicket.setString(1, movieName);
+            deleteTicket.setTimestamp(2, show_time);
+            deleteTicket.setInt(3, seatNum);
+            // statement is ready to execute
             int rowsChanged = deleteTicket.executeUpdate();
             deleteTicket.close();
             // if rowsChanged == 0, then ticket was not deleted
@@ -89,7 +97,7 @@ public class TicketDatabaseReader extends DatabaseReader {
             return null;
         }
 
-        String query = String.format("SELECT movie_name from %s WHERE movie_name = ?, show_time = ?, seat_num = ?", 
+        String query = String.format("SELECT movie_name from %s WHERE movie_name = ? AND show_time = ? AND seat_num = ?", 
         TABLE);
         //create TimeStamp object from date
         Timestamp show_time = Timestamp.from(showTime.toInstant());
@@ -99,7 +107,7 @@ public class TicketDatabaseReader extends DatabaseReader {
         try {
             PreparedStatement fetchTicket = connection.prepareStatement(query);
             // set values
-            fetchTicket.setString(1, movie_name);
+            fetchTicket.setString(1, movieName);
             fetchTicket.setTimestamp(2, show_time);
             fetchTicket.setInt(3, seatNum);
             // statement ready to execute
@@ -124,5 +132,26 @@ public class TicketDatabaseReader extends DatabaseReader {
         Movie movie = MovieDatabaseReader.getMovie(movieName);
 
         return new Ticket(movie, showTime, seatNum, 1);
+    }
+
+    public static void main(String[] args) {
+        //testing TicketDatabaseReader
+        String movieName = "m1";
+        Date showTime = new Date();
+        showTime.setTime(roundSecondsDown(showTime.getTime()));
+
+        MovieDatabaseReader.addMovie(movieName, showTime, showTime);
+        
+        System.out.println(addTicket(movieName, showTime, 1));
+
+        System.out.println(addTicket(movieName, showTime, 3));
+
+        System.out.println(removeTicket(movieName, showTime, 1));
+        
+        Ticket t1 = getTicket(movieName, showTime, 3);
+        System.out.println(t1.getMovie().getMovieName());
+        System.out.println(t1.getTime().toString());
+        System.out.println(t1.getSeatNum());
+        // all methods works as intended
     }
 }

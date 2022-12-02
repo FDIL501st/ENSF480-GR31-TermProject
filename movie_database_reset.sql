@@ -126,7 +126,6 @@ DROP TABLE IF EXISTS tickets;
 CREATE TABLE tickets (
   movie_name VARCHAR(50) CHARACTER SET 'ascii' NOT NULL COMMENT 'name of movie',
   show_time TIMESTAMP NOT NULL COMMENT 'date and time of movie showing',
-  primary key (movie_name, show_time),
   seat_num INT NOT NULL COMMENT 'the seat the ticket reserves.'
 );
 
