@@ -4,6 +4,9 @@ import java.util.Date;
 
 
 import Database.MovieDatabaseReader;
+import Database.TicketDatabaseReader;
+import Database.CodeDatabaseReader;
+import Model.Ticket;
 
 public class TicketController extends Controller{
     
@@ -25,6 +28,22 @@ public class TicketController extends Controller{
       }
       return seats;
         
+      
+    }
+    public static void makeNewCode(double value){
+      CodeDatabaseReader.makeNewCode(value);
+    }
+    @Override
+    public void add(Object o) {
+      Ticket t = (Ticket)o;
+      //TicketDatabaseReader.addTicket(t);
+      
+    }
+
+    @Override
+    public void remove(Object o) {
+      Ticket t=(Ticket)o;
+      //TicketDatabaseReader.removeTicket(t);
       
     }
     

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class Movie {
     private String movieName;
     private Date releaseDate;
-    private ArrayList<Date> availableTimes = new ArrayList<Date>();
+    private ArrayList<Date> availableTimes = new ArrayList<Date>(); //list of all available times for movie
     public Movie(String name,String releaseDate,ArrayList<String> times) throws ParseException {
         movieName = name;
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH);
@@ -18,9 +18,14 @@ public class Movie {
              availableTimes.add(formatter.parse(times.get(i)));
          }
     }
-    public String getMovieName(){
+    public String getMovieName(){ 
         return movieName;
     }
+        /**
+     * Check if movie is ready for regular announcement
+     * @return returns movieName + releaseDate if movie is ready to be announced (within a month of releaseDate), 
+     * null if movie is not ready 
+     */
     public String regularAnnouncement(){
         Date d = new Date();
         //check if releaseDate is within a month
@@ -29,7 +34,12 @@ public class Movie {
         }
         return null;
     }
-    public String RUAnnouncement(){
+    /**
+     * Check if movie is ready for RegisteredUser announcement
+     * @return returns movieName + releaseDate if movie is ready to be announced for registered users (between 30-37 days of releaseDate),
+     * null if movie is not ready 
+     */
+    public String RUAnnouncement(){ 
         Date d = new Date();
         if(TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)>30 && TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)<=37){
             return movieName + ":  " + releaseDate.toString();
@@ -39,7 +49,7 @@ public class Movie {
     public ArrayList<Date> getAvailableTimes(){
         return availableTimes;
     }
-    public Date releaseDate(){
+    public Date getReleaseDate(){
         return releaseDate;
     }
 }

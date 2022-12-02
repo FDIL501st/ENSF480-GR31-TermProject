@@ -2,7 +2,7 @@ package Interface;
 
 import javax.swing.*;
 
-import Controller.UserController;
+import Model.LoginServer;
 
 import java.awt.event.*;
 public class LoginForm extends Form implements ActionListener {
@@ -73,7 +73,7 @@ public class LoginForm extends Form implements ActionListener {
 
        if(e.getActionCommand().equals("Sign in")){
            
-            if(UserController.validate(email,password)!= null){ //check if email and password are in database
+            if(LoginServer.validate(email,password)!= null){ //check if email and password are in database
                 JOptionPane.showMessageDialog(null,"Login successful");
                 for(int i=0;i<HomePage.movieList.size();i++){
                     if(HomePage.movieList.get(i).RUAnnouncement() != null){
@@ -87,14 +87,17 @@ public class LoginForm extends Form implements ActionListener {
                 HomePage.selectButton.setVisible(false); 
                 PaymentForm.tickets.clear(); //clear any unpaid tickets in paymentform
                 Form.loginStatus = true; //set login status
-                HomePage.annualPayment.setVisible(true); //annual payment button on home page is visible
-                HomePage.currentUser = UserController.validate(email,password); //set current user
+                HomePage.currentUser = LoginServer.validate(email,password); //set current user
+                if(HomePage.currentUser.checkAnnualFee()){ //check if annual fee has been paid or not
+                    HomePage.annualPayment.setVisible(true); //annual payment button on home page is visible
+                }
                 if(HomePage.currentUser.getPaidTickets().size()>0){ //check for any paid tickets on users account
                     for(int i=0;i<HomePage.currentUser.getPaidTickets().size();i++){
                         PaymentForm.payments.add(HomePage.currentUser.getPaidTickets().get(i));
                         HomePage.paidTickets.addElement("Ticket " + String.valueOf(PaymentForm.payments.get(i).getTicket().getID()));
                     }
                     HomePage.selectButton.setVisible(true); //homepage ticket select button is visible
+                    HomePage.cancelButton.setVisible(false);
                     HomePage.pListTitle.setVisible(true);
                 }
                 HomePage.logoutButton.setVisible(true); //logout button on home page is visible

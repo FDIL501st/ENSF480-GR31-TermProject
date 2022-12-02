@@ -7,13 +7,13 @@ public class Ticket {
     private int seatNum;
     private int roomNum;
     private int ID;
-    private static int counter = 0;
+    private static int counter = 0; 
     public Ticket(Movie movie,Date timeSelected,int seatNum,int roomNum) {
        this.time = timeSelected;
         this.movie = movie;
         this.seatNum = seatNum;
         this.roomNum = roomNum;
-        this.ID = counter;
+        this.ID = counter; 
         counter++;
 
     }

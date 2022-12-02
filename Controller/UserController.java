@@ -1,21 +1,22 @@
 package Controller;
 
-import Model.LoginServer;
+import Database.UserDatabaseReader;
 import Model.RegisteredUser;
 
 public class UserController extends Controller{
-    public static boolean register(String email,String password,String fName,String lName,String address,String cardNum){
-        LoginServer lg = LoginServer.getInstance();
-        if(lg.register(email, password, fName, lName, address,cardNum)){
-            return true;
-        }
-        return false;
+    @Override
+    public void add(Object o) {
+        /*
+        RegisteredUser ru = (RegisteredUser)o;
+        UserDatabaseReader.addUser(ru);
+        */
+        
     }
-    public static RegisteredUser validate(String email,String password){
-        LoginServer lg = LoginServer.getInstance();
-        if(lg.validate(email,password)!= null){
-            return lg.validate(email,password);
-        }
-        return null;
+    @Override
+    public void remove(Object o) {
+        /* 
+        RegisteredUser ru = (RegisteredUser)o;
+        UserDatabaseReader.removeUser(ru);
+        */
     }
 }

@@ -3,6 +3,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import Controller.MovieController;
+import Controller.TicketController;
 
 import java.awt.event.*;
 import java.text.ParseException;
@@ -23,7 +24,7 @@ public class HomePage implements ActionListener{
     private static JButton registerButton;
     private static JButton movieSelect;
     static JButton annualPayment;
-    private static JButton cancelButton;
+    static JButton cancelButton;
     static JButton selectButton;
     static DefaultListModel<String> movies = new DefaultListModel<>(); //list of movie names to announce
     static ArrayList<Movie> movieList = new ArrayList<Movie>(); //list of all movies
@@ -41,7 +42,7 @@ public class HomePage implements ActionListener{
 }
     public void start() throws ParseException{
         homeFrame = new JFrame();
-        homeFrame.setSize(750,500);
+        homeFrame.setSize(850,700);
         homeFrame.setTitle("Home Page");
 
        JPanel title = new JPanel(); //panel for home page title
@@ -109,19 +110,20 @@ public class HomePage implements ActionListener{
         pListTitle.setVisible(false);
 
         JPanel ticketPanel = new JPanel(); //panel to contain paid ticket information
-        ticketPanel.setBounds( 80,180,150,220);
+        ticketPanel.setBounds( 80,150,150,400);
         ticketPanel.setLayout(new FlowLayout());
         paidList = new JList<>(paidTickets); //list of paid tickets
+        paidList.setFont(new Font("Arial",Font.PLAIN,8));
         ticketPanel.add(paidList);
 
         selectButton = new JButton("Select Ticket"); //button to select a ticket from paid tickets list
         selectButton.addActionListener(new HomePage());
-       selectButton.setBounds(100,400,150,25);
+       selectButton.setBounds(100,600,150,25);
        selectButton.setVisible(false); //set invisible to begin
         
        cancelButton = new JButton("Cancel Ticket"); //button to cancel the selected ticket 
        cancelButton.addActionListener(new HomePage());
-       cancelButton.setBounds(350,400,150,25);
+       cancelButton.setBounds(350,600,150,25);
        cancelButton.setVisible(false); //set invisible to begin
 
         mainPanel.add(title);
@@ -186,6 +188,7 @@ public class HomePage implements ActionListener{
                 pListTitle.setVisible(false); 
                 selectButton.setVisible(false);
                 cancelButton.setVisible(false);
+                logoutButton.setVisible(false);
             }
             else { //user is already logged in
                 JOptionPane.showMessageDialog(null, "Unable to logout\nNo user is logged in");
@@ -203,8 +206,8 @@ public class HomePage implements ActionListener{
         }
         
         if(e.getActionCommand().equals("Annual Payment")){
-            this.setForm(new PaymentForm());
-            form.run();
+                this.setForm(new PaymentForm());
+                form.run();          
         }
         if(e.getActionCommand().equals("Select Ticket")){
             if(paidList.getSelectedIndex()!= -1){ //an item on the ticket list is selected
@@ -229,12 +232,14 @@ public class HomePage implements ActionListener{
             }
             else{
                 JOptionPane.showMessageDialog(null,"Cancellation successful");
+                PaymentForm.tc.remove(paymentSelected.getTicket());
                 PaymentForm.payments.remove(paymentSelected); //remove from payments list
                 HomePage.currentUser.updatePayments(PaymentForm.payments); 
                 String ticket = "Ticket " + paymentSelected.getTicket().getID();
                 for(int i=0;i<paidTickets.size();i++){
                 
                     if(ticket.equals(paidTickets.get(i))){
+                    
                         paidTickets.remove(i); //remove from paidTickets display
                     }
                 }

@@ -14,13 +14,8 @@ public class MovieController extends Controller{
     
 
     public static ArrayList<Movie> getAllMovies() throws ParseException {
-        //ArrayList<Movie> movies = MovieDatabaseReader.getAllMovies();
+        //return MovieDatabaseReader.getAllMovies();
         ArrayList<Movie> names = new ArrayList<Movie>();
-        /* 
-        for(int i=0;i<movies.size();i++){
-            names.addElement(movies.get(i).getMovieName());
-        }
-        */
         //test data
         ArrayList<String> times = new ArrayList<>();
      
@@ -55,38 +50,15 @@ public class MovieController extends Controller{
         names.add(new Movie("m6","06-01-2023", times2));
         return names;
     }
-    public static DefaultListModel<String> getNewMovies(){
-       // ArrayList<Movie> movies = MovieDatabaseReader.getAllMovie();
-        DefaultListModel<String> names = new DefaultListModel<>();
-        /* 
-        for(int i=0;i<movies.size();i++){
-            if(movies.get(i).regularAnnoucement()!= null){
-                names.addElement(movies.get(i).getMovieName());
-            }
-        }
-        */
-        //test data
-        names.addElement("m1");
-        names.addElement("m2");
-        names.addElement("m3");
-        names.addElement("m4");
-        names.addElement("m5");
-        names.addElement("m6");
-        return names;
+    @Override
+    public void add(Object o) {
+        Movie m = (Movie) o;
+        MovieDatabaseReader.addMovie(m.getMovieName(),new Date(),m.getReleaseDate());
+        
     }
-    public static void addRUAnnouncement(DefaultListModel<String> names){
-        //ArrayList<Movie> movies = data.getMovies();
-        //test data
-        names.addElement("m7 (RU)");
-        names.addElement("m8 (RU)");
-        names.addElement("m9 (RU)");
-        names.addElement("m10 (RU)");
-          /* 
-        for(int i=0;i<movies.size();i++){
-            if(movies.get(i).RUAnnoucement()!= null){
-                names.addElement(movies.get(i).getMovieName() + " (RU)");
-            }
-        }
-        */
+    @Override
+    public void remove(Object o) {
+        Movie m = (Movie) o;
+        MovieDatabaseReader.removeMovie(m.getMovieName(),new Date());
     }
 }

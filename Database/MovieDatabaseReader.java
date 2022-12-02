@@ -339,7 +339,7 @@ public class MovieDatabaseReader extends DatabaseReader{
         Movie movie1 = MovieDatabaseReader.getMovie(movieName);
         if (movie1 != null)
             System.out.println(movie1.getMovieName());
-            System.out.println(movie1.releaseDate().toString());
+            System.out.println(movie1.getReleaseDate().toString());
 
             Iterator<Date> iterator = movie1.getAvailableTimes().iterator();
             while (iterator.hasNext()) 
@@ -349,7 +349,7 @@ public class MovieDatabaseReader extends DatabaseReader{
         ArrayList<Movie> movies = MovieDatabaseReader.fetchAllMovies();
         for (Movie movie : movies) {
             System.out.println(movie.getMovieName());
-            System.out.println(movie.releaseDate().toString());
+            System.out.println(movie.getReleaseDate().toString());
 
             Iterator<Date> iterator1 = movie.getAvailableTimes().iterator();
             while (iterator1.hasNext()) 
