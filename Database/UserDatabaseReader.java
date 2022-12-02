@@ -12,12 +12,16 @@ public class UserDatabaseReader extends DatabaseReader{
             return null;
         }
         
-        String query = String.format("SELECT * FROM %s WHERE email=%s, password=%s", TABLE, email, password);
+        String query = String.format("SELECT * FROM %s WHERE email= ? AND password= ?", TABLE);
         
         RegisteredUser user = null;
         try {
-            Statement fetchUser = connection.createStatement();
-            ResultSet foundUser = fetchUser.executeQuery(query);
+            PreparedStatement fetchUser = connection.prepareStatement(query);
+            // set values 
+            fetchUser.setString(1, email);
+            fetchUser.setString(2, password);
+            // statement ready to execute
+            ResultSet foundUser = fetchUser.executeQuery();
 
             if (foundUser.next()) {
                 //make a new RegisteredUser object by getting data from row
@@ -27,8 +31,9 @@ public class UserDatabaseReader extends DatabaseReader{
                 String lastName = foundUser.getString(4);
                 String address = foundUser.getString(5);
                 String cardNumber = foundUser.getString(6);
+                java.util.Date registrationDate = foundUser.getDate(7);
                 
-                user = new RegisteredUser(fetchedEmail, fetchedPassword, firstName, lastName, address, cardNumber);  
+                user = new RegisteredUser(fetchedEmail, fetchedPassword, firstName, lastName, address, cardNumber, registrationDate);  
             }
             foundUser.close();    
             
@@ -41,7 +46,7 @@ public class UserDatabaseReader extends DatabaseReader{
         
         return user;
     }
-
+/* 
     public static boolean userExist(String email) {
         if (!connect()) {
             return false;
@@ -69,25 +74,28 @@ public class UserDatabaseReader extends DatabaseReader{
     public static boolean userExist(RegisteredUser user) {
         return userExist(user.getEmail());
     }
-
+*/
     public static boolean addUser(RegisteredUser user) {
-        // No need to add an already existing user
-        if (userExist(user.getEmail())) {
-            return false;   
-        }
         // attempt to connect to database
         if (!connect()) {
             return false;
         }
 
         String query = String.format(
-            "INSERT INTO %s (email, password, first_name, last_name, address, card_number) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO %s (email, password, first_name, last_name, address, card_number, registration_date) VALUES (?, ?, ?, ?, ?, ?, ?)",
             TABLE);
-        
+        // get java.sql.Date object from java.util.Date object
+        Date registration_date = new Date(user.getDateLastPayed().getTime());
         try {
             PreparedStatement insertUser = connection.prepareStatement(query);
             // set values
             insertUser.setString(1, user.getEmail());
+            insertUser.setString(2, user.getPassword());
+            insertUser.setString(3, user.getfirstName());
+            insertUser.setString(4, user.getlastName());
+            insertUser.setString(5, user.getAddress());
+            insertUser.setString(6, user.getCardNumber());
+            insertUser.setDate(7, registration_date);
             // statement ready to execute
             int rowsChanged = insertUser.executeUpdate();
             insertUser.close();
@@ -106,22 +114,20 @@ public class UserDatabaseReader extends DatabaseReader{
     }
 
     public static boolean removeUser(String email) {
-        // can't remove user if he doesn't exist
-        if (!userExist(email)) {
-            return false;
-        }
         // if can't connect, operation failed as can't remove the user
         if (!connect()) {
             return false;
         }
         
-        String query = String.format("DELETE FROM %s WHERE email=%s", TABLE, email);
+        String query = String.format("DELETE FROM %s WHERE email=?", TABLE);
 
         try {
-            Statement deleteUser = connection.createStatement();
-            int rowsChanged = deleteUser.executeUpdate(query);
+            PreparedStatement deleteUser = connection.prepareStatement(query);
+            // set email
+            deleteUser.setString(1, email);
+            // statement ready to execute
+            int rowsChanged = deleteUser.executeUpdate();
             deleteUser.close();
-
             // if rowsChanged == 0, then the user was not removed
             // so throw SQLException so it can be caught and false be returned
             if (rowsChanged == 0) {
@@ -141,10 +147,6 @@ public class UserDatabaseReader extends DatabaseReader{
     }
 
     public static boolean updateUser(RegisteredUser updatedUser) {
-        // if user doesn't exist, can't update them
-        if (!userExist(updatedUser.getEmail())) {
-            return false;
-        }
         // operation failed if can't connect to database as can't update user
         if (!connect()) {
             return false;
@@ -152,13 +154,22 @@ public class UserDatabaseReader extends DatabaseReader{
 
         // Can't update email or registration_date
         String query = String.format(
-            "UPDATE %s SET password=%s, first_name=%s, last_name=%s, address=%s, card_number=%s WHERE email=%s",
-            TABLE, updatedUser.getPassword(), updatedUser.getfirstName(), updatedUser.getlastName(),
-            updatedUser.getAddress(), updatedUser.getCardNumber(), updatedUser.getEmail());
-
+            "UPDATE %s SET password=?, first_name=?, last_name=?, address=?, card_number=?, registration_date=? WHERE email=?",
+            TABLE);
+        // get java.sql.Date object from java.util.Date object
+        Date registration_date = new Date(updatedUser.getDateLastPayed().getTime());
         try {
-            Statement userUpdate = connection.createStatement();
-            int rowsChanged = userUpdate.executeUpdate(query);
+            PreparedStatement userUpdate = connection.prepareStatement(query);
+            // set values
+            userUpdate.setString(7, updatedUser.getEmail());
+            userUpdate.setString(1, updatedUser.getPassword());
+            userUpdate.setString(2, updatedUser.getfirstName());
+            userUpdate.setString(3, updatedUser.getlastName());
+            userUpdate.setString(4, updatedUser.getAddress());
+            userUpdate.setString(5, updatedUser.getCardNumber());
+            userUpdate.setDate(6, registration_date);
+            // statement ready to execute
+            int rowsChanged = userUpdate.executeUpdate();
             userUpdate.close();
 
             // if rowsChanged == 0, then update did not occur
@@ -175,4 +186,35 @@ public class UserDatabaseReader extends DatabaseReader{
         return true;
     }
 
+    public static void main(String[] args) {
+        String email = "fdil.fadilh1@gmail.com";
+        String password = "fdil";
+        String firstName = "Fadil";
+        String lastName = "Husain";
+        String address = "123 Someplace Dr";
+        String cardNum = "1554789855244474";
+
+        RegisteredUser registeredUser = new RegisteredUser(email, password, firstName, lastName, address, cardNum);
+
+        System.out.println(UserDatabaseReader.addUser(registeredUser));
+        System.out.println();
+
+        RegisteredUser ru2 = UserDatabaseReader.getUser(email, password);
+        System.out.println(ru2.getEmail());
+        System.out.println(ru2.getPassword());
+        System.out.println(ru2.getfirstName());
+        System.out.println(ru2.getlastName());
+        System.out.println(ru2.getAddress());
+        System.out.println(ru2.getCardNumber());
+        System.out.println(ru2.getDateLastPayed().toString());
+        System.out.println();
+
+        RegisteredUser ru3 = new RegisteredUser(email, password, firstName, lastName, "12385 false ave", cardNum);
+        System.out.println(UserDatabaseReader.updateUser(ru3));
+        System.out.println();
+
+        System.out.println(UserDatabaseReader.removeUser(registeredUser)); 
+        
+        // all methods works as intended
+    }
 }
