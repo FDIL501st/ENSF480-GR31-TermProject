@@ -2,12 +2,13 @@ package Interface;
 import java.awt.*;
 import javax.swing.*;
 
-
+import Controller.MovieController;
 import Controller.TicketController;
 import Model.Ticket;
 import Model.Movie;
 
 import java.awt.event.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -67,6 +68,32 @@ public class TicketForm extends Form implements ActionListener{
          movieLabel.setFont(new Font("Calibri Black", Font.BOLD, 15));
          movieLabel.setVisible(true);
          mListTitle.add(movieLabel);
+
+        JTextArea mPanel = new JTextArea();
+         mPanel.setBounds(100, 120, 100, 50);
+         mPanel.setLineWrap(true);
+         ArrayList<Movie> movieList = new ArrayList<Movie>();
+         String movies = "";
+        try {
+            movieList = MovieController.getAllMovies();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < movieList.size(); i++) {
+            if (movieList.get(i).regularAnnouncement() != null && movieList.get(i).RUAnnouncement() == null){
+                movies = movies + movieList.get(i).getMovieName() + "\n";
+            }
+            if (loginStatus == true) {
+                if (movieList.get(i).RUAnnouncement() != null) {
+                    movies = movies + movieList.get(i).getMovieName() + "\n";
+                }
+            }
+        }
+        mPanel.setText(movies);
+        mPanel.setEditable(false);
+        mPanel.setCaretPosition(0);
+        JScrollPane movieScroll = new JScrollPane(mPanel);
+        movieScroll.setBounds(100, 120, 100, 50);
 
          tListTitle = new JPanel(); //panel for time list title
          tListTitle.setBounds(510,40,150,40);
@@ -129,6 +156,7 @@ public class TicketForm extends Form implements ActionListener{
         ticketFrame.add(mListTitle);
         ticketFrame.add(tListTitle);
         ticketFrame.add(sListTitle);
+        ticketFrame.add(movieScroll);
         ticketFrame.add(panel);
         ticketFrame.setVisible(true); 
         ticketFrame.setLocationRelativeTo(null); //center the page
@@ -158,6 +186,9 @@ public class TicketForm extends Form implements ActionListener{
                 boolean found = false;//set to true if user entered a value movie name
                 for(int i=0;i<HomePage.movieList.size();i++){
                     if(HomePage.movieList.get(i).getMovieName().equalsIgnoreCase(movieName)){
+                        if (loginStatus == false && HomePage.movieList.get(i).regularAnnouncement() == null) {
+                            continue;
+                        }
                         found = true;
                         dates = HomePage.movieList.get(i).getAvailableTimes();
                         for(int j=0;j<dates.size();j++){
@@ -171,7 +202,7 @@ public class TicketForm extends Form implements ActionListener{
                     }
                 }
                 if(!found){
-                    JOptionPane.showMessageDialog(null,movieName + " is an invalid movie name");
+                    JOptionPane.showMessageDialog(null, movieName + " is an invalid movie name");
                 }   
         }
         if(e.getActionCommand().equals("Select Time")){ //select time button is pressed

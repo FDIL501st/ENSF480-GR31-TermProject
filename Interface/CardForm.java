@@ -189,7 +189,7 @@ public class CardForm extends Form implements ActionListener{
             }
             else{
                 //payment successful
-                JOptionPane.showMessageDialog(null,"Payment has been completed");
+                JOptionPane.showMessageDialog(null, "Payment has been completed.\nReceipt has been sent to: " + email);
                 for(int i=0;i<TicketForm.selectedTickets.size();i++){ 
                     PaymentForm.payments.add(new Payment(TicketForm.selectedTickets.get(i))); //create payment objects
                     HomePage.paidTickets.addElement("Ticket " + String.valueOf(PaymentForm.payments.get(i).getTicket().getID())); //add paidTickets to home page

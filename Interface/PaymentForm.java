@@ -99,6 +99,9 @@ public class PaymentForm extends Form implements ActionListener{
             ticketFormOpened = false; //indicate that ticket form can be reopened
        }
        if(e.getActionCommand().equals("Select Ticket")){ //select ticket (show ticket information)
+            if (tickets.size() == 0) {
+                JOptionPane.showMessageDialog(null, "Unable to select tickets.\nThis page is being used for annual payments.");
+            }
             if(ticketList.getSelectedIndex()!= -1){ //an item on the ticket list is selected
                 for(int i=0;i<TicketForm.selectedTickets.size();i++){ //check which ticket from the list is selected
                     if(ticketList.getSelectedValue().equals("Ticket " + String.valueOf(TicketForm.selectedTickets.get(i).getID()))){
@@ -115,7 +118,12 @@ public class PaymentForm extends Form implements ActionListener{
         }
         if(e.getActionCommand().equals("Confirm Payment")){
             if(Form.loginStatus){ //registered user does not need to add information
-                JOptionPane.showMessageDialog(null,"Payment has been completed");
+                if (tickets.size() == 0) {
+                    JOptionPane.showMessageDialog(null,"Annual payment has been completed\nReceipt has been sent to your email");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null,"Ticket payment has been completed\nReceipt and tickets have been sent to your email");
+                }
                 for(int i=0;i<TicketForm.selectedTickets.size();i++){ //create payment objects
                     payments.add(new Payment(TicketForm.selectedTickets.get(i)));
                     HomePage.paidTickets.addElement("Ticket " + String.valueOf(TicketForm.selectedTickets.get(i).getID()));
