@@ -2,9 +2,6 @@ package Database;
 
 import java.sql.*;
 import java.util.ArrayList;
-
-import javax.swing.text.TabExpander;
-
 import Model.RegisteredUser;
 
 public class UserDatabaseReader extends DatabaseReader{
@@ -152,6 +149,8 @@ public class UserDatabaseReader extends DatabaseReader{
         }
 
         disconnect();
+        // before returning, need to sync up changes
+        allUsers = fetchAllUsers();
         return true;
     }
 
@@ -181,6 +180,9 @@ public class UserDatabaseReader extends DatabaseReader{
         }
          
         disconnect();
+
+        // before returning, need to sync up changes
+        allUsers = fetchAllUsers();
         return true;
     }
 
@@ -225,6 +227,8 @@ public class UserDatabaseReader extends DatabaseReader{
         }
 
         disconnect();
+        // before returning, need to sync up changes
+        allUsers = fetchAllUsers();
         return true;
     }
 

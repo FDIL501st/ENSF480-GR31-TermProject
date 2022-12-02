@@ -52,6 +52,7 @@ public class TicketDatabaseReader extends DatabaseReader {
         }
         return tickets;
     }
+    
     public static boolean addTicket(String movieName, Date showTime, int seatNum) {
         // if fail to connect, failed to add new ticket
         if (!connect()) {
@@ -85,6 +86,9 @@ public class TicketDatabaseReader extends DatabaseReader {
 
         //update seat which just got reserved
         MovieDatabaseReader.updateSeat(movieName, showTime, seatNum, 0);
+
+        // need to sync up allTickets
+        allTickets = fetchAllTickets();
         return true;
     }
 
@@ -125,6 +129,8 @@ public class TicketDatabaseReader extends DatabaseReader {
         disconnect();
         // update seat which just became available
         MovieDatabaseReader.updateSeat(movieName, showTime, seatNum, 1);
+        // need to sync up allTickets
+        allTickets = fetchAllTickets();
         return true;
     }
 
