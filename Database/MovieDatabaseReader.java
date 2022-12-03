@@ -95,7 +95,7 @@ public class MovieDatabaseReader extends DatabaseReader{
             fetchSeats.setString(1, movieName);
             fetchSeats.setTimestamp(2, show_time);
             // now statement is ready to execute
-            ResultSet allSeats = fetchSeats.executeQuery(query);
+            ResultSet allSeats = fetchSeats.executeQuery();
 
             // only expecting one row to be returned, so use only first row
             if (allSeats.next()) {
