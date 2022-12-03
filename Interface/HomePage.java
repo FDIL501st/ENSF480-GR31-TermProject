@@ -279,7 +279,7 @@ public class HomePage implements ActionListener{
             if(cancel == false){
                 JOptionPane.showMessageDialog(null,"One or more tickets could not be cancelled");
             }
-            else if(!currentUser.getRegistrationStatus()){
+            if(!currentUser.getRegistrationStatus()&& cancelled >0){
                 JOptionPane.showMessageDialog(null,"Code to apply on next purchase is: " + String.valueOf(TicketController.makeNewCode(cancelled*100)));
             }
         }

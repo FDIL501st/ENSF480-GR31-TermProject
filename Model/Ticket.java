@@ -17,6 +17,14 @@ public class Ticket {
         counter++;
 
     }
+    public Ticket(Movie movie,Date timeSelected,int seatNum,int roomNum,int ID) {
+        this.time = timeSelected;
+         this.movie = movie;
+         this.seatNum = seatNum;
+         this.roomNum = roomNum;
+        this.ID = ID;
+ 
+     }
     public int getRoomNum(){
         return roomNum;
     }
