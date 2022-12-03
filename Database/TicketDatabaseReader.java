@@ -1,16 +1,58 @@
 package Database;
 
-import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
-import java.text.SimpleDateFormat;
 import Model.Movie;
 import Model.Ticket;
 import java.sql.*;
 
 public class TicketDatabaseReader extends DatabaseReader {
     final private static String TABLE = "tickets";
+    private static ArrayList<Ticket> allTickets = fetchAllTickets();
 
+    public static ArrayList<Ticket> getAllTickets() {
+        return allTickets;
+    }
+
+    public static ArrayList<Ticket> fetchAllTickets() {
+        // if fail to connect, return null as failed operation
+        if (!connect()) {
+            return null;
+        }
+
+        String query = String.format("SELECT * FROM %s", TABLE);
+        // below will store all information needed to make ticket objects
+        ArrayList<String> movie_names = new ArrayList<>();
+        ArrayList<Timestamp> show_times = new ArrayList<>();
+        ArrayList<Integer> seat_nums = new ArrayList<>();
+
+        try {
+            Statement selectAll = connection.createStatement();
+            ResultSet allResult = selectAll.executeQuery(query);
+            // now fill up our arrays
+            while (allResult.next()) {
+                movie_names.add(allResult.getString("movie_name"));
+                show_times.add(allResult.getTimestamp("show_time"));
+                seat_nums.add(allResult.getInt("seat_num"));
+            }
+            selectAll.close();
+        } catch (Exception e) {
+            disconnect();
+            return null;
+        }
+        disconnect();
+        // assuming size of all 3 arrays are the same, so can make that many tickets and append
+        int n = movie_names.size();
+        ArrayList<Ticket> tickets = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            // first make a Date object from Timestamp so can call getTicket
+            Date showTime = Date.from(show_times.get(i).toInstant());
+            // now just call getTicket and append
+            tickets.add(getTicket(movie_names.get(i), showTime, seat_nums.get(i)));
+        }
+        return tickets;
+    }
+    
     public static boolean addTicket(String movieName, Date showTime, int seatNum) {
         // if fail to connect, failed to add new ticket
         if (!connect()) {
@@ -44,6 +86,9 @@ public class TicketDatabaseReader extends DatabaseReader {
 
         //update seat which just got reserved
         MovieDatabaseReader.updateSeat(movieName, showTime, seatNum, 0);
+
+        // need to sync up allTickets
+        allTickets = fetchAllTickets();
         return true;
     }
 
@@ -84,6 +129,8 @@ public class TicketDatabaseReader extends DatabaseReader {
         disconnect();
         // update seat which just became available
         MovieDatabaseReader.updateSeat(movieName, showTime, seatNum, 1);
+        // need to sync up allTickets
+        allTickets = fetchAllTickets();
         return true;
     }
 
@@ -146,12 +193,21 @@ public class TicketDatabaseReader extends DatabaseReader {
 
         System.out.println(addTicket(movieName, showTime, 3));
 
-        System.out.println(removeTicket(movieName, showTime, 1));
+        //System.out.println(removeTicket(movieName, showTime, 1));
         
         Ticket t1 = getTicket(movieName, showTime, 3);
         System.out.println(t1.getMovie().getMovieName());
         System.out.println(t1.getTime().toString());
         System.out.println(t1.getSeatNum());
+        
+        System.out.println();
+        ArrayList<Ticket> tickets = getAllTickets();
+        for (Ticket ticket : tickets) {
+            System.out.println(ticket.getMovie().getMovieName());
+            System.out.println(ticket.getTime().toString());
+            System.out.println(ticket.getSeatNum());
+        }
         // all methods works as intended
+        // at the moment, no sync function to sync up any changes to database to allTickets or vice versa
     }
 }

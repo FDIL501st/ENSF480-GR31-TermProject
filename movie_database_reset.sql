@@ -135,5 +135,7 @@ CREATE TABLE codes (
   `value` DOUBLE NOT NULL DEFAULT 0 COMMENT 'value of code. The monetary/$ value that code represents.',
   `expiry` DATE NOT NULL COMMENT 'Expiry Date of the code',
   PRIMARY KEY (`ID`)
-  );
+);
+
+
 
