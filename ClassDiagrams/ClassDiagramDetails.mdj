@@ -6611,6 +6611,7 @@
 											"top": 509,
 											"width": 159,
 											"height": 13,
+											"underline": true,
 											"text": "+getAllMovies(): void",
 											"horizontalAlignment": 0
 										},
@@ -7328,6 +7329,7 @@
 								"$ref": "AAAAAAGEjRKeoAyiQVY="
 							},
 							"name": "getAllMovies",
+							"isStatic": true,
 							"parameters": [
 								{
 									"_type": "UMLParameter",
