@@ -5,9 +5,8 @@ import java.util.ArrayList;
 
 
 import Database.MovieDatabaseReader;
-import Database.TicketDatabaseReader;
 import Model.Movie;
-import Model.Ticket;
+
 public class MovieController extends Controller{
     
 

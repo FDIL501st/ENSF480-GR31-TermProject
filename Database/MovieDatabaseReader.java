@@ -342,48 +342,4 @@ public class MovieDatabaseReader extends DatabaseReader{
         return true;
     }
 
-    public static void main(String[] args) {
-        /* Testing this class */
-        /* 
-        Date show = new Date();
-        show.setTime(roundSecondsDown(show.getTime()));
-        System.out.println(show.toString());
-
-        Date release = new Date();
-        release.setTime(roundSecondsDown(release.getTime()));
-        System.out.println(release.toString());
-
-        String movieName = "Movie1";
-
-        System.out.println(MovieDatabaseReader.addMovie(movieName, show, release));
-
-        Movie movie1 = MovieDatabaseReader.getMovie(movieName);
-        if (movie1 != null)
-            System.out.println(movie1.getMovieName());
-            System.out.println(movie1.getReleaseDate().toString());
-
-            Iterator<Date> iterator = movie1.getAvailableTimes().iterator();
-            while (iterator.hasNext()) 
-                System.out.println(iterator.next().toString());
-        
-        System.out.println();
-        ArrayList<Movie> movies = MovieDatabaseReader.fetchAllMovies();
-        for (Movie movie : movies) {
-            System.out.println(movie.getMovieName());
-            System.out.println(movie.getReleaseDate().toString());
-
-            Iterator<Date> iterator1 = movie.getAvailableTimes().iterator();
-            while (iterator1.hasNext()) 
-                System.out.println(iterator1.next().toString());
-        }
-        //Stystem.out.println();
-        //System.out.println(MovieDatabaseReader.removeMovie(movieName, show)); 
-        //still works
-        
-        System.out.println();
-        System.out.println(MovieDatabaseReader.updateSeat(movieName, show, 1, 0));
-        */
-        // works
-        
-    }
 }

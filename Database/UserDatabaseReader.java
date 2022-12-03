@@ -238,50 +238,5 @@ public class UserDatabaseReader extends DatabaseReader{
         return true;
     }
 
-    public static void main(String[] args) {
-        /* 
-        String email = "fdil.fadilh1@gmail.com";
-        String password = "fdil";
-        String firstName = "Fadil";
-        String lastName = "Husain";
-        String address = "123 Someplace Dr";
-        String cardNum = "1554789855244474";
-
-        RegisteredUser registeredUser = new RegisteredUser(email, password, firstName, lastName, address, cardNum);
-
-        System.out.println(UserDatabaseReader.addUser(registeredUser));
-        System.out.println();
-
-        RegisteredUser ru2 = UserDatabaseReader.getUser(email, password);
-        System.out.println(ru2.getEmail());
-        System.out.println(ru2.getPassword());
-        System.out.println(ru2.getfirstName());
-        System.out.println(ru2.getlastName());
-        System.out.println(ru2.getAddress());
-        System.out.println(ru2.getCardNumber());
-        System.out.println(ru2.getDateLastPayed().toString());
-        System.out.println();
-
-        RegisteredUser ru3 = new RegisteredUser(email, password, firstName, lastName, "12385 false ave", cardNum);
-        System.out.println(UserDatabaseReader.updateUser(ru3));
-        System.out.println();
-
-        //System.out.println(UserDatabaseReader.removeUser(registeredUser)); 
-        */
-        /* 
-        ArrayList<RegisteredUser> users = getAllUsers();
-        for (RegisteredUser registeredUser : users) {
-        System.out.println(registeredUser.getEmail());
-        System.out.println(registeredUser.getPassword());
-        System.out.println(registeredUser.getfirstName());
-        System.out.println(registeredUser.getlastName());
-        System.out.println(registeredUser.getAddress());
-        System.out.println(registeredUser.getCardNumber());
-        System.out.println(registeredUser.getDateLastPayed().toString());
-        System.out.println();
-        }
-        */
-        //System.out.println(getAllUsers().size());
-        // all methods works as intended
-    }
+   
 }

@@ -239,42 +239,5 @@ public class TicketDatabaseReader extends DatabaseReader {
         return new Ticket(movie, showTime, seatNum, 1, ID);
     }
 
-    public static void main(String[] args) {
-        //testing TicketDatabaseReader
-        /*
-        String movieName = "m1";
-        Date showTime = new Date();
-        showTime.setTime(roundSecondsDown(showTime.getTime()));
 
-        MovieDatabaseReader.addMovie(movieName, showTime, showTime);
-        
-        System.out.println(addTicket(11, movieName, showTime, 1));
-
-        System.out.println(addTicket(1, movieName, showTime, 3));
-
-        //System.out.println(removeTicket(movieName, showTime, 1));
-        
-        Ticket t1 = getTicket(1);
-        System.out.println(t1.getMovie().getMovieName());
-        System.out.println(t1.getTime().toString());
-        System.out.println(t1.getSeatNum());
-        
-        System.out.println();
-        ArrayList<Ticket> tickets = getAllTickets();
-        for (Ticket ticket : tickets) {
-            System.out.println(ticket.getMovie().getMovieName());
-            System.out.println(ticket.getTime().toString());
-            System.out.println(ticket.getSeatNum());
-        }
-        // all methods works as intended
-        // at the moment, no sync function to sync up any changes to database to allTickets or vice versa
-
-        // testing chaining connects and disconnects without disconecting or connecting first
-        System.out.println(connect());
-        System.out.println(connect());
-        System.out.println(disconnect());
-        System.out.println(disconnect());
-        */
-        // works as intended
-    }
 }
