@@ -23,11 +23,6 @@ public class MovieDatabaseReader extends DatabaseReader{
         return allMovies;
     }
 
-    public static void setAllMovies(ArrayList<Movie> movies) {
-        //need to update database
-        // might not need this as this is admin features and can just call other functions instead
-    }
-
     /**
      * Sets the table accessed by this class. Is to be set when wanting to access movies from a specific theatre.
      * Table names are the names of the theatre.
@@ -189,7 +184,7 @@ public class MovieDatabaseReader extends DatabaseReader{
      * gets all the movies stored in the database
      * @return an ArrayList filled with Movie objects for all the movies
      */
-    public static ArrayList<Movie> fetchAllMovies() {
+    private static ArrayList<Movie> fetchAllMovies() {
         //if fail to connect, can't return anything
         if (!connect()) {
             return null;

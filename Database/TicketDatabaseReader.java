@@ -10,11 +10,19 @@ public class TicketDatabaseReader extends DatabaseReader {
     final private static String TABLE = "tickets";
     private static ArrayList<Ticket> allTickets = fetchAllTickets();
 
+    /**
+     * Getter for allTickets.
+     * @return an arraylist of all ticket objects stored within the database
+     */
     public static ArrayList<Ticket> getAllTickets() {
         return allTickets;
     }
 
-    public static ArrayList<Ticket> fetchAllTickets() {
+    /**
+     * fetches all the tickets stored within the database
+     * @return an arrayList of Ticket objects created from all the rows of the database
+     */
+    private static ArrayList<Ticket> fetchAllTickets() {
         // if fail to connect, return null as failed operation
         if (!connect()) {
             return null;
@@ -53,6 +61,13 @@ public class TicketDatabaseReader extends DatabaseReader {
         return tickets;
     }
     
+    /**
+     * Adds a new ticket to the database.
+     * @param movieName name of the movie
+     * @param showTime the show time of the movie
+     * @param seatNum the seat number the ticket reserves
+     * @return true if ticket was added to the database. false if the operation failed.
+     */
     public static boolean addTicket(String movieName, Date showTime, int seatNum) {
         // if fail to connect, failed to add new ticket
         if (!connect()) {
@@ -92,10 +107,22 @@ public class TicketDatabaseReader extends DatabaseReader {
         return true;
     }
 
+    /**
+     * Adds a new ticket to the database.
+     * @param ticket the ticket to add the the database
+     * @return true of ticket was added to the database. false if the operation failed.
+     */
     public static boolean addTicket(Ticket ticket) {
         return addTicket(ticket.getMovie().getMovieName(), ticket.getTime(), ticket.getSeatNum());
     }
 
+    /**
+     * Removes the ticket from the database
+     * @param movieName the name of the movie
+     * @param showTime the time of the showing of the movie
+     * @param seatNum the seat number the ticket reserves
+     * @return true if the row was removed from the database. false if the operation failed.
+     */
     public static boolean removeTicket(String movieName, Date showTime, int seatNum) {
         // if fail to connect, failed to remove ticket
         if (!connect()) {
@@ -134,10 +161,22 @@ public class TicketDatabaseReader extends DatabaseReader {
         return true;
     }
 
+    /**
+     * Removes the ticket from the database.
+     * @param ticket the ticket to remove from the database
+     * @return true if the ticket was removed from the database. false if the operation failed.
+     */
     public static boolean removeTicket(Ticket ticket) {
         return removeTicket(ticket.getMovie().getMovieName(), ticket.getTime(), ticket.getSeatNum());
     }
 
+    /**
+     * Gets a ticket from the database.
+     * @param movieName the name of the movie
+     * @param showTime the show time of the movie
+     * @param seatNum the seat number that the ticket reserves.
+     * @return the ticket object retrieved from the database.
+     */
     public static Ticket getTicket(String movieName, Date showTime, int seatNum) {
         // if fail to connect, can't return a Ticket object
         if (!connect()) {
