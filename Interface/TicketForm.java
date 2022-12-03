@@ -11,8 +11,10 @@ import java.awt.event.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class TicketForm extends Form implements ActionListener{
+    static final int NUM_OF_SEATS =100;
     private static JFrame ticketFrame; 
     private static JPanel panel;
     private static JButton payButton; 
@@ -26,12 +28,11 @@ public class TicketForm extends Form implements ActionListener{
     private static Date timeSelected; //current time selected
     private static int roomSelected; //current room selected
     private static JPanel seatPanel; 
-    static ArrayList<JButton> seatsArr = new ArrayList<JButton>(100); //array of all seats for a given movie and time
+    static ArrayList<JButton> seatsArr = new ArrayList<JButton>(NUM_OF_SEATS); //array of all seats for a given movie and time
     static ArrayList<Ticket> selectedTickets = new ArrayList<Ticket>(); //list of all tickets selected
     private static JTextField movieText;
     private static  JPanel sListTitle;
     private static  JPanel tListTitle;
-
    
     
     public void run(){
@@ -79,13 +80,17 @@ public class TicketForm extends Form implements ActionListener{
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < movieList.size(); i++) {
-            if (movieList.get(i).regularAnnouncement() != null && movieList.get(i).RUAnnouncement() == null){
-                movies = movies + movieList.get(i).getMovieName() + "\n";
+        for(int i=0;i<HomePage.movieList.size();i++){
+            if(HomePage.currentUser.getRegistrationStatus()==false){
+                if((movieList.get(i).RUAnnouncement()!= null && movieList.get(i).RUAnnouncement()== null)|| TimeUnit.DAYS.convert(movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)<=30){ 
+                    //movie has been announced for public 
+                    movies = movies + HomePage.movieList.get(i).getMovieName() + "\n";
+                }
             }
-            if (HomePage.currentUser.getRegistrationStatus() == true) {
-                if (movieList.get(i).RUAnnouncement() != null) {
-                    movies = movies + movieList.get(i).getMovieName() + "\n";
+            else{
+                if( TimeUnit.DAYS.convert(movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)<=37){ 
+                    //movie has been announced for RU 
+                    movies = movies + HomePage.movieList.get(i).getMovieName()+"\n";
                 }
             }
         }
@@ -129,8 +134,8 @@ public class TicketForm extends Form implements ActionListener{
          seatPanel = new JPanel(); //panel for seat display
          seatPanel.setLayout(new GridLayout(10,10,3,3)); //panel set to 10x10 grid layout
          seatPanel.setBounds(300,80,150,300);
-         for(int i=0;i<100;i++){ //create buttons to represent seats in an array of buttons
-           seatsArr.add(new JButton(String.valueOf(i)));
+         for(int i=0;i<NUM_OF_SEATS;i++){ //create buttons to represent seats in an array of buttons
+           seatsArr.add(new JButton(String.valueOf(i+1)));
            seatsArr.get(i).setFont(new Font("Arial",Font.PLAIN,6));
            seatsArr.get(i).setHorizontalAlignment(SwingConstants.LEFT);
            seatsArr.get(i).addActionListener(new TicketForm());
@@ -181,12 +186,16 @@ public class TicketForm extends Form implements ActionListener{
                 sListTitle.setVisible(false);
                 for(int i=0;i<seatsArr.size();i++){ //remove any previous seat displays
                     seatsArr.get(i).setVisible(false);
+                    seatsArr.get(i).setBackground(null);
                 }
                 times.clear(); //clear previous time list
                 boolean found = false;//set to true if user entered a value movie name
                 for(int i=0;i<HomePage.movieList.size();i++){
                     if(HomePage.movieList.get(i).getMovieName().equalsIgnoreCase(movieName)){
-                        if (HomePage.currentUser.getRegistrationStatus() == false && HomePage.movieList.get(i).regularAnnouncement() == null) {
+                        if (HomePage.currentUser.getRegistrationStatus() == false && ( TimeUnit.DAYS.convert(HomePage.movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)>30)){
+                            continue;
+                        }
+                        if(HomePage.currentUser.getRegistrationStatus() ==true &&TimeUnit.DAYS.convert(HomePage.movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)>37 ){
                             continue;
                         }
                         found = true;
@@ -218,11 +227,11 @@ public class TicketForm extends Form implements ActionListener{
                     }
                 }
             }
-            for(int i=0;i<seats.size();i++){ //index 0 is the room #
+            for(int i=0;i<seats.size();i++){ 
                 if(seats.get(i)==1){  //1 indicates that a seat is available so set the display button to be visible
                     seatsArr.get(i).setVisible(true); 
                 }
-                else if(seats.get(i) ==1){
+                else if(seats.get(i) ==0){
                     seatsArr.get(i).setVisible(false); 
                 }
             }
@@ -240,21 +249,21 @@ public class TicketForm extends Form implements ActionListener{
                 pf.run();
             }
         }
-        for(int i=0;i<100;i++){ //check which seats are selected
+        for(int i=1;i<=NUM_OF_SEATS;i++){ //check which seats are selected
             if(e.getActionCommand().equals(String.valueOf(i))){
                 boolean selected = false;
                 for(int j=0;j<selectedTickets.size();j++){ //check if ticket is already selected
                     if(selectedTickets.get(j).getMovie().getMovieName()==movieSelected.getMovieName() &&selectedTickets.get(j).getTime().equals(timeSelected) && selectedTickets.get(j).getSeatNum()==i){
                         JOptionPane.showMessageDialog(null,"Seat " +String.valueOf(i) + " unselected");
                         selectedTickets.remove(j); //unselects the ticket
-                        seatsArr.get(i).setBackground(null);
+                        seatsArr.get(i-1).setBackground(null);
                         selected = true;
                         break;
                     }
                 }
                 if(!selected) { //ticket is not already selected, add ticket to selected tickets
                     JOptionPane.showMessageDialog(null,"Seat " +String.valueOf(i) + " selected");
-                        seatsArr.get(i).setBackground(Color.GREEN);
+                        seatsArr.get(i-1).setBackground(Color.GREEN);
                         selectedTickets.add(new Ticket(movieSelected,timeSelected,i,roomSelected));
                   
                 }

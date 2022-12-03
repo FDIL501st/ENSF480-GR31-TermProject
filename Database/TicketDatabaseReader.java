@@ -42,7 +42,7 @@ public class TicketDatabaseReader extends DatabaseReader {
         }
         // to save time with connecting, won't disconnect and use same connection
         for (Ticket ticket : newAllTickets) {
-            removeTicket(ticket);
+            addTicket(ticket);
         }
         disconnect();
         allTickets = newAllTickets; 

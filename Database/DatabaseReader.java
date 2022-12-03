@@ -86,8 +86,10 @@ public abstract class DatabaseReader {
         System.out.println(date.toString());
         */
         connect();
+        HomePage.allTickets = TicketDatabaseReader.getAllTickets();
         HomePage hp = new HomePage();
         hp.start();
+    
         
         // Currently seems to work
     }

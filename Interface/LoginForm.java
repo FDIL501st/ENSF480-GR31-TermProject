@@ -76,6 +76,7 @@ public class LoginForm extends Form implements ActionListener {
         LoginServer lg = LoginServer.getInstance();
             if(lg.validate(email,password)!= null){ //check if email and password are in database
                 JOptionPane.showMessageDialog(null,"Login successful");
+                HomePage.movies.clear();
                 for(int i=0;i<HomePage.movieList.size();i++){
                     if(HomePage.movieList.get(i).RUAnnouncement() != null){
                         HomePage.movies.addElement(HomePage.movieList.get(i).RUAnnouncement()); //add registered user announcements

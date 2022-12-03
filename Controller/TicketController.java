@@ -9,7 +9,12 @@ import Database.CodeDatabaseReader;
 import Model.Ticket;
 
 public class TicketController extends Controller{
-    
+    public static void updateSeat(String movieName,Date showTime,int seatNum,int seatStatus){
+      MovieDatabaseReader.updateSeat(movieName,showTime,seatNum,seatStatus);
+    }
+    public static void setAllTickets(ArrayList<Ticket> tickets){
+      TicketDatabaseReader.setAllTickets(tickets);
+    }
     public  static ArrayList<Integer> getSeats(String movieName, Date showTime) {
       return MovieDatabaseReader.getSeats(movieName,showTime); 
     }

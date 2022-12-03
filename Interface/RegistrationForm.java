@@ -2,6 +2,7 @@ package Interface;
 import java.awt.*;
 import javax.swing.*;
 
+import Controller.TicketController;
 import Model.LoginServer;
 import Model.Payment;
 
@@ -228,7 +229,8 @@ public class RegistrationForm extends Form implements ActionListener{
                      Payment p = new Payment(TicketForm.selectedTickets.get(i));
                      PaymentForm.payments.add(p); //create payment objects
                      HomePage.paidTickets.addElement("Ticket " + String.valueOf(TicketForm.selectedTickets.get(i).getID())); //add paidTickets to home page
-                     PaymentForm.tc.add(p.getTicket());
+                     HomePage.allTickets.add(p.getTicket());
+                     TicketController.updateSeat(p.getTicket().getMovie().getMovieName(),p.getTicket().getTime(),p.getTicket().getSeatNum(),0);
                  }
                  HomePage.selectButton.setVisible(true); //homepage ticket select button is visible
                  HomePage.pListTitle.setVisible(true); //homepage paid ticket title is visible

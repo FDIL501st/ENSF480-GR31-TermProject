@@ -4,12 +4,14 @@ import javax.swing.*;
 
 import Controller.MovieController;
 import Controller.TicketController;
+import Database.DatabaseReader;
 
 import java.awt.event.*;
 import java.text.ParseException;
 
 import Model.Movie;
 import Model.Payment;
+import Model.Ticket;
 import Model.User;
 
 import java.util.ArrayList;
@@ -31,10 +33,10 @@ public class HomePage implements ActionListener{
     static ArrayList<Movie> movieList = new ArrayList<Movie>(); //list of all movies
     static DefaultListModel<String> paidTickets = new DefaultListModel<>(); //list of tickets that are paid for
     private static JList<String> paidList; //display for list of tickets that are paid for
+    public static ArrayList<Ticket> allTickets = new ArrayList<Ticket>();
    static JPanel pListTitle;
    JList<String> announcements;
    private static Payment paymentSelected; //payment to be cancelled
-
     public void start() throws ParseException{
         homeFrame = new JFrame();
         homeFrame.setSize(850,700);
@@ -144,10 +146,16 @@ public class HomePage implements ActionListener{
         }
   
         homeFrame.add(announcementPanel);
-         homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          homeFrame.add(ticketPanel);
          homeFrame.add(pListTitle);
          homeFrame.add(mainPanel);
+         homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         homeFrame.addWindowListener(new java.awt.event.WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e){
+                TicketController.setAllTickets(HomePage.allTickets);
+            }
+         });
          homeFrame.setVisible(true);
          homeFrame.setLocationRelativeTo(null); //center the page
          
@@ -234,7 +242,10 @@ public class HomePage implements ActionListener{
             }
             else{
                 JOptionPane.showMessageDialog(null,"Cancellation successful");
-                PaymentForm.tc.remove(paymentSelected.getTicket());
+                
+                HomePage.allTickets.remove(paymentSelected.getTicket());
+                Payment p = paymentSelected;
+                TicketController.updateSeat(p.getTicket().getMovie().getMovieName(),p.getTicket().getTime(),p.getTicket().getSeatNum(),1);
                 PaymentForm.payments.remove(paymentSelected); //remove from payments list
                 HomePage.currentUser.updatePayments(PaymentForm.payments); 
                 String ticket = "Ticket " + paymentSelected.getTicket().getID();
@@ -260,7 +271,9 @@ public class HomePage implements ActionListener{
                 }
                 else{
                     cancelled++;
-                    PaymentForm.tc.remove(PaymentForm.payments.get(i).getTicket());
+                    HomePage.allTickets.remove(PaymentForm.payments.get(i).getTicket());
+                    Payment p = PaymentForm.payments.get(i);
+                    TicketController.updateSeat(p.getTicket().getMovie().getMovieName(),p.getTicket().getTime(),p.getTicket().getSeatNum(),1);
                     removed.add(PaymentForm.payments.get(i));
                     HomePage.currentUser.updatePayments(PaymentForm.payments); 
                     String ticket = "Ticket " + PaymentForm.payments.get(i).getTicket().getID();
@@ -284,4 +297,5 @@ public class HomePage implements ActionListener{
             }
         }
     }
+ 
 }

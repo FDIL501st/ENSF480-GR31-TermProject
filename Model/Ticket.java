@@ -23,7 +23,7 @@ public class Ticket {
          this.seatNum = seatNum;
          this.roomNum = roomNum;
         this.ID = ID;
- 
+        counter = ID+1;
      }
     public int getRoomNum(){
         return roomNum;

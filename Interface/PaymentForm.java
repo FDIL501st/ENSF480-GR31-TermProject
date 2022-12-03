@@ -21,7 +21,7 @@ public class PaymentForm extends Form implements ActionListener{
     static DefaultListModel<String> tickets = new DefaultListModel<>();
     private static JList<String> ticketList;
     static ArrayList<Payment> payments = new ArrayList<Payment>();
-    static TicketController tc = new TicketController();
+
 
     
     public void run(){
@@ -176,7 +176,8 @@ public class PaymentForm extends Form implements ActionListener{
                     Payment p = new Payment(TicketForm.selectedTickets.get(i));
                     payments.add(p);
                     HomePage.paidTickets.addElement("Ticket " + String.valueOf(TicketForm.selectedTickets.get(i).getID()));
-                    tc.add(p.getTicket());
+                    HomePage.allTickets.add(p.getTicket());
+                    TicketController.updateSeat(p.getTicket().getMovie().getMovieName(),p.getTicket().getTime(),p.getTicket().getSeatNum(),0);
                 }
                 HomePage.currentUser.updatePayments(payments); //add paid tickets to user 
                 HomePage.selectButton.setVisible(true); //homepage ticket select button is visible

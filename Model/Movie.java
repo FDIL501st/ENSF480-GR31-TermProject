@@ -36,12 +36,12 @@ public class Movie {
     }
     /**
      * Check if movie is ready for RegisteredUser announcement
-     * @return returns movieName + releaseDate if movie is ready to be announced for registered users (between 30-37 days of releaseDate),
+     * @return returns movieName + releaseDate if movie is ready to be announced for registered users (up to 37 days before of releaseDate),
      * null if movie is not ready 
      */
     public String RUAnnouncement(){ 
         Date d = new Date();
-        if(TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)>30 && TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)<=37){
+        if(TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)>=0 && TimeUnit.DAYS.convert(releaseDate.getTime() - d.getTime(),TimeUnit.MILLISECONDS)<=37){
             return movieName + ":  " + releaseDate.toString();
         }
         return null;
