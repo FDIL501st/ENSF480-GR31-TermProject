@@ -47,7 +47,7 @@ public abstract class DatabaseReader {
 
     /**
      * Rounds down the seconds to 0.
-     * @param time time provided in miliseconds as per java.util.Date parameters are
+     * @param time time provided in miliseconds as per {@link java.util.Date} parameters are
      * @return time with seconds rounded down to 0
      */
     final static public long roundSecondsDown(long time) {

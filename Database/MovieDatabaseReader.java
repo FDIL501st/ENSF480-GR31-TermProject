@@ -15,6 +15,10 @@ public class MovieDatabaseReader extends DatabaseReader{
     final private static int NUM_OF_SEATS = 100;
     private static ArrayList<Movie> allMovies = fetchAllMovies();
 
+    /**
+     * Getter for allMovies
+     * @return an array of all movie objects stored within the {database
+     */
     public static ArrayList<Movie> getAllMovies() {
         return allMovies;
     }
@@ -224,6 +228,14 @@ public class MovieDatabaseReader extends DatabaseReader{
         return allMovies;
     }
 
+    /**
+     * Updates/changes the seat status of a seat.
+     * @param movieName the name of the movie 
+     * @param showTime the time of the showing of the movie
+     * @param seatNum the seat number whose seat status needs to be changed
+     * @param seatStatus the new seat status of the seat
+     * @return true if the operation with the database did not fail. false if there was a failure in updating the seat.
+     */
     public static boolean updateSeat(String movieName, Date showTime, int seatNum, int seatStatus) {
         //if fail to connect, unable to update seat
         if (!connect()) {
@@ -257,6 +269,12 @@ public class MovieDatabaseReader extends DatabaseReader{
         return true;
     }
 
+    /**
+     * Removes the specific showing of the movie from the database
+     * @param movieName the name of the movie
+     * @param showTime the time of the showing of the movie
+     * @return true if the row was removed from the database. false if the operation failed at any point.
+     */
     public static boolean removeMovie(String movieName, Date showTime) {
         // if can't connect, failed to remove movie
         if (!connect()) {
@@ -289,6 +307,13 @@ public class MovieDatabaseReader extends DatabaseReader{
         return true;
     }
 
+    /**
+     * adds a movie showing to the database
+     * @param movieName the name of the movie
+     * @param showTime the time of the showing
+     * @param releaseDate the release date of the movie
+     * @return true if the row was added in the database. false if the operation failed at any point.
+     */
     public static boolean addMovie(String movieName, Date showTime, Date releaseDate) {
         // failed to add movie if can't connect
         if (!connect()) {
