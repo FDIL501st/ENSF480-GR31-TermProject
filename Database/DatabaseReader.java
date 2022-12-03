@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import Controller.MovieController;
 import Controller.UserController;
 import Interface.HomePage;
-import Model.LoginServer;
+import Interface.LoginServer;
 import Model.Movie;
 import Model.RegisteredUser;
 

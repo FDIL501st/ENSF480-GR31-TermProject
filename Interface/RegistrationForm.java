@@ -2,7 +2,6 @@ package Interface;
 import javax.swing.*;
 
 import Controller.TicketController;
-import Model.LoginServer;
 import Model.Payment;
 
 import java.awt.event.*;
