@@ -1350,7 +1350,7 @@
 											"font": "Arial;13;0",
 											"left": 629,
 											"top": 397,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"text": "«entity»"
 										},
@@ -1363,7 +1363,7 @@
 											"font": "Arial;13;1",
 											"left": 629,
 											"top": 412,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"text": "Ticket"
 										},
@@ -1398,7 +1398,7 @@
 									"font": "Arial;13;0",
 									"left": 624,
 									"top": 392,
-									"width": 398.55908203125,
+									"width": 436.12451171875,
 									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGEghzR5cWaCyQ="
@@ -1435,7 +1435,7 @@
 											"font": "Arial;13;0",
 											"left": 629,
 											"top": 435,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"text": "-movie: Movie",
 											"horizontalAlignment": 0
@@ -1452,7 +1452,7 @@
 											"font": "Arial;13;0",
 											"left": 629,
 											"top": 450,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"text": "-seatNum: int",
 											"horizontalAlignment": 0
@@ -1469,7 +1469,7 @@
 											"font": "Arial;13;0",
 											"left": 629,
 											"top": 465,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"text": "-time: Date",
 											"horizontalAlignment": 0
@@ -1486,7 +1486,7 @@
 											"font": "Arial;13;0",
 											"left": 629,
 											"top": 480,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"text": "-status: String",
 											"horizontalAlignment": 0
@@ -1503,7 +1503,7 @@
 											"font": "Arial;13;0",
 											"left": 629,
 											"top": 495,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"text": "-roomNum: int",
 											"horizontalAlignment": 0
@@ -1520,7 +1520,7 @@
 											"font": "Arial;13;0",
 											"left": 629,
 											"top": 510,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"text": "-ID: int",
 											"horizontalAlignment": 0
@@ -1537,7 +1537,7 @@
 											"font": "Arial;13;0",
 											"left": 629,
 											"top": 525,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"underline": true,
 											"text": "-counter: int",
@@ -1547,7 +1547,7 @@
 									"font": "Arial;13;0",
 									"left": 624,
 									"top": 430,
-									"width": 398.55908203125,
+									"width": 436.12451171875,
 									"height": 113
 								},
 								{
@@ -1572,17 +1572,34 @@
 											"font": "Arial;13;0",
 											"left": 629,
 											"top": 548,
-											"width": 388.55908203125,
+											"width": 426.12451171875,
 											"height": 13,
 											"text": "+Ticket(movie: Movie, timeSelected: Date, seatNum: int, roomNum)",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGE2Yy5GIu3KfQ=",
+											"_parent": {
+												"$ref": "AAAAAAGEghzR5sWjSqE="
+											},
+											"model": {
+												"$ref": "AAAAAAGE2Yy5Aou0ghU="
+											},
+											"font": "Arial;13;0",
+											"left": 629,
+											"top": 563,
+											"width": 426.12451171875,
+											"height": 13,
+											"text": "+Ticket(movie: Movie, timeSelected: Date, seatNum: int, roomNum, int ID)",
 											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 624,
 									"top": 543,
-									"width": 398.55908203125,
-									"height": 23
+									"width": 436.12451171875,
+									"height": 38
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -1621,8 +1638,8 @@
 							"containerChangeable": true,
 							"left": 624,
 							"top": 392,
-							"width": 398.55908203125,
-							"height": 174,
+							"width": 436.12451171875,
+							"height": 189,
 							"nameCompartment": {
 								"$ref": "AAAAAAGEghzR5cWZk88="
 							},
@@ -2701,6 +2718,63 @@
 										"$ref": "AAAAAAGEnSPdqmVZwvo="
 									},
 									"name": "roomNum",
+									"type": ""
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGE2Yy5Aou0ghU=",
+							"_parent": {
+								"$ref": "AAAAAAGEghzR5sXDLYQ="
+							},
+							"name": "Ticket",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGE2YzzgYu75yc=",
+									"_parent": {
+										"$ref": "AAAAAAGE2Yy5Aou0ghU="
+									},
+									"name": "movie",
+									"type": {
+										"$ref": "AAAAAAGEghzR5sW9CZA="
+									}
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGE2YzzgYu8vg0=",
+									"_parent": {
+										"$ref": "AAAAAAGE2Yy5Aou0ghU="
+									},
+									"name": "timeSelected",
+									"type": "Date"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGE2YzzgYu9Zpc=",
+									"_parent": {
+										"$ref": "AAAAAAGE2Yy5Aou0ghU="
+									},
+									"name": "seatNum",
+									"type": "int"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGE2YzzgYu+CGw=",
+									"_parent": {
+										"$ref": "AAAAAAGE2Yy5Aou0ghU="
+									},
+									"name": "roomNum",
+									"type": ""
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGE2YzzgYu/2Pc=",
+									"_parent": {
+										"$ref": "AAAAAAGE2Yy5Aou0ghU="
+									},
+									"name": "int ID",
 									"type": ""
 								}
 							]
@@ -6758,7 +6832,7 @@
 											"top": 379,
 											"width": 213.53515625,
 											"height": 13,
-											"text": "+makeNewCode(value: double): void",
+											"text": "+makeNewCode(value: double): int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6775,7 +6849,7 @@
 											"top": 394,
 											"width": 213.53515625,
 											"height": 13,
-											"text": "+getCodeValue(code: int): void",
+											"text": "+getCodeValue(code: int): double",
 											"horizontalAlignment": 0
 										}
 									],
@@ -7295,7 +7369,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGE1R7Z9pPsjR4="
 									},
-									"type": "void",
+									"type": "int",
 									"direction": "return"
 								}
 							]
@@ -7323,7 +7397,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGE1R8K+ZP3wpU="
 									},
-									"type": "void",
+									"type": "double",
 									"direction": "return"
 								}
 							]
@@ -7999,7 +8073,7 @@
 											"width": 517.2451171875,
 											"height": 13,
 											"underline": true,
-											"text": "+fetchAllMovies(): ArrayList<Movie>",
+											"text": "-fetchAllMovies(): ArrayList<Movie>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8306,7 +8380,7 @@
 											"width": 559.85693359375,
 											"height": 13,
 											"underline": true,
-											"text": "+fetchAllTickets(): ArrayLIst<Ticket>",
+											"text": "-fetchAllTickets(): ArrayLIst<Ticket>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8866,7 +8940,7 @@
 											"width": 335.6005859375,
 											"height": 13,
 											"underline": true,
-											"text": "+fetchAllUsers(): ArrayList<RegisteredUser>",
+											"text": "-fetchAllUsers(): ArrayList<RegisteredUser>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9371,6 +9445,7 @@
 								"$ref": "AAAAAAGEjRO75A1Vsw8="
 							},
 							"name": "fetchAllMovies",
+							"visibility": "private",
 							"isStatic": true,
 							"parameters": [
 								{
@@ -9658,6 +9733,7 @@
 								"$ref": "AAAAAAGEjRQMwA2rOkE="
 							},
 							"name": "fetchAllTickets",
+							"visibility": "private",
 							"isStatic": true,
 							"parameters": [
 								{
@@ -10003,6 +10079,7 @@
 								"$ref": "AAAAAAGE1R+g4pQCWRA="
 							},
 							"name": "fetchAllUsers",
+							"visibility": "private",
 							"isStatic": true,
 							"parameters": [
 								{
