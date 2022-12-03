@@ -9,10 +9,10 @@ import java.util.Calendar;
 public class CodeDatabaseReader extends DatabaseReader{
     final private static String TABLE = "codes";
 
-    public static void makeNewCode(double value) {
-        // if fail to connect, stop
+    public static int makeNewCode(double value) {
+        // if fail to connect, can't return any code
         if (!connect()) {
-            return;
+            return  0;
         }
         String insertQuery = String.format("INSERT INTO %s (value, expiry) VALUES (?, ?)", TABLE);
         String selectQuery = String.format("SELECT * from %s WHERE value = ? AND expiry = ? ORDER by ID DESC", TABLE);
@@ -51,11 +51,10 @@ public class CodeDatabaseReader extends DatabaseReader{
             selectCode.close();
         } catch (SQLException e) {
             disconnect();
-            return;
+            return 0;
         }
         disconnect();
-        // TODO - need to return code object
-        return;
+        return codeNum;
     }
 
     public static double getCodeValue(int codeNum) {
