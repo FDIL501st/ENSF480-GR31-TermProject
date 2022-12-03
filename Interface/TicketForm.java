@@ -73,22 +73,17 @@ public class TicketForm extends Form implements ActionListener{
         JTextArea mPanel = new JTextArea();
          mPanel.setBounds(100, 120, 100, 50);
          mPanel.setLineWrap(true);
-         ArrayList<Movie> movieList = new ArrayList<Movie>();
          String movies = "";
-        try {
-            movieList = MovieController.getAllMovies();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        
         for(int i=0;i<HomePage.movieList.size();i++){
             if(HomePage.currentUser.getRegistrationStatus()==false){
-                if(TimeUnit.DAYS.convert(movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)<=30){ 
+                if(TimeUnit.DAYS.convert(HomePage.movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)<=30){ 
                     //movie has been announced for public 
                     movies = movies + HomePage.movieList.get(i).getMovieName() + "\n";
                 }
             }
             else{
-                if( TimeUnit.DAYS.convert(movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)<=37){ 
+                if( TimeUnit.DAYS.convert(HomePage.movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)<=37){ 
                     //movie has been announced for RU 
                     movies = movies + HomePage.movieList.get(i).getMovieName()+"\n";
                 }
