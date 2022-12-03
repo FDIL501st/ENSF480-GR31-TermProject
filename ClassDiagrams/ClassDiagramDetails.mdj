@@ -6758,7 +6758,7 @@
 											"top": 379,
 											"width": 213.53515625,
 											"height": 13,
-											"text": "+makeNewCode(value: double): void",
+											"text": "+makeNewCode(value: double): int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6775,7 +6775,7 @@
 											"top": 394,
 											"width": 213.53515625,
 											"height": 13,
-											"text": "+getCodeValue(code: int): void",
+											"text": "+getCodeValue(code: int): double",
 											"horizontalAlignment": 0
 										}
 									],
@@ -7295,7 +7295,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGE1R7Z9pPsjR4="
 									},
-									"type": "void",
+									"type": "int",
 									"direction": "return"
 								}
 							]
@@ -7323,7 +7323,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGE1R8K+ZP3wpU="
 									},
-									"type": "void",
+									"type": "double",
 									"direction": "return"
 								}
 							]
