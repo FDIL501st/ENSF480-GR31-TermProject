@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import Controller.TicketController;
 import Model.Payment;
-
+import Model.RegisteredUser;
 import java.awt.event.*;
 import java.util.Date;
 import java.util.ArrayList;
@@ -16,6 +16,8 @@ public class PaymentForm extends Form implements ActionListener{
     private static JButton homeButton;
     private static JButton selectButton;
     private static JTextField summText;
+    private static JButton codeButton;
+    private static JTextField codeText;
     static DefaultListModel<String> tickets = new DefaultListModel<>();
     private static JList<String> ticketList;
     static ArrayList<Payment> payments = new ArrayList<Payment>();
@@ -41,6 +43,12 @@ public class PaymentForm extends Form implements ActionListener{
         selectButton.addActionListener(new PaymentForm());
        selectButton.setBounds(100,600,150,25);
 
+       codeButton = new JButton("Apply Code"); //button to apply code
+       codeButton.addActionListener(new PaymentForm());
+        codeButton.setBounds(650,600,150,25);
+        if(HomePage.currentUser.getRegistrationStatus()){
+            codeButton.setVisible(false);
+        }
 
         JPanel tListTitle = new JPanel(); 
         tListTitle.setBounds(100,40,150,40);
@@ -75,7 +83,8 @@ public class PaymentForm extends Form implements ActionListener{
          summText = new JTextField(); //show the price of the tickets
         summText.setBounds(300, 80, 200, 40);
         if (tickets.size() == 0 ) {
-            if(HomePage.currentUser.checkAnnualFee()){
+            RegisteredUser ru = (RegisteredUser) (HomePage.currentUser);
+            if(ru.checkAnnualFee()){
                 summText.setText("Annual Payment x1: $20.00");
             }
         }
@@ -83,9 +92,19 @@ public class PaymentForm extends Form implements ActionListener{
             summText.setText("Tickets x" + tickets.size() + ": $" + 100*tickets.size() + ".00");
         }
         summText.setEditable(false); 
+        if(!HomePage.currentUser.getRegistrationStatus()){
+            JLabel codeLabel = new JLabel("Code"); //label for email
+            codeLabel.setBounds(600,40,80,25);
+            codeLabel.setFont(new Font("Arial",Font.BOLD,14));
+            panel.add(codeLabel);
+            codeText = new JTextField();
+            codeText.setBounds(600,80,165,25);
+            paymentFrame.add(codeText);
+        }
         panel.add(homeButton);
         panel.add(confirmButton);
         panel.add(selectButton);
+        panel.add(codeButton);
         
         paymentFrame.add(tListTitle);
         paymentFrame.add(ticketPanel);
@@ -122,8 +141,25 @@ public class PaymentForm extends Form implements ActionListener{
                 }
             }
         }
+        if(e.getActionCommand().equals("Apply Code")){
+            if(codeText.getText().trim().length()>0){
+                try{
+                    double value = TicketController.getCodeValue(Integer.parseInt(codeText.getText().trim()));
+                    if(value != 0){
+                        JOptionPane.showMessageDialog(null,"Code is applied");
+                        summText.setText("Tickets x" + tickets.size() + ": $" + String.valueOf(100*tickets.size()-value));
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Code is invalid");
+                    }
+                }
+                catch(Exception e1){
+                    JOptionPane.showMessageDialog(null,"Code is invalid");
+                }
+            }
+        }
         if(e.getActionCommand().equals("Confirm Payment")){
-            if(Form.loginStatus){ //registered user does not need to add information
+            if(HomePage.currentUser.getRegistrationStatus()){ //registered user does not need to add information
                 if (tickets.size() == 0) {
                     JOptionPane.showMessageDialog(null,"Annual payment has been completed\nReceipt has been sent to your email");
                 }
@@ -146,7 +182,8 @@ public class PaymentForm extends Form implements ActionListener{
                 paymentFrame.dispose();
                 ticketFormOpened =false;
                 if(tickets.size()==0){
-                    HomePage.currentUser.setDateLastPayed(new Date());
+                    RegisteredUser ru = (RegisteredUser) (HomePage.currentUser);
+                    ru.setDateLastPayed(new Date());
                     HomePage.annualPayment.setVisible(false);
                 }
             }

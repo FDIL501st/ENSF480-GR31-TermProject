@@ -209,10 +209,11 @@ public class RegistrationForm extends Form implements ActionListener{
             }
             else if(e.getActionCommand().equals("Register")){
                 String password = passwordText.getText().trim();
+                LoginServer lg = LoginServer.getInstance();
                 if(password.length()==0){ 
                     JOptionPane.showMessageDialog(null,"Password field is empty");
                 }
-                else if(LoginServer.register(email,password,fName,lName,address,cardNum)){ //register user 
+                else if(lg.register(email,password,fName,lName,address,cardNum)){ //register user 
                     JOptionPane.showMessageDialog(null,"Registration successful");
                     registerFrame.dispose();
                 }

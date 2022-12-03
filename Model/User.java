@@ -1,16 +1,25 @@
 package Model;
+
+import java.util.ArrayList;
+
 public class User {
-    private Ticket ticket;
-    private Payment payment;
+    private ArrayList<Payment> ticketsPaid = new ArrayList<Payment>(); //list of tickets user has paid for
     protected boolean registrationStatus;
     public User(){
         registrationStatus = false;
     }
-    public Ticket getTicket(){
-        return ticket;
+            /**
+     * update the list of paid tickets for the user
+     * @param payments ArrayList of payments the user has made
+     */
+    public void updatePayments(ArrayList<Payment> payments){
+        ticketsPaid.clear();
+        for(Payment p:payments){
+            ticketsPaid.add(new Payment(p.getTicket()));
+        }
     }
-    public Payment getPayment(){
-        return payment;
+    public ArrayList<Payment> getPaidTickets(){
+        return ticketsPaid;
     }
     public boolean getRegistrationStatus() {
         return registrationStatus;

@@ -10,13 +10,13 @@ import java.text.ParseException;
 
 import Model.Movie;
 import Model.Payment;
-import Model.RegisteredUser;
+import Model.User;
 
 import java.util.ArrayList;
 
 public class HomePage implements ActionListener{
     protected Form form;
-    static RegisteredUser currentUser = null; //current user that is logged in
+    static User currentUser = new User(); //current user that is logged in
     private static JFrame homeFrame;
     private static JPanel mainPanel;
     private static JButton loginButton;
@@ -25,6 +25,7 @@ public class HomePage implements ActionListener{
     private static JButton movieSelect;
     static JButton annualPayment;
     static JButton cancelButton;
+    static JButton cancelAllButton;
     static JButton selectButton;
     static DefaultListModel<String> movies = new DefaultListModel<>(); //list of movie names to announce
     static ArrayList<Movie> movieList = new ArrayList<Movie>(); //list of all movies
@@ -126,6 +127,11 @@ public class HomePage implements ActionListener{
        cancelButton.setBounds(350,600,150,25);
        cancelButton.setVisible(false); //set invisible to begin
 
+       cancelAllButton = new JButton("Cancel All Tickets"); //button to cancel all tickets
+       cancelAllButton.addActionListener(new HomePage());
+       cancelAllButton.setBounds(550,600,150,25);
+       cancelAllButton.setVisible(false); //set invisible to begin
+
         mainPanel.add(title);
         mainPanel.add(announcementTitle);
         mainPanel.add(loginButton);
@@ -134,10 +140,11 @@ public class HomePage implements ActionListener{
         mainPanel.add(movieSelect);
         mainPanel.add(selectButton);
         mainPanel.add(cancelButton);
+        mainPanel.add(cancelAllButton);
         mainPanel.add(annualPayment);
         announcementPanel.add(announcements);
 
-        if (Form.loginStatus == false) { //if user is not logged in then annual payments button will be invisible
+        if (currentUser.getRegistrationStatus()== false) { //if user is not logged in then annual payments button will be invisible
             annualPayment.setVisible(false);
             logoutButton.setVisible(false);
         }
@@ -165,9 +172,9 @@ public class HomePage implements ActionListener{
                 form.run();  //run form
         }
         if (e.getActionCommand().equals("Logout")) {
-            if (Form.loginStatus == true) { //make sure user is logged in
+            if (currentUser.getRegistrationStatus() == true) { //make sure user is logged in
                 JOptionPane.showMessageDialog(null, "Successfully Logged Out");
-                Form.loginStatus = false; //indicate user is logged out
+                currentUser = new User(); //indicate user is logged out
                 movies.clear(); //clear announced movies
                 movieList.clear(); 
                 try {
@@ -182,12 +189,12 @@ public class HomePage implements ActionListener{
                 }
                 announcements = new JList<>(movies);
                 annualPayment.setVisible(false); //set annualpayment button to be invisible
-                currentUser = null; //set currentuser to none
                 paidTickets.clear(); //clear paid tickets
                 //paid tickets select/cancel buttons set to invisible
                 pListTitle.setVisible(false); 
                 selectButton.setVisible(false);
                 cancelButton.setVisible(false);
+                cancelAllButton.setVisible(false);
                 logoutButton.setVisible(false);
             }
             else { //user is already logged in
@@ -221,6 +228,7 @@ public class HomePage implements ActionListener{
                         "<br>Room: " + PaymentForm.payments.get(i).getTicket().getRoomNum() + "</html>");
                         JOptionPane.showMessageDialog(null,info);
                         cancelButton.setVisible(true);
+                        cancelAllButton.setVisible(true);
                         paymentSelected = PaymentForm.payments.get(i);
                     }   
                 }
@@ -243,6 +251,42 @@ public class HomePage implements ActionListener{
                         paidTickets.remove(i); //remove from paidTickets display
                     }
                 }
+                if(!currentUser.getRegistrationStatus()){
+                    JOptionPane.showMessageDialog(null,"Code to apply on next purchase is: " + String.valueOf(TicketController.makeNewCode(100)));
+                }
+            }
+        }
+        if(e.getActionCommand().equals("Cancel All Tickets")){ //cancel all tickets
+            boolean cancel = true;
+            int cancelled = 0; //number of cancelled tickets
+            ArrayList<Payment> removed = new ArrayList<Payment>();
+            for(int i=0;i<PaymentForm.payments.size();i++){
+                if(!PaymentForm.payments.get(i).cancelStatus()){ //check if ticket is within 3 days of the show
+                    cancel = false;
+                }
+                else{
+                    cancelled++;
+                    PaymentForm.tc.remove(PaymentForm.payments.get(i).getTicket());
+                    removed.add(PaymentForm.payments.get(i));
+                    HomePage.currentUser.updatePayments(PaymentForm.payments); 
+                    String ticket = "Ticket " + PaymentForm.payments.get(i).getTicket().getID();
+                    for(int j=0;j<paidTickets.size();j++){
+                    
+                        if(ticket.equals(paidTickets.get(j))){
+                        
+                            paidTickets.remove(j); //remove from paidTickets display
+                        }
+                    }
+                }
+            }
+            for(Payment t: removed){
+                PaymentForm.payments.remove(t); //remove from payments list
+            }
+            if(cancel == false){
+                JOptionPane.showMessageDialog(null,"One or more tickets could not be cancelled");
+            }
+            else if(!currentUser.getRegistrationStatus()){
+                JOptionPane.showMessageDialog(null,"Code to apply on next purchase is: " + String.valueOf(TicketController.makeNewCode(cancelled*100)));
             }
         }
     }

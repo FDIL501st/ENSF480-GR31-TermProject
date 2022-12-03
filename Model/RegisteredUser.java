@@ -1,7 +1,6 @@
 package Model;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import java.util.ArrayList;
 public class RegisteredUser extends User{
     private String email;
     private String password;
@@ -12,7 +11,6 @@ public class RegisteredUser extends User{
 	private Date dateLastPayed; //date of last annual payment
     private Date registrationDate;
     private int yearsRegistered;//keeps track of which year the annual payment is for
-    private ArrayList<Payment> ticketsPaid = new ArrayList<Payment>(); //list of tickets user has paid for
     
     public String getEmail(){
         return email;
@@ -38,19 +36,7 @@ public class RegisteredUser extends User{
     public void setDateLastPayed(Date d){
         dateLastPayed = d;
     }
-    public ArrayList<Payment> getPaidTickets(){
-        return ticketsPaid;
-    }
-        /**
-     * update the list of paid tickets for the user
-     * @param payments ArrayList of payments the user has made
-     */
-    public void updatePayments(ArrayList<Payment> payments){
-        ticketsPaid.clear();
-        for(Payment p:payments){
-            ticketsPaid.add(new Payment(p.getTicket()));
-        }
-    }
+
     public RegisteredUser(String email,String password,String fName,String lName,String address,String cardNum){
         this.registrationDate = new Date();
         this.yearsRegistered = 1;
