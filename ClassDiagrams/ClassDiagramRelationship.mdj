@@ -1110,7 +1110,7 @@
 											"top": 325,
 											"width": 75.8544921875,
 											"height": 13,
-											"text": "«entity»"
+											"text": "«boundary»"
 										},
 										{
 											"_type": "LabelView",
@@ -12258,7 +12258,7 @@
 							"stereotype": "uses"
 						}
 					],
-					"stereotype": "entity"
+					"stereotype": "boundary"
 				},
 				{
 					"_type": "UMLClass",
