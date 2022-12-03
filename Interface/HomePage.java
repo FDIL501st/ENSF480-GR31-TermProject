@@ -238,7 +238,7 @@ public class HomePage implements ActionListener{
                 JOptionPane.showMessageDialog(null,"Cannot cancel ticket within 3 days of show");
             }
             else{
-                JOptionPane.showMessageDialog(null,"Cancellation successful");
+                JOptionPane.showMessageDialog(null,"Cancellation successful for Ticket " + String.valueOf(paymentSelected.getTicket().getID()));
                 
                 HomePage.allTickets.remove(paymentSelected.getTicket());
                 Payment p = paymentSelected;
@@ -254,7 +254,7 @@ public class HomePage implements ActionListener{
                     }
                 }
                 if(!currentUser.getRegistrationStatus()){
-                    JOptionPane.showMessageDialog(null,"Code to apply on next purchase is: " + String.valueOf(TicketController.makeNewCode(100)));
+                    JOptionPane.showMessageDialog(null,"Cancel successful\nCode to apply on next purchase is: " + String.valueOf(TicketController.makeNewCode(100)));
                 }
             }
         }
@@ -268,6 +268,8 @@ public class HomePage implements ActionListener{
                 }
                 else{
                     cancelled++;
+                    JOptionPane.showMessageDialog(null,"Cancel Successful for Ticket "+ String.valueOf(PaymentForm.payments.get(i).getTicket().getID()));
+
                     HomePage.allTickets.remove(PaymentForm.payments.get(i).getTicket());
                     Payment p = PaymentForm.payments.get(i);
                     TicketController.updateSeat(p.getTicket().getMovie().getMovieName(),p.getTicket().getTime(),p.getTicket().getSeatNum(),1);

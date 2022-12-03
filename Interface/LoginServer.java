@@ -57,6 +57,11 @@ public class LoginServer {
         return null; //return null if login information is incorrect
     }
     public void remove(RegisteredUser ru){ //check if login information is correct
-       users.remove(ru);
+        for(int i=0;i<users.size();i++){
+            RegisteredUser remove = users.get(i);
+            if(remove.getEmail().equalsIgnoreCase(ru.getEmail())){
+                users.remove(remove);
+            }
+        }
     }
 }
