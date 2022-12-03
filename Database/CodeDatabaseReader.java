@@ -9,6 +9,11 @@ import java.util.Calendar;
 public class CodeDatabaseReader extends DatabaseReader{
     final private static String TABLE = "codes";
 
+    /**
+     * Makes a new code for credit to be claimed. This new code is added to the database.
+     * @param value the amount of credit that can be claimed by using the code
+     * @return the code number
+     */
     public static int makeNewCode(double value) {
         // if fail to connect, can't return any code
         if (!connect()) {
@@ -46,6 +51,7 @@ public class CodeDatabaseReader extends DatabaseReader{
             ResultSet codes = selectCode.executeQuery();
             if (codes.next()) {
                 // only need first result as that is the latest code (one with highest ID)
+                //  latest code is the one we just inserted 
                 codeNum = codes.getInt("ID");
             }
             selectCode.close();
@@ -57,6 +63,11 @@ public class CodeDatabaseReader extends DatabaseReader{
         return codeNum;
     }
 
+    /**
+     * Gets the credit value of the code
+     * @param codeNum the code number whose credit value is wanted
+     * @return the value of the credit that can be claimed
+     */
     public static double getCodeValue(int codeNum) {
         // if fail to connect, can't return an actual value so end up returning 0
         if (!connect()) {
@@ -82,5 +93,14 @@ public class CodeDatabaseReader extends DatabaseReader{
         }
         disconnect();
         return codeValue;
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(makeNewCode(10));
+            if (i == 0)
+                System.out.println(getCodeValue(1));
+        }
+        // works as expected
     }
 }

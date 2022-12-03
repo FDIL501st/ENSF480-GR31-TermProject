@@ -12,7 +12,7 @@ public class UserDatabaseReader extends DatabaseReader{
         return allUsers;
     }
 
-    public static ArrayList<RegisteredUser> fetchAllUsers() {
+    private static ArrayList<RegisteredUser> fetchAllUsers() {
         // if can't connect, return null
         if (!connect()) {
             return null;

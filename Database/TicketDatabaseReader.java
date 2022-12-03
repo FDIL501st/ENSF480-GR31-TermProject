@@ -174,7 +174,7 @@ public class TicketDatabaseReader extends DatabaseReader {
      * Gets a ticket from the database.
      * @param movieName the name of the movie
      * @param showTime the show time of the movie
-     * @param seatNum the seat number that the ticket reserves.
+     * @param seatNum the seat number that the ticket reserves
      * @return the ticket object retrieved from the database.
      */
     public static Ticket getTicket(String movieName, Date showTime, int seatNum) {
