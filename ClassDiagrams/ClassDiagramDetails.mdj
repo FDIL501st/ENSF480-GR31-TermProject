@@ -1775,7 +1775,7 @@
 						"$ref": "AAAAAAGEghzR5MVUFUg="
 					},
 					"name": "LoginServer",
-					"stereotype": "entity",
+					"stereotype": "boundary",
 					"attributes": [
 						{
 							"_type": "UMLAttribute",
@@ -5079,7 +5079,7 @@
 											"top": 53,
 											"width": 753.21923828125,
 											"height": 13,
-											"text": "«entity»"
+											"text": "«boundary»"
 										},
 										{
 											"_type": "LabelView",
