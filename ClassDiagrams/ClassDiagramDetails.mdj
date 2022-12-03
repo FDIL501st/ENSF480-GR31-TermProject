@@ -7999,7 +7999,7 @@
 											"width": 517.2451171875,
 											"height": 13,
 											"underline": true,
-											"text": "+fetchAllMovies(): ArrayList<Movie>",
+											"text": "-fetchAllMovies(): ArrayList<Movie>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8306,7 +8306,7 @@
 											"width": 559.85693359375,
 											"height": 13,
 											"underline": true,
-											"text": "+fetchAllTickets(): ArrayLIst<Ticket>",
+											"text": "-fetchAllTickets(): ArrayLIst<Ticket>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8866,7 +8866,7 @@
 											"width": 335.6005859375,
 											"height": 13,
 											"underline": true,
-											"text": "+fetchAllUsers(): ArrayList<RegisteredUser>",
+											"text": "-fetchAllUsers(): ArrayList<RegisteredUser>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9371,6 +9371,7 @@
 								"$ref": "AAAAAAGEjRO75A1Vsw8="
 							},
 							"name": "fetchAllMovies",
+							"visibility": "private",
 							"isStatic": true,
 							"parameters": [
 								{
@@ -9658,6 +9659,7 @@
 								"$ref": "AAAAAAGEjRQMwA2rOkE="
 							},
 							"name": "fetchAllTickets",
+							"visibility": "private",
 							"isStatic": true,
 							"parameters": [
 								{
@@ -10003,6 +10005,7 @@
 								"$ref": "AAAAAAGE1R+g4pQCWRA="
 							},
 							"name": "fetchAllUsers",
+							"visibility": "private",
 							"isStatic": true,
 							"parameters": [
 								{
