@@ -30,18 +30,14 @@ public class TicketDatabaseReader extends DatabaseReader {
 
         String query = String.format("SELECT * FROM %s", TABLE);
         // below will store all information needed to make ticket objects
-        ArrayList<String> movie_names = new ArrayList<>();
-        ArrayList<Timestamp> show_times = new ArrayList<>();
-        ArrayList<Integer> seat_nums = new ArrayList<>();
+        ArrayList<Integer> ticket_IDs = new ArrayList<>();
 
         try {
             Statement selectAll = connection.createStatement();
             ResultSet allResult = selectAll.executeQuery(query);
             // now fill up our arrays
             while (allResult.next()) {
-                movie_names.add(allResult.getString("movie_name"));
-                show_times.add(allResult.getTimestamp("show_time"));
-                seat_nums.add(allResult.getInt("seat_num"));
+                ticket_IDs.add(allResult.getInt("ID"));
             }
             selectAll.close();
         } catch (Exception e) {
@@ -49,32 +45,30 @@ public class TicketDatabaseReader extends DatabaseReader {
             return null;
         }
         disconnect();
-        // assuming size of all 3 arrays are the same, so can make that many tickets and append
-        int n = movie_names.size();
+
+        int n = ticket_IDs.size();
         ArrayList<Ticket> tickets = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
-            // first make a Date object from Timestamp so can call getTicket
-            Date showTime = Date.from(show_times.get(i).toInstant());
-            // now just call getTicket and append
-            tickets.add(getTicket(movie_names.get(i), showTime, seat_nums.get(i)));
+            tickets.add(getTicket(ticket_IDs.get(i))); 
         }
         return tickets;
     }
     
     /**
      * Adds a new ticket to the database.
+     * @param ID the ticket ID
      * @param movieName name of the movie
      * @param showTime the show time of the movie
      * @param seatNum the seat number the ticket reserves
      * @return true if ticket was added to the database. false if the operation failed.
      */
-    public static boolean addTicket(String movieName, Date showTime, int seatNum) {
+    public static boolean addTicket(int ID, String movieName, Date showTime, int seatNum) {
         // if fail to connect, failed to add new ticket
         if (!connect()) {
             return false;
         }
 
-        String query = String.format("INSERT INTO %s (movie_name, show_time, seat_num) VALUES (?, ?, ?)", 
+        String query = String.format("INSERT INTO %s (movie_name, show_time, seat_num, ID) VALUES (?, ?, ?, ?)", 
         TABLE);
         // create TimeStamp for show_time
         Timestamp show_time = new Timestamp(showTime.getTime());
@@ -85,6 +79,7 @@ public class TicketDatabaseReader extends DatabaseReader {
             insertTicket.setString(1, movieName);
             insertTicket.setTimestamp(2, show_time);
             insertTicket.setInt(3, seatNum);
+            insertTicket.setInt(4, ID);
             // statement is ready to execute
             int rowsChanged = insertTicket.executeUpdate();
             insertTicket.close();
@@ -113,34 +108,27 @@ public class TicketDatabaseReader extends DatabaseReader {
      * @return true of ticket was added to the database. false if the operation failed.
      */
     public static boolean addTicket(Ticket ticket) {
-        return addTicket(ticket.getMovie().getMovieName(), ticket.getTime(), ticket.getSeatNum());
+        return addTicket(ticket.getID(), ticket.getMovie().getMovieName(), ticket.getTime(), ticket.getSeatNum());
     }
 
     /**
      * Removes the ticket from the database
-     * @param movieName the name of the movie
-     * @param showTime the time of the showing of the movie
-     * @param seatNum the seat number the ticket reserves
+     * @param ID the ticket ID
      * @return true if the row was removed from the database. false if the operation failed.
      */
-    public static boolean removeTicket(String movieName, Date showTime, int seatNum) {
+    public static boolean removeTicket(int ID) {
         // if fail to connect, failed to remove ticket
         if (!connect()) {
             return false;
         }
-
-        String query = String.format("DELETE FROM %s WHERE movie_name = ? AND show_time = ? AND seat_num = ?", 
+        Ticket t1 = getTicket(ID);  //need this as after deleting need some info to update seat
+        String deleteQuery = String.format("DELETE FROM %s WHERE ID = ?", 
         TABLE);
-        // create TimeStamp object from showTime
-        Timestamp show_time = new Timestamp(showTime.getTime());
-        // round down seconds to 0
-        show_time.setTime(roundSecondsDown(show_time.getTime()));
+        
         try {
-            PreparedStatement deleteTicket = connection.prepareStatement(query);
+            PreparedStatement deleteTicket = connection.prepareStatement(deleteQuery);
             // set values
-            deleteTicket.setString(1, movieName);
-            deleteTicket.setTimestamp(2, show_time);
-            deleteTicket.setInt(3, seatNum);
+            deleteTicket.setInt(1, ID);
             // statement is ready to execute
             int rowsChanged = deleteTicket.executeUpdate();
             deleteTicket.close();
@@ -155,7 +143,7 @@ public class TicketDatabaseReader extends DatabaseReader {
         }
         disconnect();
         // update seat which just became available
-        MovieDatabaseReader.updateSeat(movieName, showTime, seatNum, 1);
+        MovieDatabaseReader.updateSeat(t1.getMovie().getMovieName(), t1.getTime(), t1.getSeatNum(), 1);
         // need to sync up allTickets
         allTickets = fetchAllTickets();
         return true;
@@ -167,7 +155,7 @@ public class TicketDatabaseReader extends DatabaseReader {
      * @return true if the ticket was removed from the database. false if the operation failed.
      */
     public static boolean removeTicket(Ticket ticket) {
-        return removeTicket(ticket.getMovie().getMovieName(), ticket.getTime(), ticket.getSeatNum());
+        return removeTicket(ticket.getID());
     }
 
     /**
@@ -177,31 +165,30 @@ public class TicketDatabaseReader extends DatabaseReader {
      * @param seatNum the seat number that the ticket reserves
      * @return the ticket object retrieved from the database.
      */
-    public static Ticket getTicket(String movieName, Date showTime, int seatNum) {
+    public static Ticket getTicket(int ID) {
         // if fail to connect, can't return a Ticket object
         if (!connect()) {
             return null;
         }
 
-        String query = String.format("SELECT movie_name from %s WHERE movie_name = ? AND show_time = ? AND seat_num = ?", 
+        String query = String.format("SELECT * from %s WHERE ID = ?", 
         TABLE);
-        //create TimeStamp object from date
-        Timestamp show_time = Timestamp.from(showTime.toInstant());
-        show_time.setTime(roundSecondsDown(show_time.getTime()));   //round seconds down to 0
-        // first need to see if ticket actually exists in database
+        
         String movie_name = null;
+        Timestamp show_time = null;
+        int seatNum = 0;
         try {
             PreparedStatement fetchTicket = connection.prepareStatement(query);
             // set values
-            fetchTicket.setString(1, movieName);
-            fetchTicket.setTimestamp(2, show_time);
-            fetchTicket.setInt(3, seatNum);
+            fetchTicket.setInt(1, ID);
             // statement ready to execute
             ResultSet foundTicket = fetchTicket.executeQuery();
 
             //expecting 1 Ticket/row to be found
             if (foundTicket.next()) {
                 movie_name = foundTicket.getString(1);  //column 1 is movie_name
+                show_time = foundTicket.getTimestamp(2); // column 2 is show_time
+                seatNum = foundTicket.getInt(3);    //colum 3 is seat_num
             }
 
             fetchTicket.close();
@@ -215,9 +202,13 @@ public class TicketDatabaseReader extends DatabaseReader {
             return null;
         }
         // Now make find Movie
-        Movie movie = MovieDatabaseReader.getMovie(movieName);
+        Movie movie = MovieDatabaseReader.getMovie(movie_name);
 
-        return new Ticket(movie, showTime, seatNum, 1);
+        // Now get a Date object from Timestamp
+        Date showTime = Date.from(show_time.toInstant());
+
+        // now got all info to return a Ticket object
+        return new Ticket(movie, showTime, seatNum, 1, ID);
     }
 
     public static void main(String[] args) {
@@ -228,13 +219,13 @@ public class TicketDatabaseReader extends DatabaseReader {
 
         MovieDatabaseReader.addMovie(movieName, showTime, showTime);
         
-        System.out.println(addTicket(movieName, showTime, 1));
+        System.out.println(addTicket(11, movieName, showTime, 1));
 
-        System.out.println(addTicket(movieName, showTime, 3));
+        System.out.println(addTicket(1, movieName, showTime, 3));
 
         //System.out.println(removeTicket(movieName, showTime, 1));
         
-        Ticket t1 = getTicket(movieName, showTime, 3);
+        Ticket t1 = getTicket(1);
         System.out.println(t1.getMovie().getMovieName());
         System.out.println(t1.getTime().toString());
         System.out.println(t1.getSeatNum());
