@@ -18,9 +18,14 @@ public class TicketDatabaseReader extends DatabaseReader {
         return allTickets;
     }
 
+    /**
+     * Setter for allTickets. 
+     * This setter also syncs database up with the provided arrayList.
+     * Then sets allTickets variable.
+     * This setter won't set the varible if the syncing with database fails at any point
+     * @param newAllTickets
+     */
     public static void setAllTickets(ArrayList<Ticket> newAllTickets) {
-        
-        
         // now need to sync up with database
         // syncing is clear, first remove all elements, then add all elements in array
         if (!connect()) {
@@ -262,5 +267,12 @@ public class TicketDatabaseReader extends DatabaseReader {
         }
         // all methods works as intended
         // at the moment, no sync function to sync up any changes to database to allTickets or vice versa
+
+        // testing chaining connects and disconnects without disconecting or connecting first
+        System.out.println(connect());
+        System.out.println(connect());
+        System.out.println(disconnect());
+        System.out.println(disconnect());
+        // works as intended
     }
 }
