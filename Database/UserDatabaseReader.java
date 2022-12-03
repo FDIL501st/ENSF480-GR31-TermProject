@@ -8,10 +8,18 @@ public class UserDatabaseReader extends DatabaseReader{
     final private static String TABLE = "registered_users";
     private static ArrayList<RegisteredUser> allUsers = fetchAllUsers();
 
+    /**
+     * Getter for allUsers.
+     * @return the arrayList of all registered users
+     */
     public static ArrayList<RegisteredUser> getAllUsers() {
         return allUsers;
     }
 
+    /**
+     * Fetchs all registered users in the database.
+     * @return an arrayList of all registered users in the database
+     */
     private static ArrayList<RegisteredUser> fetchAllUsers() {
         // if can't connect, return null
         if (!connect()) {
@@ -46,6 +54,12 @@ public class UserDatabaseReader extends DatabaseReader{
         return users;
     }
 
+    /**
+     * Gets a single registered user from the database.
+     * @param email the email of the user
+     * @param password the password of the user
+     * @return a RegisteredUser object from the database
+     */
     public static RegisteredUser getUser(String email, String password) {
         if (!connect()) {
             return null;
@@ -85,35 +99,12 @@ public class UserDatabaseReader extends DatabaseReader{
         
         return user;
     }
-/* 
-    public static boolean userExist(String email) {
-        if (!connect()) {
-            return false;
-        }
 
-        String query = String.format("SELECT * FROM %s WHERE email=%s", TABLE, email);
-
-        Statement fetchUser = null;
-
-        try {
-
-            fetchUser = connection.createStatement();
-            if (!fetchUser.execute(query)) {
-                throw new SQLException();   //to return false
-            }
-            fetchUser.close();   
-        } catch (SQLException e) {
-            disconnect();
-            return false;
-        }
-        disconnect();
-        return true;
-    }
-
-    public static boolean userExist(RegisteredUser user) {
-        return userExist(user.getEmail());
-    }
-*/
+    /**
+     * Adds a new registered user to the database.
+     * @param user the new registered user to add
+     * @return true if the user was added to the database. false if the operation failed
+     */
     public static boolean addUser(RegisteredUser user) {
         // attempt to connect to database
         if (!connect()) {
@@ -154,6 +145,11 @@ public class UserDatabaseReader extends DatabaseReader{
         return true;
     }
 
+    /**
+     * Removes a registered user from the database.
+     * @param email the email of the user 
+     * @return true if the user was removed from the database. false if the operation failed
+     */
     public static boolean removeUser(String email) {
         // if can't connect, operation failed as can't remove the user
         if (!connect()) {
@@ -186,10 +182,20 @@ public class UserDatabaseReader extends DatabaseReader{
         return true;
     }
 
+    /**
+     * Removes a registered user from the database.
+     * @param user the user to remove
+     * @return true if the user was removed from the database. false if the operation failed
+     */
     public static boolean removeUser(RegisteredUser user) {
         return removeUser(user.getEmail());
     }
 
+    /**
+     * Upadtes the information of a registered user.
+     * @param updatedUser the updated user. Should have a matching email of a user stored in the database for the update to occur.
+     * @return true if the user was updated. false if the operation failed
+     */
     public static boolean updateUser(RegisteredUser updatedUser) {
         // operation failed if can't connect to database as can't update user
         if (!connect()) {
