@@ -344,6 +344,7 @@ public class MovieDatabaseReader extends DatabaseReader{
 
     public static void main(String[] args) {
         /* Testing this class */
+        /* 
         Date show = new Date();
         show.setTime(roundSecondsDown(show.getTime()));
         System.out.println(show.toString());
@@ -378,9 +379,10 @@ public class MovieDatabaseReader extends DatabaseReader{
         //Stystem.out.println();
         //System.out.println(MovieDatabaseReader.removeMovie(movieName, show)); 
         //still works
-
+        
         System.out.println();
         System.out.println(MovieDatabaseReader.updateSeat(movieName, show, 1, 0));
+        */
         // works
         
     }

@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import Controller.MovieController;
 import Controller.TicketController;
-import Database.DatabaseReader;
 
 import java.awt.event.*;
 import java.text.ParseException;

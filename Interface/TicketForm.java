@@ -82,7 +82,7 @@ public class TicketForm extends Form implements ActionListener{
         }
         for(int i=0;i<HomePage.movieList.size();i++){
             if(HomePage.currentUser.getRegistrationStatus()==false){
-                if((movieList.get(i).RUAnnouncement()!= null && movieList.get(i).RUAnnouncement()== null)|| TimeUnit.DAYS.convert(movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)<=30){ 
+                if(TimeUnit.DAYS.convert(movieList.get(i).getReleaseDate().getTime()-new Date().getTime(),TimeUnit.MILLISECONDS)<=30){ 
                     //movie has been announced for public 
                     movies = movies + HomePage.movieList.get(i).getMovieName() + "\n";
                 }

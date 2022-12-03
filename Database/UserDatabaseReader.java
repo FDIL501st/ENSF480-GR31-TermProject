@@ -281,7 +281,7 @@ public class UserDatabaseReader extends DatabaseReader{
         System.out.println();
         }
         */
-        System.out.println(getAllUsers().size());
+        //System.out.println(getAllUsers().size());
         // all methods works as intended
     }
 }

@@ -241,6 +241,7 @@ public class TicketDatabaseReader extends DatabaseReader {
 
     public static void main(String[] args) {
         //testing TicketDatabaseReader
+        /*
         String movieName = "m1";
         Date showTime = new Date();
         showTime.setTime(roundSecondsDown(showTime.getTime()));
@@ -273,6 +274,7 @@ public class TicketDatabaseReader extends DatabaseReader {
         System.out.println(connect());
         System.out.println(disconnect());
         System.out.println(disconnect());
+        */
         // works as intended
     }
 }

@@ -1,5 +1,4 @@
 package Interface;
-import java.awt.*;
 import javax.swing.*;
 
 import Controller.TicketController;

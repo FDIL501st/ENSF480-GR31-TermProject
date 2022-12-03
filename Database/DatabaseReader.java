@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Date;
 
 import Interface.HomePage;
 
@@ -74,23 +73,10 @@ public abstract class DatabaseReader {
         return time_seconds;
     }
 
-    public static void main(String[] args) throws ParseException {
-        // testing roundsSecondsDown()
-        /* 
-        Date date = new Date();
-        long l = date.getTime();
-        System.out.println(date.toString());
-        System.out.println(l);
-        System.out.println(DatabaseReader.roundSecondsDown(l));
-        date.setTime(DatabaseReader.roundSecondsDown(l));
-        System.out.println(date.toString());
-        */
+    public static void main(String[] args) throws ParseException { //main to run program
         connect();
         HomePage.allTickets = TicketDatabaseReader.getAllTickets();
         HomePage hp = new HomePage();
         hp.start();
-    
-        
-        // Currently seems to work
     }
 }

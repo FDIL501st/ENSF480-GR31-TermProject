@@ -96,11 +96,13 @@ public class CodeDatabaseReader extends DatabaseReader{
     }
 
     public static void main(String[] args) {
+        /* 
         for (int i = 0; i < 10; i++) {
             System.out.println(makeNewCode(10));
             if (i == 0)
                 System.out.println(getCodeValue(1));
         }
         // works as expected
+        */
     }
 }
