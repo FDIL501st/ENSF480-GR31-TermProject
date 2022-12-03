@@ -2,7 +2,6 @@ package Interface;
 
 import javax.swing.*;
 
-import Model.LoginServer;
 import Model.RegisteredUser;
 
 import java.awt.event.*;

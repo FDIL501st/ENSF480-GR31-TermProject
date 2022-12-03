@@ -1,7 +1,8 @@
-package Model;
+package Interface;
 import java.util.ArrayList;
 
 import Controller.UserController;
+import Model.RegisteredUser;
 public class LoginServer {
 
     private static LoginServer instance; //only instance of login server
