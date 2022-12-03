@@ -18,6 +18,31 @@ public class TicketDatabaseReader extends DatabaseReader {
         return allTickets;
     }
 
+    public static void setAllTickets(ArrayList<Ticket> newAllTickets) {
+        
+        
+        // now need to sync up with database
+        // syncing is clear, first remove all elements, then add all elements in array
+        if (!connect()) {
+            return;
+        }
+        String deleteQuery = String.format("DELETE FROM %s", TABLE);
+        try {
+            Statement delateAll = connection.createStatement();
+            delateAll.executeUpdate(deleteQuery);
+            delateAll.close();
+        } catch (SQLException e) {
+            disconnect();
+            return;
+        }
+        // to save time with connecting, won't disconnect and use same connection
+        for (Ticket ticket : newAllTickets) {
+            removeTicket(ticket);
+        }
+        disconnect();
+        allTickets = newAllTickets; 
+        // do this last as keep allTickets same as database, so if database sync failed, don't sync this up
+    }
     /**
      * fetches all the tickets stored within the database
      * @return an arrayList of Ticket objects created from all the rows of the database
