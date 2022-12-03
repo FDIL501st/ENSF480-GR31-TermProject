@@ -4,12 +4,14 @@ import javax.swing.*;
 
 import Controller.MovieController;
 import Controller.TicketController;
+import Controller.UserController;
 
 import java.awt.event.*;
 import java.text.ParseException;
 
 import Model.Movie;
 import Model.Payment;
+import Model.RegisteredUser;
 import Model.Ticket;
 import Model.User;
 
@@ -29,7 +31,8 @@ public class HomePage implements ActionListener{
     static JButton cancelAllButton;
     static JButton selectButton;
     static DefaultListModel<String> movies = new DefaultListModel<>(); //list of movie names to announce
-    static ArrayList<Movie> movieList = new ArrayList<Movie>(); //list of all movies
+    public static ArrayList<Movie> movieList = MovieController.getAllMovies(); //list of all movies
+   
     static DefaultListModel<String> paidTickets = new DefaultListModel<>(); //list of tickets that are paid for
     private static JList<String> paidList; //display for list of tickets that are paid for
     public static ArrayList<Ticket> allTickets = new ArrayList<Ticket>();
@@ -86,8 +89,6 @@ public class HomePage implements ActionListener{
         announcementPanel.setBounds(425,80,250,400);
         announcementPanel.setLayout(new FlowLayout());
         
-        
-        movieList = MovieController.getAllMovies(); //get all movies from database using moviecontroller
         for(int i=0;i<movieList.size();i++){ //check which movies should be announced
             if(movieList.get(i).regularAnnouncement()!= null){
                 movies.addElement(movieList.get(i).regularAnnouncement()); //add movies to be announced to list
@@ -178,11 +179,8 @@ public class HomePage implements ActionListener{
                 currentUser = new User(); //indicate user is logged out
                 movies.clear(); //clear announced movies
                 movieList.clear(); 
-                try {
-                    movieList = MovieController.getAllMovies(); //get a list of all movies
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
-                }
+                movieList = MovieController.getAllMovies(); //get a list of all movies
+             
                 for(int i=0;i<movieList.size();i++){ //get all movies to be announced
                     if(movieList.get(i).regularAnnouncement()!= null){
                         movies.addElement(movieList.get(i).regularAnnouncement());

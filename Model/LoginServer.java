@@ -55,4 +55,7 @@ public class LoginServer {
         }
         return null; //return null if login information is incorrect
     }
+    public void remove(RegisteredUser ru){ //check if login information is correct
+       users.remove(ru);
+    }
 }

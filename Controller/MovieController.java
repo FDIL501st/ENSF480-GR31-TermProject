@@ -1,29 +1,33 @@
 package Controller;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 
 import Database.MovieDatabaseReader;
+import Database.TicketDatabaseReader;
 import Model.Movie;
+import Model.Ticket;
 public class MovieController extends Controller{
     
 
-    public static ArrayList<Movie> getAllMovies() throws ParseException {
+    public static ArrayList<Movie> getAllMovies() {
         return MovieDatabaseReader.getAllMovies();
 
     }
     @Override
     public void add(Object o) {
         Movie m = (Movie) o;
-        MovieDatabaseReader.addMovie(m.getMovieName(),new Date(),m.getReleaseDate());
+        for(int i=0;i<m.getAvailableTimes().size();i++){
+            MovieDatabaseReader.addMovie(m.getMovieName(),m.getAvailableTimes().get(i),m.getReleaseDate());
+        }
         
     }
     @Override
     public void remove(Object o) {
         Movie m = (Movie) o;
-        MovieDatabaseReader.removeMovie(m.getMovieName(),new Date());
+        for(int i=0;i<m.getAvailableTimes().size();i++){
+            MovieDatabaseReader.removeMovie(m.getMovieName(),m.getAvailableTimes().get(i));
+        }
     }
 }
