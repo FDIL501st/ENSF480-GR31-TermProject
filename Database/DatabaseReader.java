@@ -3,7 +3,10 @@ package Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Date;
+
+import Interface.HomePage;
 
 public abstract class DatabaseReader {
     final static private String DB_NAME = "movie_database";
@@ -71,8 +74,9 @@ public abstract class DatabaseReader {
         return time_seconds;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         // testing roundsSecondsDown()
+        /* 
         Date date = new Date();
         long l = date.getTime();
         System.out.println(date.toString());
@@ -80,6 +84,11 @@ public abstract class DatabaseReader {
         System.out.println(DatabaseReader.roundSecondsDown(l));
         date.setTime(DatabaseReader.roundSecondsDown(l));
         System.out.println(date.toString());
+        */
+        connect();
+        HomePage hp = new HomePage();
+        hp.start();
+        
         // Currently seems to work
     }
 }

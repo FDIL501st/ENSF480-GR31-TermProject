@@ -218,12 +218,15 @@ public class TicketForm extends Form implements ActionListener{
                     }
                 }
             }
-            for(int i=1;i<seats.size();i++){ //index 0 is the room #
+            for(int i=0;i<seats.size();i++){ //index 0 is the room #
                 if(seats.get(i)==1){  //1 indicates that a seat is available so set the display button to be visible
                     seatsArr.get(i).setVisible(true); 
                 }
+                else if(seats.get(i) ==1){
+                    seatsArr.get(i).setVisible(false); 
+                }
             }
-            roomSelected = seats.get(0); //set room selected
+            roomSelected = 1; //set room selected
             sListTitle.setVisible(true); //set seat title to be visible
         }
         if(e.getActionCommand().equals("Pay")){

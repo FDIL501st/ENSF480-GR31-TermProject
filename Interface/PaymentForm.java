@@ -147,7 +147,13 @@ public class PaymentForm extends Form implements ActionListener{
                     double value = TicketController.getCodeValue(Integer.parseInt(codeText.getText().trim()));
                     if(value != 0){
                         JOptionPane.showMessageDialog(null,"Code is applied");
-                        summText.setText("Tickets x" + tickets.size() + ": $" + String.valueOf(100*tickets.size()-value));
+                        if((100*tickets.size()-value)>0){
+                            summText.setText("Tickets x" + tickets.size() + ": $" + String.valueOf(100*tickets.size()-value));
+                        }
+                        else{
+                            summText.setText("Tickets x" + tickets.size() + ": $" + 0 + ".00");
+                        }
+                    
                     }
                     else{
                         JOptionPane.showMessageDialog(null,"Code is invalid");

@@ -35,12 +35,6 @@ public class HomePage implements ActionListener{
    JList<String> announcements;
    private static Payment paymentSelected; //payment to be cancelled
 
-   public static void main(String[] args) throws ParseException{ //main to test
-    HomePage hp = new HomePage();
-    hp.start();
-   
-
-}
     public void start() throws ParseException{
         homeFrame = new JFrame();
         homeFrame.setSize(850,700);
