@@ -83,7 +83,7 @@ public class TicketForm extends Form implements ActionListener{
             if (movieList.get(i).regularAnnouncement() != null && movieList.get(i).RUAnnouncement() == null){
                 movies = movies + movieList.get(i).getMovieName() + "\n";
             }
-            if (loginStatus == true) {
+            if (HomePage.currentUser.getRegistrationStatus() == true) {
                 if (movieList.get(i).RUAnnouncement() != null) {
                     movies = movies + movieList.get(i).getMovieName() + "\n";
                 }
@@ -186,7 +186,7 @@ public class TicketForm extends Form implements ActionListener{
                 boolean found = false;//set to true if user entered a value movie name
                 for(int i=0;i<HomePage.movieList.size();i++){
                     if(HomePage.movieList.get(i).getMovieName().equalsIgnoreCase(movieName)){
-                        if (loginStatus == false && HomePage.movieList.get(i).regularAnnouncement() == null) {
+                        if (HomePage.currentUser.getRegistrationStatus() == false && HomePage.movieList.get(i).regularAnnouncement() == null) {
                             continue;
                         }
                         found = true;

@@ -3,6 +3,7 @@ package Interface;
 import javax.swing.*;
 
 import Model.LoginServer;
+import Model.RegisteredUser;
 
 import java.awt.event.*;
 public class LoginForm extends Form implements ActionListener {
@@ -72,8 +73,8 @@ public class LoginForm extends Form implements ActionListener {
        String password = passwordText.getText();
 
        if(e.getActionCommand().equals("Sign in")){
-           
-            if(LoginServer.validate(email,password)!= null){ //check if email and password are in database
+        LoginServer lg = LoginServer.getInstance();
+            if(lg.validate(email,password)!= null){ //check if email and password are in database
                 JOptionPane.showMessageDialog(null,"Login successful");
                 for(int i=0;i<HomePage.movieList.size();i++){
                     if(HomePage.movieList.get(i).RUAnnouncement() != null){
@@ -86,9 +87,10 @@ public class LoginForm extends Form implements ActionListener {
                 HomePage.pListTitle.setVisible(false); //homepage payment invisible
                 HomePage.selectButton.setVisible(false); 
                 PaymentForm.tickets.clear(); //clear any unpaid tickets in paymentform
-                Form.loginStatus = true; //set login status
-                HomePage.currentUser = LoginServer.validate(email,password); //set current user
-                if(HomePage.currentUser.checkAnnualFee()){ //check if annual fee has been paid or not
+               
+                HomePage.currentUser = lg.validate(email,password); //set current user
+                RegisteredUser ru = (RegisteredUser) (HomePage.currentUser);
+                if(ru.checkAnnualFee()){ //check if annual fee has been paid or not
                     HomePage.annualPayment.setVisible(true); //annual payment button on home page is visible
                 }
                 if(HomePage.currentUser.getPaidTickets().size()>0){ //check for any paid tickets on users account

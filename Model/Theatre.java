@@ -7,6 +7,7 @@ public class Theatre {
     public Theatre(String name, String location){
         this.theatreName = name;
 		this.theatreLocation = location;
+        theatreID = theatreCount++;
     }
     public String getTheatreName(){
         return this.theatreName;

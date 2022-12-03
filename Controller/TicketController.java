@@ -11,10 +11,10 @@ import Model.Ticket;
 public class TicketController extends Controller{
     
     public  static ArrayList<Integer> getSeats(String movieName, Date showTime) {
-        /* 
-      return MovieDatabaseReader.getSeats(movieName,time);
-      */
+      return MovieDatabaseReader.getSeats(movieName,showTime);
+      
       //test data
+      /* 
       ArrayList<Integer> seats = new ArrayList<Integer>(100);
         seats.add(10);
       for(int i=1;i<100;i++){
@@ -27,24 +27,28 @@ public class TicketController extends Controller{
         }
       }
       return seats;
-        
+        */
       
     }
-    public static void makeNewCode(double value){
-      CodeDatabaseReader.makeNewCode(value);
+    public static int makeNewCode(double value){
+      return CodeDatabaseReader.makeNewCode(value);
+    }
+    public static double getCodeValue(int code){
+      return CodeDatabaseReader.getCodeValue(code);
     }
     @Override
     public void add(Object o) {
       Ticket t = (Ticket)o;
-      //TicketDatabaseReader.addTicket(t);
+      TicketDatabaseReader.addTicket(t);
+      MovieDatabaseReader.updateSeat(t.getMovie().getMovieName(),t.getTime(),t.getSeatNum(),0); //update the seat
       
     }
 
     @Override
     public void remove(Object o) {
       Ticket t=(Ticket)o;
-      //TicketDatabaseReader.removeTicket(t);
-      
+      TicketDatabaseReader.removeTicket(t);
+      MovieDatabaseReader.updateSeat(t.getMovie().getMovieName(),t.getTime(),t.getSeatNum(),1);
     }
     
 }

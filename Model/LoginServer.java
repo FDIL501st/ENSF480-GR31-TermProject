@@ -9,7 +9,7 @@ public class LoginServer {
     public static UserController uc = new UserController(); //controller to update database
     
     private LoginServer(){
-        users = new ArrayList<RegisteredUser>(); 
+        users = UserController.getAllUsers(); 
     }
     public static LoginServer getInstance(){ //make sure only one instance is accessed
         if(instance == null){
@@ -28,7 +28,7 @@ public class LoginServer {
      * @return a boolean value true if registration is successful and false
      * if email is already registered
      */
-    public static boolean register(String email,String password,String fName,String lName,String address,String cardNum){ 
+    public boolean register(String email,String password,String fName,String lName,String address,String cardNum){ 
         for(RegisteredUser u:users){ //check if email is already used
             if(u.getEmail().equals(email)){
                 return false;
@@ -47,7 +47,7 @@ public class LoginServer {
      * @return a RegisteredUser object if login information is correct 
      * and null if login information is incorrect
      */
-    public static RegisteredUser validate(String email,String password){ //check if login information is correct
+    public RegisteredUser validate(String email,String password){ //check if login information is correct
         for(RegisteredUser u: users){ 
             if(u.getEmail().equals(email)&&(u.getPassword().equals(password))){ //return user object if login information is correct
                 return u;
