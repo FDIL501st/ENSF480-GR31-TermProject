@@ -1248,6 +1248,19 @@
 							"propertyLabel": {
 								"$ref": "AAAAAAGEoN2FCYXvxEk="
 							}
+						},
+						{
+							"_type": "UMLTextView",
+							"_id": "AAAAAAGE2xVAAtvnQSY=",
+							"_parent": {
+								"$ref": "AAAAAAGEgh6Tps5LWyc="
+							},
+							"font": "Arial;13;0",
+							"left": 584,
+							"top": 8,
+							"width": 60,
+							"height": 38,
+							"text": "Eric Wong"
 						}
 					]
 				}
