@@ -3195,6 +3195,19 @@
 							"propertyLabel": {
 								"$ref": "AAAAAAGEqz3OHx6pWl8="
 							}
+						},
+						{
+							"_type": "UMLTextView",
+							"_id": "AAAAAAGE2xs7VsNjiz8=",
+							"_parent": {
+								"$ref": "AAAAAAGEqyfZ4xp7O8c="
+							},
+							"font": "Arial;13;0",
+							"left": 424,
+							"top": 496,
+							"width": 60,
+							"height": 25,
+							"text": "Jaron"
 						}
 					]
 				}
