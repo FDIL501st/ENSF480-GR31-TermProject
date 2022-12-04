@@ -1474,6 +1474,19 @@
 									"activation": {
 										"$ref": "AAAAAAGEnZum0rDhQEw="
 									}
+								},
+								{
+									"_type": "UMLTextBoxView",
+									"_id": "AAAAAAGE2xKP33vRzOU=",
+									"_parent": {
+										"$ref": "AAAAAAGEnYi9Zq0Hgwc="
+									},
+									"font": "Arial;13;0",
+									"left": 24,
+									"top": 496,
+									"width": 60,
+									"height": 38,
+									"text": "by Fadil Husain"
 								}
 							]
 						}
@@ -1675,7 +1688,8 @@
 					"_parent": {
 						"$ref": "AAAAAAGEnYi9Za0F0nM="
 					},
-					"name": "Role4"
+					"name": "Role4",
+					"type": ""
 				},
 				{
 					"_type": "UMLAttribute",
@@ -1683,7 +1697,8 @@
 					"_parent": {
 						"$ref": "AAAAAAGEnYi9Za0F0nM="
 					},
-					"name": "Role5"
+					"name": "Role5",
+					"type": ""
 				},
 				{
 					"_type": "UMLAttribute",
@@ -1691,7 +1706,8 @@
 					"_parent": {
 						"$ref": "AAAAAAGEnYi9Za0F0nM="
 					},
-					"name": "Role6"
+					"name": "Role6",
+					"type": ""
 				}
 			]
 		}
