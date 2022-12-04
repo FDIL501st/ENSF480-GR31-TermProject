@@ -124,9 +124,6 @@ public class TicketDatabaseReader extends DatabaseReader {
         }
         disconnect();
 
-        //update seat which just got reserved
-        MovieDatabaseReader.updateSeat(movieName, showTime, seatNum, 0);
-
         // need to sync up allTickets
         allTickets = fetchAllTickets();
         return true;
@@ -151,7 +148,7 @@ public class TicketDatabaseReader extends DatabaseReader {
         if (!connect()) {
             return false;
         }
-        Ticket t1 = getTicket(ID);  //need this as after deleting need some info to update seat
+        
         String deleteQuery = String.format("DELETE FROM %s WHERE ID = ?", 
         TABLE);
         
@@ -172,8 +169,7 @@ public class TicketDatabaseReader extends DatabaseReader {
             return false;
         }
         disconnect();
-        // update seat which just became available
-        MovieDatabaseReader.updateSeat(t1.getMovie().getMovieName(), t1.getTime(), t1.getSeatNum(), 1);
+        
         // need to sync up allTickets
         allTickets = fetchAllTickets();
         return true;
