@@ -1,0 +1,13 @@
+﻿Noun,Filtering Decision
+User,Filtered (actor)
+Registered User,Filtered (actor)
+Movie,Candidate object
+Theatre,Candidate object
+Time,Filtered (property of movie)
+Seat,Filtered (property of room)
+Ticket,Candidate object
+Payment,Candidate object
+Receipt,Filtered (property of payment)
+Credit code,Candidate object
+Registration Status,Filtered (property of User
+Room,Filtered (property of theatre)
