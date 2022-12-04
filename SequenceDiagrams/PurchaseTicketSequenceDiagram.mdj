@@ -136,10 +136,12 @@
 													"_parent": {
 														"$ref": "AAAAAAGEWfjI9YRTw4w="
 													},
-													"visible": false,
 													"font": "Arial;13;0",
-													"left": -112,
-													"height": 13
+													"left": 21,
+													"top": 45,
+													"width": 62.736328125,
+													"height": 13,
+													"text": "«actor»"
 												},
 												{
 													"_type": "LabelView",
@@ -148,8 +150,8 @@
 														"$ref": "AAAAAAGEWfjI9YRTw4w="
 													},
 													"font": "Arial;13;1",
-													"left": 29,
-													"top": 47,
+													"left": 21,
+													"top": 60,
 													"width": 62.736328125,
 													"height": 13,
 													"text": "User"
@@ -162,7 +164,7 @@
 													},
 													"visible": false,
 													"font": "Arial;13;0",
-													"left": -112,
+													"left": -128,
 													"width": 106.20263671875,
 													"height": 13,
 													"text": "(from Interaction1)"
@@ -175,13 +177,13 @@
 													},
 													"visible": false,
 													"font": "Arial;13;0",
-													"left": -112,
+													"left": -128,
 													"height": 13,
 													"horizontalAlignment": 1
 												}
 											],
 											"font": "Arial;13;0",
-											"left": 24,
+											"left": 16,
 											"top": 40,
 											"width": 72.736328125,
 											"height": 40,
@@ -208,14 +210,14 @@
 												"$ref": "AAAAAAGEWfjI9IRRREQ="
 											},
 											"font": "Arial;13;0",
-											"left": 60,
+											"left": 52,
 											"top": 80,
 											"width": 1,
 											"height": 512
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 24,
+									"left": 16,
 									"top": 40,
 									"width": 72.736328125,
 									"height": 552,
@@ -368,10 +370,12 @@
 													"_parent": {
 														"$ref": "AAAAAAGEWfncvYTM+js="
 													},
-													"visible": false,
 													"font": "Arial;13;0",
-													"left": 16,
-													"height": 13
+													"left": 589,
+													"top": 45,
+													"width": 67.80810546875,
+													"height": 13,
+													"text": "«actor»"
 												},
 												{
 													"_type": "LabelView",
@@ -380,8 +384,8 @@
 														"$ref": "AAAAAAGEWfncvYTM+js="
 													},
 													"font": "Arial;13;1",
-													"left": 597,
-													"top": 47,
+													"left": 589,
+													"top": 60,
 													"width": 67.80810546875,
 													"height": 13,
 													"text": "Database"
@@ -394,7 +398,6 @@
 													},
 													"visible": false,
 													"font": "Arial;13;0",
-													"left": 16,
 													"width": 106.20263671875,
 													"height": 13,
 													"text": "(from Interaction1)"
@@ -407,13 +410,12 @@
 													},
 													"visible": false,
 													"font": "Arial;13;0",
-													"left": 16,
 													"height": 13,
 													"horizontalAlignment": 1
 												}
 											],
 											"font": "Arial;13;0",
-											"left": 592,
+											"left": 584,
 											"top": 40,
 											"width": 77.80810546875,
 											"height": 40,
@@ -440,14 +442,14 @@
 												"$ref": "AAAAAAGEWfncvYTKPZk="
 											},
 											"font": "Arial;13;0",
-											"left": 631,
+											"left": 623,
 											"top": 80,
 											"width": 1,
 											"height": 491
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 592,
+									"left": 584,
 									"top": 40,
 									"width": 77.80810546875,
 									"height": 531,
@@ -823,7 +825,7 @@
 												"$ref": "AAAAAAGEfPmI66Cwhhs="
 											},
 											"font": "Arial;13;0",
-											"left": 80,
+											"left": 76,
 											"top": 319,
 											"width": 93.208984375,
 											"height": 13,
@@ -846,7 +848,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 129,
+											"left": 125,
 											"top": 305,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -867,7 +869,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 129,
+											"left": 125,
 											"top": 340,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -900,7 +902,7 @@
 									"tail": {
 										"$ref": "AAAAAAGEWfjI9oRYLnY="
 									},
-									"points": "60:336;198:336",
+									"points": "52:336;198:336",
 									"nameLabel": {
 										"$ref": "AAAAAAGEfPmI66CyRoQ="
 									},
@@ -1269,7 +1271,7 @@
 												"$ref": "AAAAAAGEWhHuQYngIEo="
 											},
 											"font": "Arial;13;0",
-											"left": 67,
+											"left": 63,
 											"top": 431,
 											"width": 110.55712890625,
 											"height": 13,
@@ -1292,7 +1294,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 129,
+											"left": 125,
 											"top": 417,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -1313,7 +1315,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 129,
+											"left": 125,
 											"top": 452,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -1346,7 +1348,7 @@
 									"tail": {
 										"$ref": "AAAAAAGEWfjI9oRYLnY="
 									},
-									"points": "60:448;198:448",
+									"points": "52:448;198:448",
 									"nameLabel": {
 										"$ref": "AAAAAAGEWhHuQoniXmQ="
 									},
@@ -1604,7 +1606,7 @@
 												"$ref": "AAAAAAGEWhPPmYoQoBE="
 											},
 											"font": "Arial;13;0",
-											"left": 446,
+											"left": 442,
 											"top": 504,
 											"width": 160.43701171875,
 											"height": 13,
@@ -1627,7 +1629,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 526,
+											"left": 522,
 											"top": 489,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -1648,7 +1650,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 526,
+											"left": 522,
 											"top": 524,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -1668,7 +1670,7 @@
 												"$ref": "AAAAAAGEWhPPmYoQoBE="
 											},
 											"font": "Arial;13;0",
-											"left": 624,
+											"left": 616,
 											"top": 520,
 											"width": 14,
 											"height": 29
@@ -1681,7 +1683,7 @@
 									"tail": {
 										"$ref": "AAAAAAGEWf39O4aAUi0="
 									},
-									"points": "428:520;624:520",
+									"points": "428:520;616:520",
 									"nameLabel": {
 										"$ref": "AAAAAAGEWhPPmooSlWY="
 									},
@@ -1715,7 +1717,7 @@
 												"$ref": "AAAAAAGEhy3nFR75c98="
 											},
 											"font": "Arial;13;0",
-											"left": 59,
+											"left": 55,
 											"top": 530,
 											"width": 140.91796875,
 											"height": 13,
@@ -1738,7 +1740,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 129,
+											"left": 125,
 											"top": 515,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -1759,7 +1761,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 129,
+											"left": 125,
 											"top": 550,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -1792,7 +1794,7 @@
 									"tail": {
 										"$ref": "AAAAAAGEWfjI9oRYLnY="
 									},
-									"points": "60:546;198:546",
+									"points": "52:546;198:546",
 									"nameLabel": {
 										"$ref": "AAAAAAGEhy3nFR777Ro="
 									},
@@ -2040,7 +2042,7 @@
 									"top": 24,
 									"width": 89,
 									"height": 38,
-									"text": "Eric Wong"
+									"text": "Eric "
 								}
 							]
 						}
@@ -2209,6 +2211,7 @@
 								"$ref": "AAAAAAGEWfivDoQPGl4="
 							},
 							"name": "User",
+							"stereotype": "actor",
 							"represent": {
 								"$ref": "AAAAAAGEWfjI9IRQQek="
 							},
@@ -2233,6 +2236,7 @@
 								"$ref": "AAAAAAGEWfivDoQPGl4="
 							},
 							"name": "Database",
+							"stereotype": "actor",
 							"represent": {
 								"$ref": "AAAAAAGEWfncvYTJGZk="
 							},

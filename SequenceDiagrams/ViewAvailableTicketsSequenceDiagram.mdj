@@ -119,9 +119,12 @@
 													"_parent": {
 														"$ref": "AAAAAAGEoEvw6czhEYQ="
 													},
-													"visible": false,
 													"font": "Arial;13;0",
-													"height": 13
+													"left": 85,
+													"top": 45,
+													"width": 62.736328125,
+													"height": 13,
+													"text": "«actor»"
 												},
 												{
 													"_type": "LabelView",
@@ -131,7 +134,7 @@
 													},
 													"font": "Arial;13;1",
 													"left": 85,
-													"top": 47,
+													"top": 60,
 													"width": 62.736328125,
 													"height": 13,
 													"text": "User"
@@ -464,10 +467,12 @@
 													"_parent": {
 														"$ref": "AAAAAAGEoEx1ds1DCxM="
 													},
-													"visible": false,
 													"font": "Arial;13;0",
-													"left": 16,
-													"height": 13
+													"left": 629,
+													"top": 45,
+													"width": 67.80810546875,
+													"height": 13,
+													"text": "«actor»"
 												},
 												{
 													"_type": "LabelView",
@@ -477,7 +482,7 @@
 													},
 													"font": "Arial;13;1",
 													"left": 629,
-													"top": 47,
+													"top": 60,
 													"width": 67.80810546875,
 													"height": 13,
 													"text": "Database"
@@ -2329,6 +2334,19 @@
 									"activation": {
 										"$ref": "AAAAAAGEoFp+088dJn0="
 									}
+								},
+								{
+									"_type": "UMLTextView",
+									"_id": "AAAAAAGE2xlbtj3S1M4=",
+									"_parent": {
+										"$ref": "AAAAAAGEoEhPpcy1G5Q="
+									},
+									"font": "Arial;13;0",
+									"left": 952,
+									"top": 24,
+									"width": 60,
+									"height": 25,
+									"text": "Jaron"
 								}
 							]
 						}
@@ -2567,6 +2585,7 @@
 								"$ref": "AAAAAAGEoEhPpMy02A8="
 							},
 							"name": "User",
+							"stereotype": "actor",
 							"represent": {
 								"$ref": "AAAAAAGEoEvw6MzejLA="
 							},
@@ -2603,6 +2622,7 @@
 								"$ref": "AAAAAAGEoEhPpMy02A8="
 							},
 							"name": "Database",
+							"stereotype": "actor",
 							"represent": {
 								"$ref": "AAAAAAGEoEx1ds1Anw0="
 							},
