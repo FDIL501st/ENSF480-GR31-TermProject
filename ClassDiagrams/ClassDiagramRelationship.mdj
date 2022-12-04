@@ -4992,7 +4992,7 @@
 										"$ref": "AAAAAAGE1PudbowsPq4="
 									},
 									"edgePosition": 2,
-									"text": "*"
+									"text": "0..*"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -6047,7 +6047,7 @@
 									"font": "Arial;13;0",
 									"left": 182,
 									"top": 567,
-									"width": 12.65087890625,
+									"width": 13.83154296875,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -6098,7 +6098,7 @@
 										"$ref": "AAAAAAGE1TrT/OGUyfk="
 									},
 									"edgePosition": 2,
-									"text": "*"
+									"text": "0..*"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -7478,7 +7478,7 @@
 										"$ref": "AAAAAAGE1UJd8sblqOQ="
 									},
 									"edgePosition": 2,
-									"text": "*"
+									"text": "1"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -8030,7 +8030,7 @@
 										"$ref": "AAAAAAGE1UQbp/tjsN0="
 									},
 									"edgePosition": 2,
-									"text": "*"
+									"text": "0..*"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -11369,7 +11369,7 @@
 								"reference": {
 									"$ref": "AAAAAAGEghu3+Lo3uBk="
 								},
-								"multiplicity": "*"
+								"multiplicity": "0..*"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",
@@ -11906,7 +11906,7 @@
 								"reference": {
 									"$ref": "AAAAAAGEghu3+rpNyPM="
 								},
-								"multiplicity": "*"
+								"multiplicity": "0..*"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",
@@ -11964,7 +11964,7 @@
 								"reference": {
 									"$ref": "AAAAAAGEghu3+rpNyPM="
 								},
-								"multiplicity": "*"
+								"multiplicity": "1"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",
@@ -11994,7 +11994,7 @@
 								"reference": {
 									"$ref": "AAAAAAGEghu3+rpNyPM="
 								},
-								"multiplicity": "*"
+								"multiplicity": "0..*"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",
