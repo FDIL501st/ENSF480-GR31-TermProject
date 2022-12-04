@@ -3,16 +3,6 @@ package Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.ArrayList;
-
-import Controller.MovieController;
-import Controller.UserController;
-import Interface.HomePage;
-import Interface.LoginServer;
-import Model.Movie;
-import Model.RegisteredUser;
-
 
 public abstract class DatabaseReader {
     final static private String DB_NAME = "movie_database";
