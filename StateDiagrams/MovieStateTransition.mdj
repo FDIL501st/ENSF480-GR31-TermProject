@@ -3127,6 +3127,19 @@
 									"width": 60,
 									"height": 64,
 									"text": "Last room in theatre not full"
+								},
+								{
+									"_type": "UMLTextBoxView",
+									"_id": "AAAAAAGE2yB/Bt7PG0s=",
+									"_parent": {
+										"$ref": "AAAAAAGE2mZyvew+0tU="
+									},
+									"font": "Arial;13;0",
+									"left": 96,
+									"top": 472,
+									"width": 60,
+									"height": 51,
+									"text": "By: Justin Kuhn"
 								}
 							]
 						}
