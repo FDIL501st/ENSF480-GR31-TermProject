@@ -80,36 +80,4 @@ public abstract class DatabaseReader {
         return time_seconds;
     }
 
-    public static void main(String[] args) throws ParseException { //main to run program
-        connect();
-        HomePage.allTickets = TicketDatabaseReader.getAllTickets();
-        ArrayList<String> times = new ArrayList<String>();
-        times.add("21-12-2022 13:45");
-        times.add("22-12-2022 16:45");
-        times.add("23-12-2022 17:45");
-        times.add("25-12-2022 18:45");
-        times.add("27-12-2022 20:45");
-        MovieController mc = new MovieController(); 
-        Movie m = new Movie("m7","20-12-2022",times);
-       mc.add(m); //add new movie "m7"
-       HomePage.movieList.add(m);
-       /* 
-        mc.remove(m); //remove movie
-        for(int i=0;i<HomePage.movieList.size();i++){
-            Movie remove = HomePage.movieList.get(i);
-            if(remove.getMovieName().equalsIgnoreCase(m.getMovieName())){
-                HomePage.movieList.remove(remove);
-            }
-        }
-        */
-       UserController uc = new UserController();
-       RegisteredUser ru = new RegisteredUser("a@b.c","1","a","b","1 a b","1478 3478 4378 4378");
-       uc.add(ru);//add new user 
-       LoginServer lg = LoginServer.getInstance();
-       lg.register("a@b.c","1","a","b","1 a b","1478 3478 4378 4378");
-       //uc.remove(ru);//remove registered user
-       //lg.remove(ru);
-        HomePage hp = new HomePage();
-        hp.start();
-    }
 }
